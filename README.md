@@ -12,7 +12,11 @@ ApkToolPlus是一个包含apk逆向分析，apk加固，角标生成等一系列
 
 运行ApkToolPlus需要Java Runtime，我这里用的是jdk8，jdk下载地址<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html" target="_blank">`http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html`</a>
 
-作者博客：<a href="http://blog.csdn.net/linchaolong" target="_blank">`http://blog.csdn.net/linchaolong`</a>
+作者博客：
+[`http://blog.csdn.net/linchaolong`](http://blog.csdn.net/linchaolong){:target="_blank"}
+
+[http://blog.csdn.net/linchaolong](http://blog.csdn.net/linchaolong){:target="_blank"}
+
 
 ##工具说明
 
