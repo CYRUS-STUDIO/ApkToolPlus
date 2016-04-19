@@ -28,7 +28,7 @@ ApkToolPlus是一个包含apk逆向分析，apk加固，角标生成等一系列
 （4）smali2dex：smali文件转换dex文件；<br/>
 （5）class2dex：class文件转换dex文件。<br/>
 6.Proguard：代码混淆工具。<br/>
-7.JAD：java反编译工具。<br/>
+7.JAD：java反编译工具，注意jar文件或目录不要在中文路径下。<br/>
 8.JD：java反编译工具。<br/>
 9.角标生成工具：icon角标生成工具，可调整角标位置。<br/>
 10.JBE：java汇编代码查看编辑工具。<br/>
