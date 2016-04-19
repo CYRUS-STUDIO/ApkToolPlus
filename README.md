@@ -10,12 +10,9 @@ ApkToolPlus是一个包含apk逆向分析，apk加固，角标生成等一系列
 
 ## 前言
 
-运行ApkToolPlus需要Java Runtime，我这里用的是jdk8，jdk下载地址<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html" target="_blank">`http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html`</a>
+运行ApkToolPlus需要Java Runtime，我这里用的是jdk8，jdk下载地址：http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
-作者博客：
-[`http://blog.csdn.net/linchaolong`](http://blog.csdn.net/linchaolong){:target="_blank"}
-
-[http://blog.csdn.net/linchaolong](http://blog.csdn.net/linchaolong){:target="_blank"}
+作者博客：http://blog.csdn.net/linchaolong
 
 
 ##工具说明
@@ -64,4 +61,3 @@ ApkToolPlus是一个包含apk逆向分析，apk加固，角标生成等一系列
 6.角标生成工具
 <img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/IconTool.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
 <br/>
-
