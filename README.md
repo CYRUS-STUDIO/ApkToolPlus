@@ -61,3 +61,10 @@ ApkToolPlus是一个包含apk逆向分析，apk加固，角标生成等一系列
 6.角标生成工具
 <img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/IconTool.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
 <br/>
+
+#版本更新说明
+
+**1.0.1**<br/>
+1.优化Apk加固加解密算法，执行效率更高；<br/>
+2.修复keystore配置别名显示问题；<br/>
+
