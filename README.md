@@ -2,69 +2,105 @@
 # ApkToolPlus
 
 <a href="https://github.com/linchaolong/ApkToolPlus">
-    <img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/logo.png" alt="ApkToolPlus" title="ApkToolPlus" align="right" />
+    <img src="doc/logo.png" alt="ApkToolPlus" title="ApkToolPlus" align="right" />
 </a>
-<br/>
+<br/><br/>
 
-ApkToolPlus是一个包含apk逆向分析，apk加固，角标生成等一系列相关功能的工具。
+ApkToolPlus 是一个可视化的跨平台 apk 分析工具。
 
-## 前言
+## 功能说明
 
-运行ApkToolPlus需要Java Runtime，我这里用的是jdk8，jdk下载地址：http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+### 1. ApkTool 
 
-作者博客：http://blog.csdn.net/linchaolong
+apk 反编译，回编译，签名。
 
+![apktool](doc/apktool.jpg)
 
-##工具说明
+### 2. Apk 加固
 
-1.ApkTool：反编译，回编译，apk签名，支持Android6.0应用，支持批量操作。<br/>
-2.Apk加固：dex加密，防止还原真实代码逻辑，避免应用被复制，支持批量加固。<br/>
-3.ApkInfoPrinter：apk信息查看工具，如：AndroidManifest.xml，签名,包名等常见信息，支持拖入直接查看。<br/>
-4.Apk源码查看工具：用于查看apk源码，支持Multi-Dex。<br/>
-5.文件转换工具<br/>
-（1）ja2smali：jar文件转换smali文件；<br/>
-（2）class2smali：class文件转换smali文件；<br/>
-（3）dex2smali：dex/apk文件转换smali文件，支持Multi-Dex；<br/>
-（4）smali2dex：smali文件转换dex文件；<br/>
-（5）class2dex：class文件转换dex文件。<br/>
-6.Proguard：代码混淆工具。<br/>
-7.JAD：java反编译工具，注意jar文件或目录不要在中文路径下。<br/>
-8.JD：java反编译工具。<br/>
-9.角标生成工具：icon角标生成工具，可调整角标位置。<br/>
-10.JBE：java汇编代码查看编辑工具。<br/>
+dex 加密，防逆向，防止二次打包。（注意：该功能当前并非很完善，不建议商用，欢迎学习交流，欢迎提交 Pull requests）。
 
+![apktool](doc/jiagu.jpg)
 
-## 界面预览
+### 3. ApkInfoPrinter
 
-1.主界面
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/Main1.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/Main2.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
+apk 常见信息查看工具，如：AndroidManifest.xml，apk签名，版本号等。支持直接拖入查看apk信息。
 
-2.Debug界面，可查看日志输出。
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/Debug.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
+![apktool](doc/apkinfoprinter.png)
 
-3.设置界面，可关联Sublime，关联后通过工具转换的的文件会自动显示在Sublime。
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/Settings.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
+### 4. Apk源码查看工具 
 
-4.ApkTool，可对apk进行反编译、回编译、签名操作，支持Andrid6.0应用。
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/ApkTool.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
+Apk 源码查看工具，支持 multi-dex。
 
-5.Apk加固，支持批量加固。
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/ApkProtector.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
+![apktool](doc/jd.jpg)
 
-6.角标生成工具
-<img src="https://raw.githubusercontent.com/linchaolong/ApkToolPlus/master/img/IconTool.jpg" alt="ApkToolPlus" title="ApkToolPlus"/>
-<br/>
+### 5. 格式转换工具
 
-#版本更新说明
+jar2smali，class2smali，dex2smali（apk2smali），smali2dex，class2dex。
 
-**1.0.1**<br/>
-1.优化Apk加固加解密算法，执行效率更高；<br/>
-2.修复keystore配置别名显示问题；<br/>
+在设置界面，可关联Sublime，关联后通过工具转换的的文件会自动显示在Sublime。
+
+![apktool](doc/settings.jpg)
+
+### 6. 角标生成工具
+
+icon 角标生成工具
+
+![apktool](doc/icon_tool.jpg)
+
+### 7. 其他
+
+- JD（Java反编译工具）
+- JAD（Java反编译工具），注意jar文件或目录不要在中文路径下。
+- JBE（Java字节码编辑工具）
+- Proguard（Java代码混淆工具）
+
+## 工程结构
+
+- app：应用主模块。
+- app.Build：应用构建模块。
+- lib.ApkParser：[apk-parser](https://github.com/clearthesky/apk-parser)，apk解析库。
+- lib.AXMLPrinter： [AXMLPrinter2](https://code.google.com/archive/p/android4me/downloads)，二进制xml文件解析库。
+- lib.Jad： [Jad](https://varaneckas.com/jad/) ，Java反编译工具。
+- lib.JBE： [JBE](http://cs.ioc.ee/~ando/jbe/) ，Java字节码编辑器。
+- lib.JiaGu：apk加固模块。
+- lib.Proguard： [Proguard](https://sourceforge.net/projects/proguard/files/) ，代码混淆优化工具， [Usage](https://www.guardsquare.com/en/proguard/manual/usage) 。
+- lib.Res：应用资源模块。
+- lib.Utils：工具类模块。
+
+> ApkToolPlus.jks
+> - alias: ApkToolPlus
+> - password: linchaolong
+> - keystore password: linchaolong
+
+## 构建说明
+
+> 这是一个 IntelliJ IDEA 工程。
+>
+> 项目的构建依赖 ant， [点击这里下载 ant](https://ant.apache.org/bindownload.cgi)，并把 ant 的 bin 目录路径配置到 Path 环境变量，执行 `ant -version` 命令检测是否配置完成。
+
+### 1. 运行项目
+
+直接 Run `app` 模块中的 `com.linchaolong.apktoolplus.Main` 运行 ApkToolPlus。
+
+### 2. 构建apk加固模块
+  
+`lib.JiaGu` 是 apk 加固模块，如果有更新修改，则执行 `app.Build` 模块的 `com.linchaolong.apktoolplus.build.UpdateJiaGu` 自动更新打包 apk 加固库到 app 模块。
+
+### 3. 打包ApkToolPlus
+
+`Build -> Artifacts... -> ApkToolPlus -> Build`，ApkToolPlus.jar 将生成在 `out\artifacts\ApkToolPlus` 目录下，如果已经安装 jdk 可以直接点击运行。
+
+## 下载
+
+> 项目地址：https://github.com/linchaolong/ApkToolPlus
+
+点击 [这里](release) 下载 release 版 ApkToolPlus。
+
+## 联系方式
+
+- Email：linchaolong.dev@gmail.com
+- Blog：http://www.jianshu.com/u/149dc6683cc7
+
+> 最后，欢迎 Star，Fork，Issues 和提交 Pull requests，感谢 [ApkTool](https://github.com/iBotPeaches/Apktool) ，[apk-parser](https://github.com/clearthesky/apk-parser)，[AXMLPrinter](https://code.google.com/archive/p/android4me/downloads) 等开源项目的开发者。
 
