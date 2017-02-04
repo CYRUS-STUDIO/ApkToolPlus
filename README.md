@@ -18,13 +18,15 @@ apk 反编译，回编译，签名。
 
 ### 2. Apk 加固
 
-dex 加密，防逆向，防止二次打包。（注意：该功能当前并非很完善，不建议商用，欢迎学习交流，欢迎提交 Pull requests）。
+dex 加密，防逆向，防止二次打包。（注意：该功能当前并非很完善，暂不建议商用，欢迎学习交流，欢迎提交 Pull requests）。
 
 ![apktool](doc/jiagu.jpg)
 
+> 注意：加固后的 apk 启动时会做签名校验，如果和原来的签名不匹配会启动失败，在设置界面的 ApkTool 下配置 keystore。
+
 ### 3. ApkInfoPrinter
 
-apk 常见信息查看工具，如：AndroidManifest.xml，apk签名，版本号等。支持直接拖入查看apk信息。
+apk 常见信息查看工具，如：AndroidManifest.xml，apk 签名，版本号等。支持直接拖入查看 apk 信息。
 
 ![apktool](doc/apkinfoprinter.png)
 
@@ -38,7 +40,7 @@ Apk 源码查看工具，支持 multi-dex。
 
 jar2smali，class2smali，dex2smali（apk2smali），smali2dex，class2dex。
 
-在设置界面，可关联Sublime，关联后通过工具转换的的文件会自动显示在Sublime。
+在设置界面，可关联 [Sublime](http://www.sublimetext.com/2) ，关联后通过工具转换后的文件会自动显示在 Sublime。
 
 ![apktool](doc/settings.jpg)
 
@@ -50,20 +52,20 @@ icon 角标生成工具
 
 ### 7. 其他
 
-- JD（Java反编译工具）
-- JAD（Java反编译工具），注意jar文件或目录不要在中文路径下。
-- JBE（Java字节码编辑工具）
-- Proguard（Java代码混淆工具）
+- JD（Java 反编译工具）
+- JAD（Java 反编译工具），注意 jar 文件或 class 目录不要在中文路径下!!!
+- JBE（Java 字节码编辑工具）
+- Proguard（Java 代码混淆工具）
 
 ## 工程结构
 
 - app：应用主模块。
 - app.Build：应用构建模块。
-- lib.ApkParser：[apk-parser](https://github.com/clearthesky/apk-parser)，apk解析库。
-- lib.AXMLPrinter： [AXMLPrinter2](https://code.google.com/archive/p/android4me/downloads)，二进制xml文件解析库。
-- lib.Jad： [Jad](https://varaneckas.com/jad/) ，Java反编译工具。
-- lib.JBE： [JBE](http://cs.ioc.ee/~ando/jbe/) ，Java字节码编辑器。
-- lib.JiaGu：apk加固模块。
+- lib.ApkParser：[apk-parser](https://github.com/clearthesky/apk-parser)，apk 解析库。
+- lib.AXMLPrinter： [AXMLPrinter2](https://code.google.com/archive/p/android4me/downloads)，二进制 xml 文件解析库。
+- lib.Jad： [Jad](https://varaneckas.com/jad/) ，Java 反编译工具。
+- lib.JBE： [JBE](http://cs.ioc.ee/~ando/jbe/) ，Java 字节码编辑器。
+- lib.JiaGu：apk 加固模块。
 - lib.Proguard： [Proguard](https://sourceforge.net/projects/proguard/files/) ，代码混淆优化工具， [Usage](https://www.guardsquare.com/en/proguard/manual/usage) 。
 - lib.Res：应用资源模块。
 - lib.Utils：工具类模块。
