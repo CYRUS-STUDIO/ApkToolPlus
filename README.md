@@ -60,7 +60,7 @@ icon 角标生成工具
 ## 工程结构
 
 - app：应用主模块。
-- app.Build：应用构建模块。
+- app.Builder：应用构建模块。
 - lib.ApkParser：[apk-parser](https://github.com/clearthesky/apk-parser)，apk 解析库。
 - lib.AXMLPrinter： [AXMLPrinter2](https://code.google.com/archive/p/android4me/downloads)，二进制 xml 文件解析库。
 - lib.Jad： [Jad](https://varaneckas.com/jad/) ，Java 反编译工具。
@@ -87,7 +87,7 @@ icon 角标生成工具
 
 ### 2. 构建apk加固模块
   
-`lib.JiaGu` 是 apk 加固模块，如果有更新修改，则执行 `app.Build` 模块的 `com.linchaolong.apktoolplus.build.UpdateJiaGu` 自动更新打包 apk 加固库到 app 模块。
+`lib.JiaGu` 是 apk 加固模块，如果有更新修改，则执行 `app.Builder` 模块的 `com.linchaolong.apktoolplus.builder.UpdateJiaGu` 自动更新打包 apk 加固库到 app 模块。
 
 ### 3. 打包ApkToolPlus
 

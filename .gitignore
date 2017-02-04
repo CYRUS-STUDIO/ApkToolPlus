@@ -34,7 +34,7 @@ proguard/
 captures/
 
 # Intellij
-*.iml
+# *.iml
 .idea/workspace.xml
 /.idea/markdown-navigator.xml
 
