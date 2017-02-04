@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import java.net.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="600.0" styleClass="setting_view" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linchaolong.apktoolplus.module.settings.SettingsActivity">
+   <children>
+      <AnchorPane prefHeight="42.0" prefWidth="650.0" styleClass="top_pane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="btnClose" layoutX="570.0" layoutY="5.0" mnemonicParsing="false" onAction="#close" prefHeight="32.0" prefWidth="40.0" styleClass="button_close" stylesheets="@../../../../../css/settings.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <HBox AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="6.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../res/white_icon/white_icon_Engine.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="342.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="设置" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="8.0">
+                     <font>
+                        <Font name="Arial" size="22.0" />
+                     </font>
+                     <effect>
+                        <DropShadow color="WHITE" />
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="5.0" top="2.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="paneItems" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #ECECEC;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="42.0">
+         <children>
+            <VBox fx:id="boxItems">
+               <children>
+                  <ToggleButton mnemonicParsing="false" styleClass="button_item" text="常规设置" />
+                  <ToggleButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="button_item" text="ApkTool" />
+                  <ToggleButton mnemonicParsing="false" styleClass="button_item" text="关于" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="paneContent" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
+      <Text fx:id="textVersion" fill="#43b1e0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version:1.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../../css/settings.css" />
+   </stylesheets>
+</AnchorPane>

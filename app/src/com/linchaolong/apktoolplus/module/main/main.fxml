@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="960.0" styleClass="main_view" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linchaolong.apktoolplus.module.main.MainActivity">
+   <children>
+      <AnchorPane layoutX="80.0" prefHeight="90.0" prefWidth="800.0" style="-fx-background-color: #eee2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox stylesheets="@../../../../../css/common.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="btnMinimized" mnemonicParsing="false" onAction="#minimized" pickOnBounds="true" prefHeight="30.0" prefWidth="34.0" style="" styleClass="button_minimize" text="" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="btnClose" mnemonicParsing="false" onAction="#close" pickOnBounds="true" prefHeight="30.0" prefWidth="34.0" styleClass="button_close" text="" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <rotationAxis>
+                        <Point3D />
+                     </rotationAxis>
+                  </Button>
+               </children>
+            </HBox>
+            <Button fx:id="btnBack" mnemonicParsing="false" onAction="#popPane" prefHeight="50.0" prefWidth="50.0" styleClass="button_back" stylesheets="@../../../../../css/main.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+            <BorderPane layoutX="143.0" prefHeight="80.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <Text fx:id="textTitle" fill="WHITE" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ApkToolPlus" textAlignment="JUSTIFY" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Microsoft YaHei" size="28.0" />
+                     </font>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" />
+                     </BorderPane.margin>
+                  </Text>
+               </center>
+               <right>
+                  <Button fx:id="btnDebug" mnemonicParsing="false" onAction="#debug" prefHeight="50.0" prefWidth="50.0" styleClass="button_debug" stylesheets="@../../../../../css/main.css" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="10.0" />
+                     </BorderPane.margin>
+                     <tooltip>
+                        <Tooltip styleClass="tooltip_button" text="Logcat" />
+                     </tooltip></Button>
+               </right>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="paneUIContainer" layoutX="80.0" layoutY="101.0" prefHeight="297.0" prefWidth="960.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Group fx:id="groupPages" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <AnchorPane prefHeight="280.0" prefWidth="800.0">
+                     <children>
+                        <AnchorPane layoutX="270.0" AnchorPane.bottomAnchor="0.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#actionJD" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_2" stylesheets="@../../../../../css/main.css" text="JD（Java反编译工具）" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Microsoft YaHei" size="25.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="btnApkTool" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#actionApkTool" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="ApkTool" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Microsoft YaHei" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnApkEncrypted" layoutX="270.0" mnemonicParsing="false" onAction="#actionApkEncrypted" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="Apk加固" textFill="WHITE" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Microsoft YaHei" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button layoutY="180.0" mnemonicParsing="false" onAction="#actionApkInfoPrinter" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="ApkInfoPrinter" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                           <font>
+                              <Font name="Microsoft YaHei" size="25.0" />
+                           </font>
+                        </Button>
+                        <AnchorPane layoutX="270.0" layoutY="145.0">
+                           <children>
+                              <Button fx:id="btnDex2Jar" mnemonicParsing="false" onAction="#actionDex2Jar" prefHeight="76.0" prefWidth="260.0" styleClass="button_menu_3" stylesheets="@../../../../../css/main.css" text="Apk源码查看工具" textFill="WHITE">
+                                 <font>
+                                    <Font name="Microsoft YaHei" size="25.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnDex2JarOpenFile" layoutX="142.0" layoutY="33.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_file" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                 <tooltip>
+                                    <Tooltip styleClass="tooltip_button" text="查看源码" />
+                                 </tooltip>
+                              </Button>
+                              <Button fx:id="btnDex2JarOut" layoutX="132.0" layoutY="23.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_out_dir" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+                                 <tooltip>
+                                    <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <VBox layoutX="543.0" AnchorPane.rightAnchor="0.0">
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="btnJar2Smali" mnemonicParsing="false" onAction="#actionJar2Smali" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_2" stylesheets="@../../../../../css/main.css" text="jar2smali" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font name="Microsoft YaHei" size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnJar2SmaliOut" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_out_dir" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
+                                       <tooltip>
+                                          <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                                       </tooltip>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="btnClass2Smali" mnemonicParsing="false" onAction="#actionClass2Smali" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_2" stylesheets="@../../../../../css/main.css" text="class2smali" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                                       <font>
+                                          <Font name="Microsoft YaHei" size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnClass2SmaliOut" layoutX="132.0" layoutY="23.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_out_dir" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
+                                       <tooltip>
+                                          <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                                       </tooltip>
+                                    </Button>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="btnDex2Smali" mnemonicParsing="false" onAction="#actionDex2Smali" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_2" stylesheets="@../../../../../css/main.css" text="dex2smali" textFill="WHITE">
+                                       <font>
+                                          <Font name="Microsoft YaHei" size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnDex2SmaliOut" layoutX="142.0" layoutY="33.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_out_dir" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
+                                       <tooltip>
+                                          <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                                       </tooltip>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="btnSmali2Dex" mnemonicParsing="false" onAction="#actionSmali2Dex" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_2" stylesheets="@../../../../../css/main.css" text="smali2dex" textFill="WHITE">
+                                       <font>
+                                          <Font name="Microsoft YaHei" size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnSmali2DexOut" layoutX="152.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_out_dir" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
+                                       <tooltip>
+                                          <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                                       </tooltip>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="btnClass2Dex" mnemonicParsing="false" onAction="#actionClass2Dex" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_2" stylesheets="@../../../../../css/main.css" text="class2dex" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                                       <font>
+                                          <Font name="Microsoft YaHei" size="25.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnClass2DexOut" layoutX="162.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="button_open_out_dir" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
+                                       <tooltip>
+                                          <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                                       </tooltip>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <Text disable="true" layoutX="25.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="apk反编译、回编译、签名" />
+                        <Text disable="true" layoutX="300.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="dex加密，防逆向，防二次打包" />
+                        <Text disable="true" layoutX="25.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="AndroidManifest.xml，apk签名，等常见信息查看工具" wrappingWidth="200.0" />
+                        <Text disable="true" layoutX="300.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="Apk源码查看工具，支持Multi-Dex" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="280.0" prefWidth="800.0" visible="false">
+                     <children>
+                        <Button layoutX="280.0" layoutY="10.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="JAD" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Microsoft YaHei" size="25.0" />
+                           </font>
+                        </Button>
+                        <Text disable="true" layoutX="25.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="Java字节码反编译工具" />
+                        <HBox AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="90.0">
+                           <children>
+                              <Button fx:id="btnJadDir" mnemonicParsing="false" onAction="#actionJadDir" styleClass="button_line_white" text="class目录">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="btnJadJar" mnemonicParsing="false" onAction="#actionJadJar" styleClass="button_line_white" text="选择jar">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin></Button>
+                              <Button fx:id="btnJadBrowser" layoutX="88.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionJadBrowser" styleClass="button_line_white" text="浏览源码">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <AnchorPane layoutX="270.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#actionProguard" prefHeight="76.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="Proguard" textFill="WHITE">
+                                 <font>
+                                    <Font name="Microsoft YaHei" size="25.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="460.0" layoutY="60.0" mnemonicParsing="false" onAction="#actionProguardHelp" prefHeight="30.0" prefWidth="30.0" styleClass="button_proguard_help" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <tooltip>
+                                    <Tooltip styleClass="tooltip_button" text="帮助" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <Text disable="true" layoutX="300.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="Java代码混淆工具" textAlignment="JUSTIFY" wrappingWidth="200.0" />
+                        <Button layoutX="280.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionIconTool" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="角标生成工具" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Microsoft YaHei" size="25.0" />
+                           </font>
+                        </Button>
+                        <Text disable="true" layoutX="570.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="渠道角标生成工具" textAlignment="JUSTIFY" wrappingWidth="200.0" />
+                        <Button fx:id="btnJBE" layoutX="584.0" layoutY="14.0" mnemonicParsing="false" onAction="#actionJBE" prefHeight="135.0" prefWidth="260.0" styleClass="button_menu_1" stylesheets="@../../../../../css/main.css" text="JBE" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                           <font>
+                              <Font name="Microsoft YaHei" size="25.0" />
+                           </font>
+                        </Button>
+                        <Text disable="true" layoutX="35.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_desc" text="Java字节码（.class文件）编辑工具" wrappingWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Group>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="398.0" layoutY="352.0" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: #eee2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0">
+               <image>
+                  <Image url="@../../../../../res/logo.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="textTaskQueueSize" fill="#62bee5" layoutX="82.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="当前任务队列大小 : 0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="80.0">
+               <font>
+                  <Font name="Microsoft YaHei" size="16.0" />
+               </font>
+            </Text>
+            <Pagination fx:id="pages" layoutX="229.0" layoutY="40.0" pageCount="2" prefHeight="50.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="400.0" />
+            <HBox layoutX="775.0" layoutY="20.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionOpenAppOutDir" prefHeight="60.0" prefWidth="60.0" styleClass="button_open_app_out_dir" stylesheets="@../../../../../css/main.css" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="125.0">
+                     <tooltip>
+                        <Tooltip styleClass="tooltip_button" text="打开输出目录" />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="btnSetting" mnemonicParsing="false" onAction="#actionSetting" prefHeight="60.0" prefWidth="60.0" styleClass="button_setting" stylesheets="@../../../../../css/main.css" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="5.0">
+                     <tooltip>
+                        <Tooltip styleClass="tooltip_button" text="设置" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../../css/ui.css" />
+      <URL value="@../../../../../css/main.css" />
+      <URL value="@../../../../../css/common.css" />
+   </stylesheets>
+</AnchorPane>

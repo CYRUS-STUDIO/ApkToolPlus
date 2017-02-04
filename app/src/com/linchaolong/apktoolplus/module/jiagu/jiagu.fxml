@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="ui" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linchaolong.apktoolplus.module.jiagu.JiaGuActivity">
+   <children>
+      <AnchorPane layoutX="740.0" layoutY="20.0" prefHeight="50.0" style="-fx-background-color: #eee5; -fx-background-radius: 5;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Button fx:id="btnAddApk" layoutX="805.0" layoutY="234.0" mnemonicParsing="false" onAction="#addApk" styleClass="button_line_white" text="添加apk">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clearFinish" styleClass="button_line_white" text="清空已完成">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clear" styleClass="button_line_white" text="清空">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Button fx:id="btnStartEncrypt" layoutX="805.0" layoutY="234.0" mnemonicParsing="false" onAction="#startEncrypt" styleClass="button_line_white" text="一键加固">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <ListView fx:id="listViewApkList" prefHeight="240.0" prefWidth="200.0" style="-fx-background-color: null; -fx-background-radius: 5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+   </children>
+   <stylesheets>
+      <URL value="@../../../../../css/common.css" />
+      <URL value="@../../../../../css/jiagu.css" />
+      <URL value="@../../../../../css/main.css" />
+   </stylesheets>
+</AnchorPane>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="450.0" minWidth="800.0" prefHeight="450.0" prefWidth="1000.0" styleClass="bg" stylesheets="@../../../../../css/debug.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linchaolong.apktoolplus.module.debug.DebugActivity">
+   <children>
+      <Text fill="WHITE" layoutX="274.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Debug" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+         <font>
+            <Font name="Microsoft YaHei" size="21.0" />
+         </font>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </Text>
+      <Button fx:id="btnClose" layoutX="570.0" layoutY="5.0" mnemonicParsing="false" onAction="#close" prefHeight="32.0" prefWidth="40.0" styleClass="button_close" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <TextArea fx:id="output" layoutX="30.0" layoutY="71.0" prefHeight="200.0" prefWidth="526.0" styleClass="content" wrapText="true" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0">
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor></TextArea>
+      <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="180.0">
+         <children>
+            <Button fx:id="btnOpenLogLocation" mnemonicParsing="false" onAction="#openLogLocation" styleClass="button_item" text="打开日志输出目录" AnchorPane.leftAnchor="30.0">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnClear" layoutX="130.0" mnemonicParsing="false" onAction="#clear" styleClass="button_item" text="clear" AnchorPane.leftAnchor="160.0">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+            <CheckBox fx:id="checkboxOutputLog" layoutX="486.0" layoutY="4.0" mnemonicParsing="false" styleClass="checkbox_item" text="是否输出日志到文件" textFill="WHITE" AnchorPane.rightAnchor="35.0">
+               <HBox.margin>
+                  <Insets right="10.0" top="9.0" />
+               </HBox.margin>
+            </CheckBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+      <ChoiceBox fx:id="choiceBoxLogLevel" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+   </children>
+</AnchorPane>

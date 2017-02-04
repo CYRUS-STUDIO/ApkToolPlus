@@ -1,0 +1,92 @@
+
+.bg{
+    -fx-background-color:#424242;
+    -fx-background-radius: 5;
+}
+
+.btn_open{
+    -fx-background-color:#424242;
+    -fx-background-radius: 5;
+    -fx-border-width: 0;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 18px;
+    -fx-text-fill: #80CBC4;
+}
+.btn_open:hover{
+    -fx-background-color:#eee2;
+}
+.btn_open:pressed{
+    -fx-background-color:#eee5;
+}
+
+.text_file_path{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 16px;
+    -fx-text-fill: #80CBC4;
+}
+
+.tableview{
+    -fx-background-color:null;
+}
+.tableview .nested-column-header{
+    -fx-background-color:null;
+}
+
+.content{
+    -fx-background-color:null;
+    -fx-font-size:16px;
+    //-fx-text-fill:#fff;
+    -fx-text-fill:#80CBC4;
+    -fx-font-family: "Microsoft YaHei";
+}
+.content .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.content .scroll-bar:horizontal .track,
+.content .scroll-bar:vertical .track{
+	-fx-background-color:#424242;
+	-fx-border-color:#424242;
+	-fx-background-radius: 0em;
+	-fx-border-radius:5em;
+}
+.content .scroll-bar:vertical .increment-button ,
+.content .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 0em;
+	-fx-padding:0 10 0 0;
+}
+.content .increment-arrow,
+.content .decrement-arrow {
+    -fx-background-color: null;
+    -fx-padding: 0;
+}
+.content .scroll-bar:horizontal .thumb,
+.content .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(rgba(0,0,0,0.3),00%);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 5em;
+}
+.content .scroll-bar:horizontal .thumb:hover,
+.content .scroll-bar:horizontal .thumb:pressed,
+.content .scroll-bar:vertical .thumb:hover,
+ .content .scroll-bar:vertical .thumb:pressed{
+    -fx-background-color:derive(rgba(108,202,195,1),00%);
+}
+
+
+
+/*关闭按钮*/
+.button_close{
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url("../res/close.png");
+    -fx-background-repeat:no-repeat;
+    -fx-background-position: center center;
+
+}
+.button_close:hover{
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+

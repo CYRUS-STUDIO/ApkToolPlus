@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="ui" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linchaolong.apktoolplus.module.icon.IconToolActivity">
+   <children>
+      <AnchorPane layoutX="90.0" prefWidth="420.0" AnchorPane.leftAnchor="280.0">
+         <children>
+            <AnchorPane fx:id="paneIcon" layoutX="86.0" layoutY="22.0" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: null;" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="22.0">
+               <children>
+                  <ImageView fx:id="imageViewIcon" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ImageView fx:id="imageViewJiaoBiao" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" />
+               </children></AnchorPane>
+            <AnchorPane fx:id="paneBorder" layoutX="96.0" layoutY="32.0" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: null;" styleClass="rect_line_white" stylesheets="@../../../../../css/ui.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="22.0" />
+            <VBox layoutX="275.0" layoutY="36.0">
+               <children>
+                  <CheckBox fx:id="checkBoxShowBorder" layoutX="302.0" layoutY="29.0" mnemonicParsing="false" text="显示边框" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Microsoft YaHei" size="12.0" />
+                     </font>
+                  </CheckBox>
+                  <Button fx:id="btnSelectIcon" layoutX="304.0" layoutY="66.0" mnemonicParsing="false" onAction="#selectIcon" styleClass="button_line_white" text="选择Icon">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnSelectJiaoBiao" mnemonicParsing="false" onAction="#selectJiaoBiao" styleClass="button_line_white" text="选择角标">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnExport" layoutX="316.0" layoutY="157.0" mnemonicParsing="false" onAction="#export" styleClass="button_line_white" text="导出">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnExportMulti" mnemonicParsing="false" onAction="#exportMulti" styleClass="button_line_white" text="导出多分辨率icon" />
+               </children>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </VBox>
+            <AnchorPane layoutX="2.0" layoutY="22.0">
+               <children>
+                  <Slider fx:id="sliderX" layoutY="258.0" prefHeight="15.0" prefWidth="256.0" value="50.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="2.0" />
+                  <Slider fx:id="sliderY" layoutX="256.0" orientation="VERTICAL" prefHeight="256.0" prefWidth="15.0" value="50.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="258.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../../css/common.css" />
+      <URL value="@../../../../../css/main.css" />
+   </stylesheets>
+</AnchorPane>

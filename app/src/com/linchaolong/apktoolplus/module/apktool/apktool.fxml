@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="ui" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.linchaolong.apktoolplus.module.apktool.ApkToolActivity">
+   <children>
+      <AnchorPane layoutX="392.0" layoutY="15.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <HBox>
+               <children>
+                  <ToggleButton fx:id="toggleDecompile" mnemonicParsing="false" styleClass="toggle_button_left" text="反编译" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ToggleButton fx:id="toggleRecompile" layoutX="61.0" layoutY="3.0" mnemonicParsing="false" styleClass="toggle_button_center" text="回编译" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ToggleButton fx:id="toggleApkSign" mnemonicParsing="false" styleClass="toggle_button_right" text="apk签名" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="154.0" layoutY="120.0" prefHeight="60.0" prefWidth="665.0" stylesheets="@../../../../../css/ui.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+         <children>
+            <StackPane fx:id="paneDecompile" visible="false">
+               <children>
+                  <AnchorPane layoutX="145.0" layoutY="54.0" prefHeight="240.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="141.0" layoutY="58.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="58.0">
+                           <children>
+                              <HBox styleClass="hbox_container" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <TextField fx:id="textFieldDecompileApkList" editable="false" prefHeight="52.0" prefWidth="560.0" stylesheets="@../../../../../css/ui.css">
+                                       <styleClass>
+                                          <String fx:value="rect_line_white" />
+                                          <String fx:value="text_feild_white" />
+                                       </styleClass>
+                                    </TextField>
+                                    <Button fx:id="btnSelectDecompileApk" layoutX="489.0" layoutY="13.0" mnemonicParsing="false" onAction="#selectDecompileApk" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="选择apk" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="12.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnDecompile" layoutX="572.0" layoutY="13.0" mnemonicParsing="false" onAction="#startDecompile" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="开始反编译" AnchorPane.rightAnchor="25.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="btnOpenDecompileOut" layoutX="435.0" layoutY="165.0" mnemonicParsing="false" onAction="#openDecompileOut" styleClass="button_line_white" stylesheets="@../../../../../css/common.css" text="打开输出目录" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+            <StackPane fx:id="paneRecompile">
+               <children>
+                  <AnchorPane layoutX="155.0" layoutY="64.0" prefHeight="240.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="148.0" layoutY="90.0" stylesheets="@../../../../../css/ui.css" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="58.0">
+                           <children>
+                              <HBox spacing="20.0" styleClass="hbox_container" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <TextField fx:id="textFieldRecompileApkDir" editable="false" layoutX="7.0" layoutY="5.0" prefHeight="52.0" prefWidth="560.0" stylesheets="@../../../../../css/ui.css" AnchorPane.bottomAnchor="4.0" AnchorPane.topAnchor="4.0">
+                                       <styleClass>
+                                          <String fx:value="rect_line_white" />
+                                          <String fx:value="text_feild_white" />
+                                       </styleClass>
+                                    </TextField>
+                                    <Button fx:id="btnSelectRecompileApk" alignment="CENTER" contentDisplay="CENTER" layoutX="489.0" layoutY="13.0" mnemonicParsing="false" onAction="#selectRecompileApk" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="选择目录" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="12.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnRecompile" alignment="CENTER" contentDisplay="CENTER" layoutX="572.0" layoutY="13.0" mnemonicParsing="false" onAction="#startRecompile" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="开始回编译" AnchorPane.rightAnchor="25.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="btnOpenRecompileOut" layoutX="435.0" layoutY="165.0" mnemonicParsing="false" onAction="#openRecompileOut" styleClass="button_line_white" stylesheets="@../../../../../css/common.css" text="打开输出目录" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+            <StackPane fx:id="paneApkSign" visible="false">
+               <children>
+                  <AnchorPane layoutX="155.0" layoutY="64.0" prefHeight="240.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="148.0" layoutY="90.0" stylesheets="@../../../../../css/ui.css" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="58.0">
+                           <children>
+                              <HBox styleClass="hbox_container" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <TextField fx:id="textFieldSignApkList" editable="false" layoutX="7.0" layoutY="5.0" prefHeight="52.0" prefWidth="560.0" stylesheets="@../../../../../css/ui.css" AnchorPane.bottomAnchor="4.0" AnchorPane.topAnchor="4.0">
+                                       <styleClass>
+                                          <String fx:value="rect_line_white" />
+                                          <String fx:value="text_feild_white" />
+                                       </styleClass>
+                                    </TextField>
+                                    <Button fx:id="btnSelectSignApk" layoutX="489.0" layoutY="13.0" mnemonicParsing="false" onAction="#selectSignApk" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="选择apk" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="12.0" />
+                                    <Button fx:id="btnApkSign" layoutX="572.0" layoutY="13.0" mnemonicParsing="false" onAction="#startApkSign" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="开始签名" AnchorPane.rightAnchor="35.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="btnOpenApkSignOut" layoutX="435.0" layoutY="165.0" mnemonicParsing="false" onAction="#openApkSignOut" styleClass="button_line_white" stylesheets="@../../../../../css/common.css" text="打开输出目录" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../../css/main.css" />
+      <URL value="@../../../../../css/apktool.css" />
+   </stylesheets>
+</AnchorPane>

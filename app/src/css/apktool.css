@@ -1,0 +1,54 @@
+
+.toggle_button_left{
+    -fx-background-color:null;
+    -fx-border-radius:20 0 0 20;
+    -fx-background-radius:20 0 0 20;
+    -fx-border-width:1.5;
+    -fx-border-color:white;
+    -fx-alignment:CENTER;
+    -fx-font-size:12px;
+    -fx-text-fill:white;
+    -fx-font-family: "Microsoft YaHei";
+}
+.toggle_button_left:selected{
+    -fx-background-color:white;
+    -fx-text-fill:black;
+}
+
+.hbox_container {
+    -fx-spacing:20;
+    -fx-alignment:center;
+}
+
+.toggle_button_center{
+    -fx-background-color:null;
+    -fx-border-radius:0;
+    -fx-background-radius:0;
+    -fx-border-width:1.5;
+    -fx-border-color:white;
+    -fx-alignment:CENTER;
+    -fx-font-size:12px;
+    -fx-text-fill:white;
+    -fx-font-family: "Microsoft YaHei";
+}
+.toggle_button_center:selected{
+    -fx-background-color:white;
+    -fx-text-fill:black;
+}
+
+.toggle_button_right{
+    -fx-background-color:null;
+    -fx-border-radius:0 20 20 0;
+    -fx-background-radius:0 20 20 0;
+    -fx-border-width:1.5;
+    -fx-border-color:white;
+    -fx-alignment:CENTER;
+    -fx-font-size:12px;
+    -fx-text-fill:white;
+    -fx-font-family: "Microsoft YaHei";
+}
+.toggle_button_right:selected{
+    -fx-background-color:white;
+    -fx-text-fill:black;
+}
+

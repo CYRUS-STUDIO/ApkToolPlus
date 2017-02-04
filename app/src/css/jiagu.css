@@ -1,0 +1,57 @@
+.progress-bar .bar {
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+    -fx-background-color:
+            -fx-box-border,
+            linear-gradient(to bottom, derive(#009AF7,30%) 5%, derive(#009AF7,-17%));
+}
+
+.progress-bar > .track {
+  -fx-text-box-border: #fff;
+  -fx-control-inner-background: #fff;
+}
+
+
+.list-cell{
+    -fx-background-color: null;
+}
+.list-cell:selected > .cell-root{
+    -fx-background-color: null;
+}
+
+.list-cell:selected{
+    -fx-border-width:0px;
+    -fx-border-color:null;
+}
+
+.cell-root{
+    -fx-background-color: null;
+}
+
+
+.label_apk_name{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 16px;
+    -fx-fill:white;
+    -fx-text-fill: white;
+    -fx-max-width: 240px;
+}
+
+.text_apk_state_waiting{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 14px;
+    -fx-fill:#51E014;
+}
+
+.text_apk_state_encrypting{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 14px;
+    -fx-fill:#009AF7;
+}
+
+.text_apk_state_finished{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 14px;
+    -fx-fill:#ee0000;
+}
+

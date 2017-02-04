@@ -1,0 +1,103 @@
+/*设置界面*/
+.setting_view{
+    -fx-background-color: #fff;
+    //-fx-background-image:url('../res/bg/bg_gradient3.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+/*关闭按钮*/
+.button_close{
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url("../res/close.png");
+    -fx-background-repeat:no-repeat;
+    -fx-background-position: center center;
+
+}
+.button_close:hover{
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+
+/*顶部栏*/
+.top_pane{
+    -fx-background-color: null;
+    -fx-background-image:url('../res/bg/bg_setting_top_pane.png');
+    -fx-background-position: center center;
+    -fx-background-size:cover;
+    -fx-background-repeat:no-repeat;
+}
+
+/*设置项按钮*/
+/*默认*/
+.button_item{
+    -fx-background-color:null;
+    -fx-font-size:12px;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-text-fill:#676767;
+    -fx-pref-width:150;
+    -fx-pref-height:36;
+}
+
+/*鼠标经过*/
+.button_item:hover{
+    -fx-text-fill:#43B1E0;
+    -fx-background-color: #B8E1FF;
+}
+
+/*已经选择*/
+.button_item:selected{
+    -fx-text-fill:#43B1E0;
+    -fx-background-color: #fff;
+}
+
+
+/*标签、提示文字*/
+.label{
+    -fx-font-size:13px;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-text-fill:#676767;
+    -fx-text-alignment: CENTER;
+}
+
+/*输入框*/
+.field{
+    -fx-pref-height: 30;
+    -fx-background-color: null;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-border-color : #D6D6D6;
+}
+
+/*按钮*/
+.button_positive{
+    -fx-border-radius:0;
+    -fx-background-radius:0;
+    -fx-background-color:#43B1E0;
+    -fx-text-fill:#fff;
+    -fx-font-size:13px;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-text-alignment: CENTER;
+}
+.button_positive:hover{
+    -fx-background-color:#52C1E7;
+}
+.button_positive:pressed{
+    -fx-background-color:#329DD7;
+}
+
+.button_negative{
+    -fx-background-color:#CCCCCC;
+    -fx-text-fill:#676767;
+    -fx-font-size:13px;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-text-alignment: CENTER;
+}
+.button_negative:hover{
+    -fx-background-color:#D6D6D6;
+}
+.button_negative:pressed{
+    -fx-background-color:#B3B3B3;
+}

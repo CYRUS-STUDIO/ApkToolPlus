@@ -1,0 +1,185 @@
+/*主界面按钮样式定义*/
+
+/*定义按钮默认样式*/
+.button{
+    -fx-border-width: 0;
+    -fx-background-color: null;
+}
+.button:focused:hover{
+    -fx-background-color: #eee5;
+}
+
+.ui{
+    //-fx-min-width, -fx-pref-width, -fx-max-width
+    -fx-pref-width:960;
+    -fx-pref-height:300;
+    -fx-background-color:null;
+}
+
+/*菜单按钮样式*/
+.button_menu_1 {
+    -fx-pref-width:260;
+    -fx-pref-height:135;
+    -fx-border-radius: 5;
+    -fx-border-width: 0;
+    -fx-border-color : null;
+    -fx-alignment: TOP_LEFT;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 21px;
+    -fx-text-fill: white;
+    -fx-background-color: #eee5;
+}
+.button_menu_1:hover,
+.button_menu_1:pressed{
+    -fx-text-fill: red;
+    -fx-background-color:eee2;
+    //-fx-effect:innershadow(three-pass-box, red, 10, 0.5, 0, 0);
+}
+
+.button_menu_2 {
+    -fx-pref-width:260;
+    -fx-pref-height:48;
+    -fx-border-radius: 5;
+    -fx-border-width: 0;
+    -fx-border-color : null;
+    -fx-alignment: TOP_LEFT;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 21px;
+    -fx-text-fill: white;
+    -fx-background-color: #eee5;
+}
+.button_menu_2:hover,
+.button_menu_2:pressed{
+    -fx-text-fill: red;
+    -fx-background-color:eee2;
+}
+
+.button_menu_3 {
+    -fx-pref-width:260;
+    -fx-border-radius: 5;
+    -fx-border-width: 0;
+    -fx-border-color : null;
+    -fx-alignment: TOP_LEFT;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 21px;
+    -fx-text-fill: white;
+    -fx-background-color: #eee5;
+}
+.button_menu_3:hover,
+.button_menu_3:pressed{
+    -fx-text-fill: red;
+    -fx-background-color:eee2;
+}
+
+.text_desc{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 12px;
+    -fx-fill:white;
+    -fx-text-fill: white;
+    -fx-max-width: 20px;
+}
+
+
+/*Home按钮*/
+.button_home{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_Home.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+/*设置按钮*/
+.button_setting{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_Engine.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+
+/*个人中心按钮*/
+.button_personal{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_User.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+/*打开输出目录按钮*/
+.button_open_app_out_dir{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_File.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+/*打开输出目录按钮*/
+.button_open_out_dir{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_Location2.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+    -fx-background-size: 15,15;
+}
+
+.button_open_file{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_Search.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+    -fx-background-size: 18,18;
+}
+
+.button_proguard_help{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/white_icon/white_icon_Info.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+    -fx-background-size: 12,20;
+}
+
+/*打开输出目录按钮的tooltip*/
+.tooltip_button{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+/*debug按钮*/
+.button_debug{
+    -fx-background-radius: 5;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url('../res/bug_green.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+/*后退按钮*/
+.button_back{
+    -fx-background-radius: 100;
+    -fx-border-radius: 100;
+    -fx-border-width: 2;
+    -fx-border-color : white;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-background-image:url('../res/white_icon/white_icon_LeftArrow.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+

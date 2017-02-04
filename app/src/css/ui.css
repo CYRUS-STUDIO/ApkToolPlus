@@ -1,0 +1,80 @@
+.bg_black_transparent {
+    -fx-background-color: #00000022;
+}
+
+.bg_white {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-background-radius: 5;
+    -fx-background-color: null;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-border-color : white;
+    -fx-padding: 10;
+}
+
+.bg_drak_white {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.rect_line_white {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-background-color: null;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-border-color : white;
+    -fx-padding: 10;
+}
+
+.text_feild_white {
+    -fx-text-fill:white;
+    -fx-text-inner-color: white;
+    -fx-font-size:18;
+}
+
+.text_error_tips {
+    -fx-text-fill:red;
+    -fx-font-size:20;
+}
+
+.title{
+    -fx-fill:white;
+    -fx-text-alignment: CENTER;
+    -fx-font: 24px "Microsoft YaHei";
+}
+
+
+/*主界面*/
+.main_view{
+    -fx-background-color: null;
+    -fx-background-radius: 5;
+    -fx-background-image:url('../res/bg/bg_dream_sky.jpg');
+    -fx-background-image-radius: 5;
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+
+/*Debug视图*/
+.debug_view{
+    -fx-background-color: null;
+    -fx-background-image:url('../res/bg/bg_gradient4.png');
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+
+.debug_output{
+    -fx-background-color: transparent;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-border-color : white;
+    -fx-font: 16px "Microsoft YaHei";
+    -fx-text-fill: white;
+}
+.debug_output .viewport{
+    -fx-background-color: transparent;
+}
+.debug_output .content{
+    -fx-background-color: transparent;
+}

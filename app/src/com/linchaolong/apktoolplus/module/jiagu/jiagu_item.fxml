@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="910.0" style="-fx-background-color: black; -fx-background-color: #eee5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <stylesheets>
+      <URL value="@../../../../../css/common.css" />
+      <URL value="@../../../../../css/jiagu.css" />
+   </stylesheets>
+   <children>
+      <Label fx:id="label" layoutX="14.0" layoutY="14.0" styleClass="label_apk_name" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="5.0" />
+      <ProgressBar fx:id="progressBar" prefHeight="10.0" prefWidth="280.0" progress="0.47" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="12.0" />
+      <HBox layoutX="666.0" layoutY="3.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <Button fx:id="btnRemove" layoutX="553.0" layoutY="3.0" mnemonicParsing="false" styleClass="button_line_white" text="移除" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="3.0">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnOpenDir" layoutX="563.0" layoutY="13.0" mnemonicParsing="false" styleClass="button_line_white" text="打开所在目录" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="3.0">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Text fx:id="textState" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text_apk_state_waiting" text="等待中" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="8.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

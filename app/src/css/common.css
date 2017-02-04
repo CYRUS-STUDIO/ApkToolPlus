@@ -1,0 +1,69 @@
+/*通用按钮样式定义*/
+
+/* 定义按钮默认样式*/
+.button_line_white{
+  -fx-background-color: transparent;
+  -fx-border-radius: 2;
+  -fx-border-width: 1.5;
+  -fx-border-color : white;
+  -fx-alignment: CENTER;
+  -fx-font-family: "Microsoft YaHei";
+  -fx-font-size: 12px;
+  -fx-color: white;
+  -fx-text-fill: white;
+}
+
+.button_line_white:hover{
+  -fx-background-color: #fff;
+  -fx-text-fill: black;
+}
+
+ /*白色按钮*/
+.button_white{
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+    -fx-padding: 10;
+    -fx-font: 12px "Microsoft YaHei";
+}
+.button_white:focused:hover{
+    -fx-background-color: #eee;
+}
+
+/*最小化按钮*/
+.button_minimize{
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url("../res/minimize.png");
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+.button_minimize:hover{
+    -fx-background-color: #eee5;
+    //-fx-background-image:url("../res/minimize-hover.png");
+    -fx-background-repeat:no-repeat;
+}
+
+/*关闭按钮*/
+.button_close{
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-background-image:url("../res/close.png");
+    -fx-background-position: center center;
+    -fx-background-repeat:no-repeat;
+}
+.button_close:hover{
+    -fx-background-color: #eee5;
+    //-fx-background-image:url("../res/close-hover.png");
+    -fx-background-repeat:no-repeat;
+}
+
+/*ScrollPane透明*/
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+.scroll-pane {
+   -fx-background-color: transparent;
+}
+
