@@ -1,0 +1,31 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ApkToolPlus">
+    <output-path>$PROJECT_DIR$/out/artifacts/ApkToolPlus</output-path>
+    <root id="archive" name="ApkToolPlus.jar">
+      <element id="module-output" name="app" />
+      <element id="dir-copy" path="$PROJECT_DIR$/out/production/lib.Utils" />
+      <element id="dir-copy" path="$PROJECT_DIR$/out/production/lib.ApkParser" />
+      <element id="dir-copy" path="$PROJECT_DIR$/out/production/lib.AXMLPrinter" />
+      <element id="dir-copy" path="$PROJECT_DIR$/out/production/lib.JBE" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dx.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dom4j-1.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/zip4j_1.3.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/jd-gui-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/jpinyin-1.1.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/commons-io-2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/pull-parser-2.1.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/asm-debug-all-5.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-ir-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/d2j-smali-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-tools-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/d2j-jasmin-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-reader-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-writer-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/d2j-base-cmd-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-reader-api-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-translator-2.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/apktool-cli.jar" path-in-jar="/" />
+      <element id="module-output" name="lib.Res" />
+    </root>
+  </artifact>
+</component>

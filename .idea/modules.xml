@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApkToolPlus.iml" filepath="$PROJECT_DIR$/.idea/modules/ApkToolPlus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app.Builder/app.Builder.iml" filepath="$PROJECT_DIR$/app.Builder/app.Builder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.AXMLPrinter/lib.AXMLPrinter.iml" filepath="$PROJECT_DIR$/lib.AXMLPrinter/lib.AXMLPrinter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.ApkParser/lib.ApkParser.iml" filepath="$PROJECT_DIR$/lib.ApkParser/lib.ApkParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.JBE/lib.JBE.iml" filepath="$PROJECT_DIR$/lib.JBE/lib.JBE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.Jad/lib.Jad.iml" filepath="$PROJECT_DIR$/lib.Jad/lib.Jad.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.JiaGu/lib.JiaGu.iml" filepath="$PROJECT_DIR$/lib.JiaGu/lib.JiaGu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.Proguard/lib.Proguard.iml" filepath="$PROJECT_DIR$/lib.Proguard/lib.Proguard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.Res/lib.Res.iml" filepath="$PROJECT_DIR$/lib.Res/lib.Res.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.Utils/lib.Utils.iml" filepath="$PROJECT_DIR$/lib.Utils/lib.Utils.iml" />
+    </modules>
+  </component>
+</project>
