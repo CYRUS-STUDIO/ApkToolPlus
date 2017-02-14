@@ -89,7 +89,7 @@ Run `app` module's `com.linchaolong.apktoolplus.Main`。
 
 ### 2. Update apk protection module
   
-`lib.JiaGu` is apk protection module，if updated，execute  `app.Builder` 模块的 `com.linchaolong.apktoolplus.builder.UpdateJiaGu` update apk protection library to app module。
+`lib.JiaGu` is apk protection module，if have updated，run `com.linchaolong.apktoolplus.builder.UpdateJiaGu` in the `app.Builder` module, update apk protection library to app module。
 
 ### 3. Pack ApkToolPlus
 
