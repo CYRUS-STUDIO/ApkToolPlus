@@ -101,8 +101,11 @@ Run `app` module's `com.linchaolong.apktoolplus.Main`。
 
 Click [here](release) to download release version of ApkToolPlus。
 
+## Related Links
+
+[dexknife-wj](https://github.com/godlikewangjun/dexknife-wj)：apk protect plugin, supports signature verification and dex encryption.
+
 ## Contact
 
 - Email：linchaolong.dev@gmail.com
 - Blog：http://www.jianshu.com/u/149dc6683cc7
-
