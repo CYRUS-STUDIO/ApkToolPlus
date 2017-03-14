@@ -8,7 +8,7 @@ import com.linchaolong.apktoolplus.base.Activity;
 import com.linchaolong.apktoolplus.core.debug.LogManager;
 import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.core.AppManager;
-import com.linchaolong.apktoolplus.utils.Debug;
+import com.linchaolong.apktoolplus.utils.LogUtils;
 
 /**
  * Created by linchaolong on 2015/9/8.
@@ -91,10 +91,10 @@ public class DebugActivity extends Activity{
         );
         choiceBoxLogLevel.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             Config.set(Config.kLogLevel,newValue);
-            Debug.setLogLevel((Integer) newValue);
+            LogUtils.setLogLevel((Integer) newValue);
         });
         choiceBoxLogLevel.setTooltip(new Tooltip("设置日志输出级别"));
         // 恢复默认设置
-        choiceBoxLogLevel.getSelectionModel().select(Config.getInt(Config.kLogLevel, Debug.DEBUG));
+        choiceBoxLogLevel.getSelectionModel().select(Config.getInt(Config.kLogLevel, LogUtils.DEBUG));
     }
 }

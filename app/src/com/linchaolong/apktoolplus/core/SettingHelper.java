@@ -1,7 +1,7 @@
 package com.linchaolong.apktoolplus.core;
 
 import com.linchaolong.apktoolplus.Config;
-import com.linchaolong.apktoolplus.utils.Base64Tool;
+import com.linchaolong.apktoolplus.utils.Base64Utils;
 import com.linchaolong.apktoolplus.utils.StringUtils;
 
 import java.io.File;
@@ -52,8 +52,8 @@ public class SettingHelper {
         KeystoreConfig config = new KeystoreConfig();
         config.keystorePath = keystoreFilePath;
         config.alias = alias;
-        config.aliasPassword = Base64Tool.decode(aliasPassword);
-        config.keystorePassword = Base64Tool.decode(keystorePassword);
+        config.aliasPassword = Base64Utils.decode(aliasPassword);
+        config.keystorePassword = Base64Utils.decode(keystorePassword);
 
         return config;
     }

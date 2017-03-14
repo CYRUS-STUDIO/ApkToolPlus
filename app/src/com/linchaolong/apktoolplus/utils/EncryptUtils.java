@@ -1,13 +1,11 @@
 package com.linchaolong.apktoolplus.utils;
 
-import com.linchaolong.apktoolplus.utils.xxtea.XXTEA;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class DataProtector {
+public class EncryptUtils {
 
 	private static final int BUFF_SIZE = 1024*1024*5; // 10MB
 
@@ -43,7 +41,7 @@ public class DataProtector {
 	public static void encrypt(File file, File outFile){
 
 		if (!FileHelper.exists(file)){
-			Debug.e("file not exists!!! : " + file.getAbsolutePath());
+			LogUtils.e("file not exists!!! : " + file.getAbsolutePath());
 			return;
 		}
 
@@ -75,8 +73,8 @@ public class DataProtector {
 			e.printStackTrace();
 		} finally {
 			// 释放资源
-			IO.close(in);
-			IO.close(out);
+			IOUtils.close(in);
+			IOUtils.close(out);
 		}
 	}
 }

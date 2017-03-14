@@ -1,5 +1,6 @@
 package com.linchaolong.apktoolplus.ui;
 
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -8,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import com.linchaolong.apktoolplus.core.Callback;
-import com.linchaolong.apktoolplus.utils.Debug;
 
 /**
  *  popup ui
@@ -98,7 +98,7 @@ public class Popup extends StackPane {
             HBox hBox = new HBox();
             // 确认按钮
             Button btnConfirm = makeButton("确认", event -> {
-                Debug.d( "click btnConfirm");
+                LogUtils.d( "click btnConfirm");
                 if(confirmCallback != null){
                     confirmCallback.callback(1);;
                 }
@@ -113,7 +113,7 @@ public class Popup extends StackPane {
                 hBox.getChildren().add(centerRegion);
                 // 取消按钮
                 Button btnCancel = makeButton("取消", event -> {
-                    Debug.d( "click btnCancel");
+                    LogUtils.d( "click btnCancel");
                     if(cancelCallback != null){
                         cancelCallback.callback(1);
                     }
@@ -134,7 +134,7 @@ public class Popup extends StackPane {
     public void remove(){
         Parent parent = Popup.this.getParent();
         if (parent == null) {
-            Debug.w( "remove popup failure because parent is null");
+            LogUtils.w( "remove popup failure because parent is null");
             return;
         }
         Pane pane = (Pane) parent;
@@ -194,7 +194,7 @@ public class Popup extends StackPane {
      */
     public void show(StackPane parent){
         if(parent == null){
-            Debug.e("parent is nll , can't show popup ui.");
+            LogUtils.e("parent is nll , can't show popup ui.");
             return;
         }
 

@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Debug {
+public class LogUtils {
 	
 	/** 日志级别 **/
 	public static final int VERBOSE = 0;

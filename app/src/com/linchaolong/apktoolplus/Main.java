@@ -13,8 +13,8 @@ import javafx.stage.StageStyle;
 import com.linchaolong.apktoolplus.core.AppManager;
 import com.linchaolong.apktoolplus.core.Global;
 import com.linchaolong.apktoolplus.module.main.MainActivity;
-import com.linchaolong.apktoolplus.utils.ClassHelper;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.ClassUtils;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 public class Main extends Application {
 
@@ -23,9 +23,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         // 设置应用图标
-        UIHelper.setWindowIcon(stage, ClassHelper.getResourceAsURL("res/white_icon/white_icon_Plus.png"));
+        ViewUtils.setWindowIcon(stage, ClassUtils.getResourceAsURL("res/white_icon/white_icon_Plus.png"));
         // 无边框
-        UIHelper.setNoBroder(stage);
+        ViewUtils.setNoBroder(stage);
         // 设置标题
         stage.setTitle("ApkToolPlus");
         // 背景透明
@@ -48,7 +48,7 @@ public class Main extends Application {
         stage.setScene(scene);
 
         // test
-//        Loading loading = new Loading(ClassHelper.getResourceAsURL("res/gif/loading.gif"));
+//        Loading loading = new Loading(ClassUtils.getResourceAsURL("res/gif/loading.gif"));
 //        loading.setMessage("正在加载,请稍候...");
 //        root.getChildren().add(loading);
 //        loading.lauchTimeoutTimer(2000);
@@ -57,7 +57,7 @@ public class Main extends Application {
         stage.centerOnScreen();
 
         // 设置拖拽事件
-        UIHelper.registerDragEvent(stage,root);
+        ViewUtils.registerDragEvent(stage,root);
 
         stage.show();
 

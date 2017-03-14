@@ -41,9 +41,9 @@ import java.net.URL;
  *
  * Created by linchaolong on 2015/8/28.
  */
-public class UIHelper {
+public class ViewUtils {
 
-    public static final String TAG = UIHelper.class.getSimpleName();
+    public static final String TAG = ViewUtils.class.getSimpleName();
 
 
     /**
@@ -57,7 +57,7 @@ public class UIHelper {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 if(isEncrypt){
-                    newValue = Base64Tool.encode(newValue.trim());
+                    newValue = Base64Utils.encode(newValue.trim());
                 }
                 Config.set(key, newValue.trim());
             }
@@ -102,13 +102,13 @@ public class UIHelper {
      * @param imgPath
      */
     public static void setBackgroudImage(Parent parent, String imgPath){
-        String image = ClassHelper.getResourceAsURL(imgPath).toExternalForm();
+        String image = ClassUtils.getResourceAsURL(imgPath).toExternalForm();
         if (image != null){
             parent.setStyle("-fx-background-image: url('" + image + "'); " +
                     "-fx-background-position: center center; " +
                     "-fx-background-repeat: no-repeat;");
         }else{
-            Debug.w( "'" + imgPath + "' image not found in classpath.");
+            LogUtils.w( "'" + imgPath + "' image not found in classpath.");
         }
     }
 
@@ -249,7 +249,7 @@ public class UIHelper {
         // injectFields
         for(Node node : parent.getChildrenUnmodifiable()){
             if(node.getId() != null){
-                Reflect.setFieldValue(controllerClass,controller,node.getId(),node);
+                ReflectUtils.setFieldValue(controllerClass,controller,node.getId(),node);
             }
             if(node instanceof Parent){
                 injectFields((Parent) node, controller);
@@ -296,7 +296,7 @@ public class UIHelper {
      */
     public static void setWindowIcon(Stage stage, URL url){
         if (url == null){
-            Debug.w("setWindowIcon green_icon url is null");
+            LogUtils.w("setWindowIcon green_icon url is null");
             return ;
         }
         stage.getIcons().add(new Image(url.toString()));
@@ -310,13 +310,13 @@ public class UIHelper {
      */
     public static void setWindowIcon(Stage stage, String iconPath){
         if (iconPath == null){
-            Debug.w("setWindowIcon iconPath is null");
+            LogUtils.w("setWindowIcon iconPath is null");
             return ;
         }
 
         File icon = new File(iconPath);
         if (!icon.exists()){
-            Debug.w("setWindowIcon green_icon is not exist : " + iconPath);
+            LogUtils.w("setWindowIcon green_icon is not exist : " + iconPath);
             return ;
         }
 

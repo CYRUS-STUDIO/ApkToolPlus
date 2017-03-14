@@ -1,7 +1,7 @@
 package com.linchaolong.apktoolplus.module.main;
 
 import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.ZipHelper;
+import com.linchaolong.apktoolplus.utils.ZipUtils;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class MultDexSupport {
 
     public static List<FileHeader> getDexFileHeaders(File apkFile) {
-        return ZipHelper.listForPattern(apkFile, "[^/]*\\.dex");
+        return ZipUtils.listForPattern(apkFile, "[^/]*\\.dex");
     }
 
     protected List<File> unzipDexList(File apk, File tempDir){
@@ -32,7 +32,7 @@ public abstract class MultDexSupport {
         try {
             for(FileHeader dexFileHeader : dexFileHeaders){
                 ZipFile zipFile = new ZipFile(apk);
-                boolean unzip = ZipHelper.unzip(zipFile, dexFileHeader, tempDir);
+                boolean unzip = ZipUtils.unzip(zipFile, dexFileHeader, tempDir);
                 if(unzip){
                     dexFileList.add(new File(tempDir,dexFileHeader.getFileName()));
                 }

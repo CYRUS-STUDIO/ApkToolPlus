@@ -1,5 +1,6 @@
 package com.linchaolong.apktoolplus.module.main;
 
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -14,9 +15,8 @@ import com.linchaolong.apktoolplus.core.Global;
 import com.linchaolong.apktoolplus.module.debug.DebugView;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
-import com.linchaolong.apktoolplus.utils.Debug;
 import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.TaskHandler;
+import com.linchaolong.apktoolplus.utils.TaskManager;
 import org.jd.gui.controller.MainController;
 
 import java.io.File;
@@ -135,8 +135,8 @@ public class MainView extends Activity {
      */
     protected void openFileOnJD(File file) {
         if (file != null && file.exists()) {
-            Debug.d( "open file on jd :" + file.getPath());
-            TaskHandler.get().submit(() -> {
+            LogUtils.d( "open file on jd :" + file.getPath());
+            TaskManager.get().submit(() -> {
                 Global.showLoading();
                 org.jd.gui.App.main();
                 MainController controller = org.jd.gui.App.getController();
@@ -152,7 +152,7 @@ public class MainView extends Activity {
 
     protected void openFileOnJD(List<File> fileList) {
         if (fileList != null && !fileList.isEmpty()) {
-            TaskHandler.get().submit(() -> {
+            TaskManager.get().submit(() -> {
                 Global.showLoading();
                 org.jd.gui.App.main();
                 MainController controller = org.jd.gui.App.getController();
@@ -195,7 +195,7 @@ public class MainView extends Activity {
         if (file != null && file.exists()) {
             Config.set(lastDirKey, file.getParent());
             callback.uiOnSelected(file);
-            TaskHandler.get().queue(() -> {
+            TaskManager.get().queue(() -> {
                 callback.onSelected(file);
                 runOnUiThread(() -> callback.uiOnEnd());
             });
@@ -212,7 +212,7 @@ public class MainView extends Activity {
         if (file != null && file.exists()) {
             Config.set(lastDirKey, file.getPath());
             callback.uiOnSelected(file);
-            TaskHandler.get().queue(() -> {
+            TaskManager.get().queue(() -> {
                 callback.onSelected(file);
                 Platform.runLater(() -> {
                     callback.uiOnEnd();

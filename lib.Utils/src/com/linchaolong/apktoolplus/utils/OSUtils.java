@@ -16,7 +16,8 @@
  */
 package com.linchaolong.apktoolplus.utils;
 
-public class OS {
+public class OSUtils {
+
     private static String OS = System.getProperty("os.name").toLowerCase();
 
     public static boolean isWindows() {

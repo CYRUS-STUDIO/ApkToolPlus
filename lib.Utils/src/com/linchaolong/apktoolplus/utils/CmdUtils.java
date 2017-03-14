@@ -9,15 +9,15 @@ import java.io.InputStreamReader;
  *
  注意：在Windows下执行批处理不能省略后缀，但exe可以
  示例：
-     if(OS.isWindows()){
-        Cmd.exec("ant.bat compile -f "+buildFile.getAbsolutePath());
+     if(OSUtils.isWindows()){
+        CmdUtils.exec("ant.bat compile -f "+buildFile.getAbsolutePath());
      }else{
-        Cmd.exec("ant compile -f "+buildFile.getAbsolutePath());
+        CmdUtils.exec("ant compile -f "+buildFile.getAbsolutePath());
      }
  *
  * Created by linchaolong on 2015/11/12.
  */
-public class Cmd {
+public class CmdUtils {
 
     /**
      * 执行指定命令
@@ -73,9 +73,9 @@ public class Cmd {
      * @return
      */
     public static boolean exec(String cmd, String[] env, File workDir, boolean isOutput){
-        Debug.d( "exec=" + cmd);
+        LogUtils.d( "exec=" + cmd);
         boolean isSuccess  = true;
-        if(FileHelper.exists(workDir) && OS.isWindows()){
+        if(FileHelper.exists(workDir) && OSUtils.isWindows()){
             cmd = String.format("cmd /c %s",cmd);
         }
         Runtime runtime = Runtime.getRuntime();
@@ -93,16 +93,16 @@ public class Cmd {
                     InputStreamReader(proc.getErrorStream(),encoding));
 
             // read the _out from the command
-            //Debug.d("Here is the standard _out of the command:\n");
+            //LogUtils.d("Here is the standard _out of the command:\n");
             String s;
             while ((s = stdInput.readLine()) != null) {
-                Debug.d(s);
+                LogUtils.d(s);
             }
 
             // read any errors from the attempted command
-            //Debug.e( "Here is the standard error of the command (if any):\n");
+            //LogUtils.e( "Here is the standard error of the command (if any):\n");
             while ((s = stdError.readLine()) != null) {
-                Debug.e(s);
+                LogUtils.e(s);
                 isSuccess = false;
             }
         } catch (Exception e) {

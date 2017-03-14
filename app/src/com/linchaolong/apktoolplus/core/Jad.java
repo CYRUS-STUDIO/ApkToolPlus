@@ -40,7 +40,7 @@ public class Jad {
             FileHelper.delete(classes);
             if (target.isFile()){
                 // 解压文件到缓存目录
-                boolean result = ZipHelper.unzip(target, classes);
+                boolean result = ZipUtils.unzip(target, classes);
                 if(!result){
                     return false;
                 }
@@ -60,24 +60,24 @@ public class Jad {
                   .append("-r -ff -s java ")
                   .append("-d ").append(out.getPath()).append(" ")
                   .append(classes.getPath()).append("/**/*.class");
-//        Cmd.exec(cmdBuilder.toString());
+//        CmdUtils.exec(cmdBuilder.toString());
         //问题：通过Runtime.exec启动jad，反编译大文件是反编译并不完整（比如8M的jar），会卡在某个地方，但没报错。
         //解决方案：动态生成批处理，通过Desktop.browser打开该批处理。
 
         String cmdSuffix = ".bat";
-        if(!OS.isWindows()){
+        if(!OSUtils.isWindows()){
             cmdSuffix = ".sh";
         }
         File cmdFile = new File(AppManager.getTempDir(),"jad_cmd"+cmdSuffix);
         cmdFile.delete();
         OutputStreamWriter output = null;
         try {
-            output = new OutputStreamWriter(new FileOutputStream(cmdFile), OS.getCharset());
+            output = new OutputStreamWriter(new FileOutputStream(cmdFile), OSUtils.getCharset());
             output.write(cmdBuilder.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
-            IO.close(output);
+            IOUtils.close(output);
         }
         AppManager.browser(cmdFile);
         return true;
@@ -101,7 +101,7 @@ public class Jad {
             FileHelper.delete(classes);
             if (target.isFile()){
                 // 解压文件到缓存目录
-                boolean result = ZipHelper.unzip(target, classes);
+                boolean result = ZipUtils.unzip(target, classes);
                 if(!result){
                     return false;
                 }
@@ -124,7 +124,7 @@ public class Jad {
                 .append("-r -ff -s java ")
                 .append("-d ").append(src.getPath()).append(" ")
                 .append(classes.getPath()).append("/**/*.class");
-        Cmd.exec(cmdBuilder.toString(), jad.getParentFile(), true);
+        CmdUtils.exec(cmdBuilder.toString(), jad.getParentFile(), true);
 
         // clean
         if(!src.equals(out)){
@@ -137,7 +137,7 @@ public class Jad {
         if(isOutZip){
             finalOut = new File(out.getParentFile(),out.getName()+".zip");
             finalOut.delete();
-            ZipHelper.zip(out.listFiles(), finalOut);
+            ZipUtils.zip(out.listFiles(), finalOut);
         }
         return finalOut.exists();
     }
@@ -145,18 +145,18 @@ public class Jad {
     private static void checkJad(){
         if(jad == null || !jad.exists()){
             String filePath;
-            if(OS.isWindows()){
+            if(OSUtils.isWindows()){
                 filePath = "jad/bin/windows/jad.exe";
-            }else if(OS.isMacOSX()){
+            }else if(OSUtils.isMacOSX()){
                 filePath = "jad/bin/macosx/jad";
-            }else if(OS.isUnix()){
+            }else if(OSUtils.isUnix()){
                 filePath = "jad/bin/linux/jad";
             }else{
                 throw new RuntimeException("jad not support this system.");
             }
             String fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
             jad = new File(AppManager.getTempDir(),fileName);
-            ClassHelper.releaseResourceToFile(filePath,jad);
+            ClassUtils.releaseResourceToFile(filePath,jad);
         }
     }
 

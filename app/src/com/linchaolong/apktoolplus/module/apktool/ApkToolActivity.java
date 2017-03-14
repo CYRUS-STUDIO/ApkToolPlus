@@ -9,10 +9,10 @@ import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
 import com.linchaolong.apktoolplus.ui.Loading;
-import com.linchaolong.apktoolplus.utils.Debug;
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.TaskHandler;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.TaskManager;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 import java.io.File;
 import java.util.List;
@@ -74,9 +74,9 @@ public class ApkToolActivity extends ApkToolView {
         }
 
         isDecompiling = true;
-        Loading loading = UIHelper.showLoading(paneDecompile, "正在反编译,请稍候...", 20000);
+        Loading loading = ViewUtils.showLoading(paneDecompile, "正在反编译,请稍候...", 20000);
 
-        TaskHandler.get().queue(() -> {
+        TaskManager.get().queue(() -> {
             boolean isSuccess = true;
             for (File apk : decompileApkList) {
                 lastDecompileDir = new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk));
@@ -92,7 +92,7 @@ public class ApkToolActivity extends ApkToolView {
                 }
             }
             isDecompiling = false;
-            UIHelper.hideLoading(paneDecompile, loading);
+            ViewUtils.hideLoading(paneDecompile, loading);
             // 显示打开输出目录
             btnOpenDecompileOut.setVisible(true);
             if (isSuccess) {
@@ -144,7 +144,7 @@ public class ApkToolActivity extends ApkToolView {
      */
     @FXML
     public void startRecompile() {
-        Debug.d("startRecompile");
+        LogUtils.d("startRecompile");
 
         if (recompileApkDir == null) {
             showToast("请先选择apk反编译文件目录");
@@ -162,9 +162,9 @@ public class ApkToolActivity extends ApkToolView {
         }
 
         isRecompiling = true;
-        Loading loading = UIHelper.showLoading(paneRecompile, "正在回编译,请稍候...", 18000);
+        Loading loading = ViewUtils.showLoading(paneRecompile, "正在回编译,请稍候...", 18000);
 
-        TaskHandler.get().queue(() -> {
+        TaskManager.get().queue(() -> {
             boolean isSuccess = ApkToolPlus.recompile(recompileApkDir, null, new Callback<Exception>() {
                 @Override
                 public void callback(Exception e) {
@@ -172,7 +172,7 @@ public class ApkToolActivity extends ApkToolView {
                 }
             });
             isRecompiling = false;
-            UIHelper.hideLoading(paneRecompile, loading);
+            ViewUtils.hideLoading(paneRecompile, loading);
             if (isSuccess) {
                 // 显示打开输出目录
                 btnOpenRecompileOut.setVisible(true);
@@ -244,9 +244,9 @@ public class ApkToolActivity extends ApkToolView {
         }
 
         isSigning = true;
-        Loading loading = UIHelper.showLoading(paneApkSign, "正在签名,请稍候...", 15000);
+        Loading loading = ViewUtils.showLoading(paneApkSign, "正在签名,请稍候...", 15000);
 
-        TaskHandler.get().queue(() -> {
+        TaskManager.get().queue(() -> {
 
             for (File apk : signApkList) {
                 String name = apk.getName();
@@ -256,7 +256,7 @@ public class ApkToolActivity extends ApkToolView {
             }
 
             isSigning = false;
-            UIHelper.hideLoading(paneApkSign, loading);
+            ViewUtils.hideLoading(paneApkSign, loading);
             // 显示打开输出目录
             btnOpenApkSignOut.setVisible(true);
         });

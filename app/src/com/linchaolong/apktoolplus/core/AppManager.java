@@ -25,18 +25,12 @@ public class AppManager {
     /** 用于当前判断是否在 Release 环境 **/
     public static boolean isReleased = false;
 
-    public static final String APKTOOL_JAR = "apktool.jar";
-    public static final String FRAMEWORK_RES = "framework-res.apk";
-    private static File apkTool = new File(getTempDir(), APKTOOL_JAR);
+    public static final String APKTOOL_FILE = "apktool.jar";
+    public static final String APKTOOL_PATH = "apktool/" + APKTOOL_FILE;
+    public static final String FRAMEWORK_FILE = "framework-res.apk";
+    public static final String FRAMEWORK_PATH = "apktool/" + FRAMEWORK_FILE;
 
-    /**
-     * 当前是否已经发布
-     *
-     * @return
-     */
-    public static boolean isReleased() {
-        return isReleased;
-    }
+    private static File apkTool = new File(getTempDir(), APKTOOL_FILE);
 
     public static File getApkTool(){
         initApkTool();
@@ -44,23 +38,47 @@ public class AppManager {
     }
 
     public static void initApkTool(){
-        if(!FileHelper.exists(apkTool)){
-            File frameworkRes = new File(apkTool.getParentFile(), FRAMEWORK_RES);
-            if(AppManager.isReleased()){
-                // 已发布
-                ClassHelper.releaseResourceToFile("apktool/" + APKTOOL_JAR,apkTool);
-                ClassHelper.releaseResourceToFile("apktool/" + FRAMEWORK_RES,frameworkRes);
+        if(FileHelper.exists(apkTool)){
+            // 检测 temp 目录下的 apktool 是否已经过期
+            if(AppManager.isReleased){
+                File jarFile = JarUtils.getJarFile(AppManager.class);
+                Long lastUpdatedTime = JarUtils.getLastUpdatedTime(jarFile, APKTOOL_PATH);
+//                LogUtils.d("apktool lastUpdatedTime="+lastUpdatedTime + ", temp="+apkTool.lastModified());
+                if(lastUpdatedTime != null && lastUpdatedTime > apkTool.lastModified()){
+                    updateApkTool();
+                }
             }else{
-                // 开发中
-                // 拷贝工程 src 目录下的apktool.jar
-                File apkToolFile = new File(getProjectDir(),"lib.Res/src/apktool/" + APKTOOL_JAR);
-                File frameworkResFile = new File(getProjectDir(),"lib.Res/src/apktool/" + FRAMEWORK_RES);
-                FileHelper.copyFile(apkToolFile,apkTool);
-                FileHelper.copyFile(frameworkResFile,frameworkRes);
+                File apkToolFile = new File(getProjectDir(), "lib.Res/src/" + APKTOOL_PATH);
+                if(apkToolFile.lastModified() > apkTool.lastModified()){
+                    updateApkTool();
+                }
             }
-            ApkToolPlus.installFramework(apkTool, frameworkRes);
-            FileHelper.delete(frameworkRes);
+        }else{
+            updateApkTool();
         }
+    }
+
+    /**
+     * 更新 temp 目录下的 apktool
+     */
+    private static void updateApkTool() {
+        LogUtils.d("updateApkTool...");
+        File frameworkRes = new File(apkTool.getParentFile(), FRAMEWORK_FILE);
+        FileHelper.delete(apkTool);
+        if(AppManager.isReleased){
+            // 已发布
+            ClassUtils.releaseResourceToFile(APKTOOL_PATH, apkTool);
+            ClassUtils.releaseResourceToFile(FRAMEWORK_PATH, frameworkRes);
+        }else{
+            // 开发中
+            // 拷贝工程 src 目录下的apktool.jar
+            File apkToolFile = new File(getProjectDir(), "lib.Res/src/" + APKTOOL_PATH);
+            File frameworkResFile = new File(getProjectDir(), "lib.Res/src/" + FRAMEWORK_PATH);
+            FileHelper.copyFile(apkToolFile, apkTool);
+            FileHelper.copyFile(frameworkResFile, frameworkRes);
+        }
+        ApkToolPlus.installFramework(apkTool, frameworkRes);
+        FileHelper.delete(frameworkRes);
     }
 
     public static void init() {
@@ -77,7 +95,7 @@ public class AppManager {
      * 退出程序
      */
     public static void exit (){
-        if(TaskHandler.get().queueSize() > 0){
+        if(TaskManager.get().queueSize() > 0){
             Global.dialog("当前有任务未完成，是否确认退出程序?",new Callback<Integer>(){
                 @Override
                 public void callback(Integer integer) {
@@ -99,11 +117,11 @@ public class AppManager {
             PlatformImpl.addListener(new PlatformImpl.FinishListener() {
                 @Override
                 public void idle(boolean implicitExit) {
-                    Debug.d( "FinishListener idle");
+                    LogUtils.d( "FinishListener idle");
                 }
                 @Override
                 public void exitCalled() {
-                    Debug.d( "FinishListener exitCalled");
+                    LogUtils.d( "FinishListener exitCalled");
                     System.exit(0); //kill process
                 }
             });
@@ -171,7 +189,7 @@ public class AppManager {
      * @return
      */
     public static File getRoot(){
-        return new File(ClassHelper.class.getProtectionDomain().getCodeSource().getLocation().getFile());
+        return new File(ClassUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile());
     }
 
     /**
@@ -271,7 +289,7 @@ public class AppManager {
 
     public static boolean showInSublime(File file, boolean isAdd){
         if(!FileHelper.exists(file)){
-            Debug.e("file must exist");
+            LogUtils.e("file must exist");
             return false;
         }
         String sublimePath = Config.get(Config.kSublimePath);
@@ -290,11 +308,11 @@ public class AppManager {
                 if(isAdd){
                     cmd = cmd + " --add";
                 }
-                Cmd.exec(cmd,false);
+                CmdUtils.exec(cmd,false);
                 return true;
             }
         }else{
-            Debug.e("sublime path can'n be null");
+            LogUtils.e("sublime path can'n be null");
         }
         return false;
     }

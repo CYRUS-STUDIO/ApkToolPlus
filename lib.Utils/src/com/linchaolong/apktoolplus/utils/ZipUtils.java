@@ -19,9 +19,9 @@ import java.util.regex.Pattern;
 /**
  * Created by linchaolong on 2015/10/28.
  */
-public class ZipHelper {
+public class ZipUtils {
 
-    public static final String TAG = ZipHelper.class.getSimpleName();
+    public static final String TAG = ZipUtils.class.getSimpleName();
 
     /**
      * 获取zip文件中实体的输入流，注意在不需要时close返回的InputStream
@@ -121,7 +121,7 @@ public class ZipHelper {
                         zip.addFile(file,parameters);
                     }
                 }else{
-                    Debug.e("zip error file not exits : " + file.getAbsolutePath());
+                    LogUtils.e("zip error file not exits : " + file.getAbsolutePath());
                 }
             }
             zip.setRunInThread(false);
@@ -357,7 +357,7 @@ public class ZipHelper {
 //            if (zip.getFileHeaders() != null && zip.getFileHeaders().size() > 0) {
 //                zip.removeFile((FileHeader)zip.getFileHeaders().get(0));
 //            } else {
-//                Debug.d("This cannot be demonstrated as zip file does not have any files left");
+//                LogUtils.d("This cannot be demonstrated as zip file does not have any files left");
 //            }
 
             return true;
@@ -381,17 +381,17 @@ public class ZipHelper {
         if(f1.isDirectory()){
             FileHelper.copyDir(f1,temp, false);
         }else{
-            ZipHelper.unzip(f1,temp);
+            ZipUtils.unzip(f1,temp);
         }
         // merge
         if(f2.isDirectory()){
             FileHelper.copyDir(f2, temp, false);
         }else{
             // unzip
-            ZipHelper.unzip(f2,temp, false);
+            ZipUtils.unzip(f2,temp, false);
         }
         // zip
-        ZipHelper.zip(temp.listFiles(), outFile);
+        ZipUtils.zip(temp.listFiles(), outFile);
         // clean
         FileHelper.delete(temp);
     }

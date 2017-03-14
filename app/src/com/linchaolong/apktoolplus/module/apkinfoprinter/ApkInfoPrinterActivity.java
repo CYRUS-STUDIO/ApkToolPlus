@@ -100,12 +100,12 @@ public class ApkInfoPrinterActivity extends Activity{
             ZipFile apkFile;
             try {
                 apkFile = new ZipFile(file);
-                InputStream in = ZipHelper.getEntryInputStream(apkFile, "AndroidManifest.xml");
+                InputStream in = ZipUtils.getEntryInputStream(apkFile, "AndroidManifest.xml");
                 manifestData = AXMLPrinter.decode(in);
-                IO.close(in);
-                IO.close(apkFile);
+                IOUtils.close(in);
+                IOUtils.close(apkFile);
             } catch (IOException e) {
-                Debug.e("文件解析失败:"+file.getPath());
+                LogUtils.e("文件解析失败:"+file.getPath());
                 e.printStackTrace();
                 DialogPlus.alert("错误提示","","文件解析失败:"+file.getPath());
                 return;

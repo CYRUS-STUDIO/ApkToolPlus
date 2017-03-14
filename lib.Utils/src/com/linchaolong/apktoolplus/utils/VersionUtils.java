@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  *
  * Created by linchaolong on 2016/4/11.
  */
-public class VersionHelper {
+public class VersionUtils {
 
     /**
      * 分解版本号

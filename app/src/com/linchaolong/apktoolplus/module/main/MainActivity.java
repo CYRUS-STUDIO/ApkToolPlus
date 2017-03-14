@@ -24,7 +24,7 @@ import com.linchaolong.apktoolplus.module.settings.SettingsActivity;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
 import com.linchaolong.apktoolplus.ui.UIStack;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -150,7 +150,7 @@ public class MainActivity extends MainView implements Initializable {
             return;
         }
         isOpeningProguard = true;
-        TaskHandler.get().submit(()->{
+        TaskManager.get().submit(()->{
             Proguard.proguardGUI();
             isOpeningProguard = false;
         });
@@ -189,7 +189,7 @@ public class MainActivity extends MainView implements Initializable {
                     showToast(jarFile.getName() + "转换失败");
                 }
                 outDirMap.put(Config.kLastOpenJar2SmaliDir, outDir);
-                Debug.d( "Jar2Smaling isSuccess=" + isSuccess);
+                LogUtils.d( "Jar2Smaling isSuccess=" + isSuccess);
                 btnDex2JarOpenFile.setVisible(true);
                 isJar2Smaling = false;
             }
@@ -228,7 +228,7 @@ public class MainActivity extends MainView implements Initializable {
                     showToast(classFile.getName() + "转换失败");
                 }
                 outDirMap.put(Config.kLastOpenClass2SmaliDir, outDir);
-                Debug.d( "Class2Smali isSuccess=" + isSuccess);
+                LogUtils.d( "Class2Smali isSuccess=" + isSuccess);
                 isClass2Smaling = false;
             }
             @Override
@@ -314,7 +314,7 @@ public class MainActivity extends MainView implements Initializable {
                 }else{
                     showToast(smaliDir.getName() + "转换失败");
                 }
-                Debug.d( "Smali2Dex isSuccess=" + isSuccess);
+                LogUtils.d( "Smali2Dex isSuccess=" + isSuccess);
                 isSmali2Dexing = false;
             }
             @Override
@@ -351,7 +351,7 @@ public class MainActivity extends MainView implements Initializable {
                 }else{
                     showToast(classDir.getName() + "转换失败");
                 }
-                Debug.d( "Class2Dex isSuccess=" + isSuccess);
+                LogUtils.d( "Class2Dex isSuccess=" + isSuccess);
                 isClass2Dexing = false;
             }
             @Override
@@ -423,7 +423,7 @@ public class MainActivity extends MainView implements Initializable {
      * JBE（Java Byte Editor）Java字节码编辑器
      */
     public void actionJBE() {
-        TaskHandler.get().submit(()->{
+        TaskManager.get().submit(()->{
             Global.showLoading();
             BrowserApplication.main(new String[]{});
             Global.hideLoading();
@@ -434,7 +434,7 @@ public class MainActivity extends MainView implements Initializable {
      * JD（Java Decompiler）Java字节码反编译工具
      */
     public void actionJD() {
-        TaskHandler.get().submit(()->{
+        TaskManager.get().submit(()->{
             Global.showLoading();
             org.jd.gui.App.main();
             Global.hideLoading();
@@ -448,13 +448,13 @@ public class MainActivity extends MainView implements Initializable {
      */
     public void actionApkInfoPrinter() {
         if (uiApkInfoPrinter == null) {
-            uiApkInfoPrinter = UIHelper.newWindow(ApkInfoPrinterActivity.class.getResource("apkinfoprinter.fxml"), false);
+            uiApkInfoPrinter = ViewUtils.newWindow(ApkInfoPrinterActivity.class.getResource("apkinfoprinter.fxml"), false);
             uiApkInfoPrinter.setTitle("ApkInfoPrinter");
             // 设置应用图标
-            UIHelper.setWindowIcon(uiApkInfoPrinter, ClassHelper.getResourceAsURL("res/white_icon/white_icon_Plus.png"));
+            ViewUtils.setWindowIcon(uiApkInfoPrinter, ClassUtils.getResourceAsURL("res/white_icon/white_icon_Plus.png"));
             // 设置拖拽事件
             Parent root = uiApkInfoPrinter.getScene().getRoot();
-            UIHelper.registerDragEvent(uiApkInfoPrinter, root);
+            ViewUtils.registerDragEvent(uiApkInfoPrinter, root);
             // 最少宽高
             uiApkInfoPrinter.setMinWidth(800);
             uiApkInfoPrinter.setMinHeight(600);
@@ -499,7 +499,7 @@ public class MainActivity extends MainView implements Initializable {
                 .setInitDir(lastDir)
                 .showDialog();
         if(file != null && file.exists()){
-            TaskHandler.get().submit(()->{
+            TaskManager.get().submit(()->{
                 isJadDecomping = true;
                 Config.set(Config.kLastOpenJadDir,file.getParent());
                 File srcFile = new File(file.getParentFile(), PinyinUtils.shortPinyin(file.getName()) + "_src");
@@ -530,7 +530,7 @@ public class MainActivity extends MainView implements Initializable {
                 .addFilter("jar", "zip")
                 .showDialog();
         if(file != null && file.exists()){
-            TaskHandler.get().submit(()-> {
+            TaskManager.get().submit(()-> {
                 isJadDecomping = true;
                 Config.set(Config.kLastOpenJadJarDir, file.getParent());
                 File srcFile = new File(file.getParentFile(), PinyinUtils.shortPinyin(file.getName()) + "_src");
@@ -612,12 +612,12 @@ public class MainActivity extends MainView implements Initializable {
         // 默认不显示回退按钮
         btnBack.setVisible(false);
         // 显示任务队列大小
-        TaskHandler.get().setTaskQueueListener((task, code) -> {
-            textTaskQueueSize.setText("当前任务队列大小 : " + TaskHandler.get().queueSize());
+        TaskManager.get().setTaskQueueListener((task, code) -> {
+            textTaskQueueSize.setText("当前任务队列大小 : " + TaskManager.get().queueSize());
         });
         // main pages
         pages.setPageFactory(pageIndex -> {
-//            Debug.d( "toPage pageIndex=" + pageIndex + " currentPageIndex=" + pages.getCurrentPageIndex());
+//            LogUtils.d( "toPage pageIndex=" + pageIndex + " currentPageIndex=" + pages.getCurrentPageIndex());
             toPage(pageIndex);
             return nullRegion;
         });

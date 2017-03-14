@@ -8,7 +8,7 @@ import com.linchaolong.apktoolplus.base.Activity;
 import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 import com.linchaolong.apktoolplus.utils.FileHelper;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public class CommonSettingsActivity extends Activity implements Initializable{
         // 恢复数据
         review();
         // 监听输入
-        UIHelper.listenerInputAndSave(textFieldCmdParams,Config.kSublimeCmdParams);
+        ViewUtils.listenerInputAndSave(textFieldCmdParams,Config.kSublimeCmdParams);
     }
 
     public void selectSublime(){
@@ -74,10 +74,10 @@ public class CommonSettingsActivity extends Activity implements Initializable{
      */
     private void review() {
         // sublime文件
-        UIHelper.review(textFieldSublimePath,Config.kSublimePath);
+        ViewUtils.review(textFieldSublimePath,Config.kSublimePath);
         // 自定义命令参数
-        UIHelper.review(textFieldCmdParams,Config.kSublimeCmdParams);
+        ViewUtils.review(textFieldCmdParams,Config.kSublimeCmdParams);
         // ApkToolPlus文件输出目录
-        UIHelper.review(textFieldAppOutPath,Config.kAppOutputDir);
+        ViewUtils.review(textFieldAppOutPath,Config.kAppOutputDir);
     }
 }

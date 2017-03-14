@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -134,7 +134,7 @@ public class DialogPlus {
         dialog.initStyle(StageStyle.UNDECORATED);
         dialog.setTitle(title);
         if(icon != null){
-            UIHelper.setWindowIcon(dialog, icon);
+            ViewUtils.setWindowIcon(dialog, icon);
         }
         Scene scene = new Scene(view);
         dialog.setScene(scene);

@@ -1,5 +1,6 @@
 package com.linchaolong.apktoolplus.module.settings;
 
+import com.linchaolong.apktoolplus.utils.CmdUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,9 +9,8 @@ import javafx.scene.control.TextField;
 import com.linchaolong.apktoolplus.base.Activity;
 import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
-import com.linchaolong.apktoolplus.utils.UIHelper;
-import com.linchaolong.apktoolplus.utils.Base64Tool;
-import com.linchaolong.apktoolplus.utils.Cmd;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
+import com.linchaolong.apktoolplus.utils.Base64Utils;
 import com.linchaolong.apktoolplus.utils.StringUtils;
 
 import java.io.File;
@@ -59,9 +59,9 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
         // 恢复数据
         initData();
         // 监听输入
-        UIHelper.listenerInputAndSave(textFieldAlias,Config.kKeystoreAlias);
-        UIHelper.listenerInputAndSave(textFieldAliasPassword,Config.kAliasPassword, true);
-        UIHelper.listenerInputAndSave(textFieldKeystorePassword,Config.kKeystorePassword, true);
+        ViewUtils.listenerInputAndSave(textFieldAlias,Config.kKeystoreAlias);
+        ViewUtils.listenerInputAndSave(textFieldAliasPassword,Config.kAliasPassword, true);
+        ViewUtils.listenerInputAndSave(textFieldKeystorePassword,Config.kKeystorePassword, true);
     }
 
     /**
@@ -69,13 +69,13 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
      */
     private void initData() {
         // keystore文件
-        String keystorePath = UIHelper.review(textFieldFilePath,Config.kKeystoreFilePath);
+        String keystorePath = ViewUtils.review(textFieldFilePath,Config.kKeystoreFilePath);
         // keystore password
-        String keystorePassword = UIHelper.review(textFieldKeystorePassword,Config.kKeystorePassword);
+        String keystorePassword = ViewUtils.review(textFieldKeystorePassword,Config.kKeystorePassword);
         // alias
-        UIHelper.review(textFieldAlias,Config.kKeystoreAlias);
+        ViewUtils.review(textFieldAlias,Config.kKeystoreAlias);
         // alias password
-        UIHelper.review(textFieldAliasPassword,Config.kAliasPassword);
+        ViewUtils.review(textFieldAliasPassword,Config.kAliasPassword);
         // 显示keystore信息列表
         showKeystoreList(keystorePath, keystorePassword);
     }
@@ -90,7 +90,7 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
         if(StringUtils.isEmpty(keystorePassword) || StringUtils.isEmpty(keystorePassword)){
             return;
         }
-        keystorePassword = Base64Tool.decode(keystorePassword);
+        keystorePassword = Base64Utils.decode(keystorePassword);
         //keytool -list -v -keystore <keystore-path> -storepass <keystore-password>
         /*
          -certreq            生成证书请求
@@ -111,7 +111,7 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
          -storepasswd        更改密钥库的存储口令
          */
         String cmd = "keytool -list -v -keystore " + keystorePath + " -storepass " + keystorePassword;
-        String output = Cmd.execAndGetOutput(cmd);
+        String output = CmdUtils.execAndGetOutput(cmd);
         textArea.setText(output);
     }
 }

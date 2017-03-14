@@ -1,9 +1,9 @@
 package com.linchaolong.apktoolplus.core;
 
-import com.linchaolong.apktoolplus.utils.ClassHelper;
-import com.linchaolong.apktoolplus.utils.Cmd;
-import com.linchaolong.apktoolplus.utils.Debug;
-import com.linchaolong.apktoolplus.utils.ZipHelper;
+import com.linchaolong.apktoolplus.utils.ClassUtils;
+import com.linchaolong.apktoolplus.utils.CmdUtils;
+import com.linchaolong.apktoolplus.utils.LogUtils;
+import com.linchaolong.apktoolplus.utils.ZipUtils;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class Proguard {
      * 文件完整性校验
      */
     public static void checkCompleted(){
-        Debug.d("文件完整性校验");
+        LogUtils.d("文件完整性校验");
 
         //proguard/examples.zip
         File examples = new File(AppManager.getTempDir(), "proguard/examples");
@@ -32,7 +32,7 @@ public class Proguard {
                 public void callback(File file) {
                     if(file.exists()){
                         // 解压examples.zip
-                        ZipHelper.unzip(file,examples);
+                        ZipUtils.unzip(file,examples);
                         file.delete();
                     }
                 }
@@ -57,12 +57,12 @@ public class Proguard {
     private static void checkResource(String resPath, Callback<File> releasedCallback){
         File proguardJar = new File(AppManager.getTempDir(), resPath);
         if(!proguardJar.exists()){
-            Debug.d( resPath+"不存在，正在修复资源...");
+            LogUtils.d( resPath+"不存在，正在修复资源...");
             File releaseFile = new File(AppManager.getTempDir(), resPath);
-            boolean result = ClassHelper.releaseResourceToFile(resPath, releaseFile);
+            boolean result = ClassUtils.releaseResourceToFile(resPath, releaseFile);
             if(result){
             }else{
-                Debug.e( resPath+"修复失败");
+                LogUtils.e( resPath+"修复失败");
             }
             if(releasedCallback != null){
                 releasedCallback.callback(releaseFile);
@@ -72,12 +72,12 @@ public class Proguard {
 
     public static void proguardGUI(){
         checkCompleted();
-        Cmd.exec("java -jar "+new File(AppManager.getTempDir(), proguardGUIPath).getPath());
+        CmdUtils.exec("java -jar "+new File(AppManager.getTempDir(), proguardGUIPath).getPath());
     }
 
     public static void proguard(File proFile){
         checkCompleted();
         //java -jar ../lib/proguard.jar @proguard.pro
-        Cmd.exec("java -jar "+new File(AppManager.getTempDir(), proguardPath).getPath() + " @"+proFile.getPath());
+        CmdUtils.exec("java -jar "+new File(AppManager.getTempDir(), proguardPath).getPath() + " @"+proFile.getPath());
     }
 }

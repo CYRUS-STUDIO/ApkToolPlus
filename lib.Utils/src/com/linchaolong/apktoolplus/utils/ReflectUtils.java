@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  * @author linchaolong
  *
  */
-public class Reflect {
+public class ReflectUtils {
 	
     /**
      * 调用类或对象的方法并返回结果

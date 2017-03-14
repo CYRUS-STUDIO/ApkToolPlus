@@ -10,9 +10,9 @@ import java.util.concurrent.Executors;
  *
  * Created by linchaolong on 2015/9/18.
  */
-public class TaskHandler {
+public class TaskManager {
 
-    public static final String TAG = TaskHandler.class.getSimpleName();
+    public static final String TAG = TaskManager.class.getSimpleName();
 
     // 任务队列
     private TaskQueue taskQueue;
@@ -20,15 +20,15 @@ public class TaskHandler {
     private ExecutorService threadPool = Executors.newCachedThreadPool();
 
     // 单例
-    private static TaskHandler instance = null;
+    private static TaskManager instance = null;
 
-    public static synchronized TaskHandler get(){
+    public static synchronized TaskManager get(){
         if (instance == null)
-            instance = new TaskHandler();
+            instance = new TaskManager();
         return instance;
     }
 
-    private TaskHandler() {
+    private TaskManager() {
         // 初始化任务队列
         taskQueue = new TaskQueue();
         taskQueue.start();

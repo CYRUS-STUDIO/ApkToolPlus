@@ -8,10 +8,10 @@ import brut.common.BrutException;
 import com.googlecode.dex2jar.tools.Dex2jarCmd;
 import com.googlecode.dex2jar.tools.Jar2Dex;
 import com.googlecode.dex2jar.tools.StdApkCmd;
-import com.linchaolong.apktoolplus.utils.Cmd;
-import com.linchaolong.apktoolplus.utils.Debug;
+import com.linchaolong.apktoolplus.utils.CmdUtils;
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.ZipHelper;
+import com.linchaolong.apktoolplus.utils.ZipUtils;
 import org.jf.baksmali.baksmali;
 import org.jf.baksmali.baksmaliOptions;
 import org.jf.dexlib2.DexFileFactory;
@@ -136,13 +136,13 @@ public class ApkToolPlus {
 
         // 检查类路径
         if (!classesDir.exists()){
-            Debug.w("class2dex error : classPath is not exists.");
+            LogUtils.w("class2dex error : classPath is not exists.");
             return false;
         }
 
         // 创建输出路径
         if (!FileHelper.makePath(outputDexPath)){
-            Debug.w( "makePath error : outputDexPath '" + outputDexPath + "' make fail");
+            LogUtils.w( "makePath error : outputDexPath '" + outputDexPath + "' make fail");
             return false;
         }
 
@@ -171,7 +171,7 @@ public class ApkToolPlus {
         DexBackedDexFile dexBackedDexFile = null;
 
         if (dexFile == null || !dexFile.exists()){
-            Debug.w( "dex2smali dexFile is null or not exists : " + dexFile.getPath());
+            LogUtils.w( "dex2smali dexFile is null or not exists : " + dexFile.getPath());
             return false;
         }
 
@@ -204,7 +204,7 @@ public class ApkToolPlus {
     public static boolean jar2smali(File jarFile, File outDir){
 
         if (!jarFile.exists() || jarFile.isDirectory()) {
-            Debug.w( "jar2smali error : jar file '" + jarFile.getPath() + "' is not exists or is a directory.");
+            LogUtils.w( "jar2smali error : jar file '" + jarFile.getPath() + "' is not exists or is a directory.");
             return false;
         }
         return class2smali(jarFile, outDir);
@@ -219,7 +219,7 @@ public class ApkToolPlus {
      */
     public static boolean class2smali(File classesDir, File outDir){
         if (!classesDir.exists()){
-            Debug.w("class2smali error : classpath '" + classesDir.getPath() + "' is not exists.");
+            LogUtils.w("class2smali error : classpath '" + classesDir.getPath() + "' is not exists.");
             return false;
         }
 
@@ -231,16 +231,16 @@ public class ApkToolPlus {
         if (class2dex(classesDir, dexFile.getPath())){
             // dex -> smali
             if (dex2smali(dexFile,outDir)){
-                Debug.d("class2smali succcess");
+                LogUtils.d("class2smali succcess");
             }else{
-                Debug.e("class2smali error : dex2smali error");
+                LogUtils.e("class2smali error : dex2smali error");
             }
 
             // clean temp
             dexFile.delete();
             return true;
         }else {
-            Debug.e( "class2smali error : class2dex error");
+            LogUtils.e( "class2smali error : class2dex error");
             return false;
         }
     }
@@ -255,13 +255,13 @@ public class ApkToolPlus {
     public static boolean smali2dex(String smaliDirPath, String dexOutputPath){
         ExtFile smaliDir = new ExtFile(new File(smaliDirPath));
         if (!smaliDir.exists()){
-            Debug.w("smali2dex error : smali dir '" + smaliDirPath + "' is not exists");
+            LogUtils.w("smali2dex error : smali dir '" + smaliDirPath + "' is not exists");
             return false;
         }
 
         // 创建输出路径
         if (!FileHelper.makePath(dexOutputPath)){
-            Debug.w("makePath error : dexOutputPath '" + dexOutputPath + "' make fail");
+            LogUtils.w("makePath error : dexOutputPath '" + dexOutputPath + "' make fail");
             return false;
         }
 
@@ -344,7 +344,7 @@ public class ApkToolPlus {
 
         FileHelper.copyFile(apk,apkCopy);
         //删除META-INF目录，防止包含多个签名问题
-        ZipHelper.removeFileFromZip(apkCopy,"META-INF");
+        ZipUtils.removeFileFromZip(apkCopy,"META-INF");
 
         File signedApk = new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk");
         FileHelper.delete(signedApk);
@@ -359,7 +359,7 @@ public class ApkToolPlus {
         String cmd = cmdBuilder.toString();
 
         // 执行命令
-        Cmd.exec(cmd);
+        CmdUtils.exec(cmd);
 
         // clean
         FileHelper.delete(apkCopy);
@@ -380,7 +380,7 @@ public class ApkToolPlus {
     }
 
     public static void installFramework(File apkToolFile, File frameworkFile){
-        Cmd.exec("java -jar " + apkToolFile.getAbsolutePath() + " if " + frameworkFile.getAbsolutePath());
+        CmdUtils.exec("java -jar " + apkToolFile.getAbsolutePath() + " if " + frameworkFile.getAbsolutePath());
     }
 
     private static void runApkTool(String[] args) throws InterruptedException, BrutException, IOException {
@@ -393,7 +393,7 @@ public class ApkToolPlus {
             cmdBuilder.append(" ").append(arg);
         }
         // 执行命令
-        Cmd.exec(cmdBuilder.toString());
+        CmdUtils.exec(cmdBuilder.toString());
     }
 }
 

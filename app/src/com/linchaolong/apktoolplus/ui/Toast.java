@@ -62,7 +62,7 @@ public class Toast {
             tt.setCycleCount(1);
             tt.setAutoReverse(false);
             tt.setOnFinished(event -> {
-//                Debug.d("toast animation finish.");
+//                LogUtils.d("toast animation finish.");
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override

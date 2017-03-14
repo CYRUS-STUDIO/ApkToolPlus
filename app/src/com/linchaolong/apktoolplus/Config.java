@@ -1,10 +1,10 @@
 package com.linchaolong.apktoolplus;
 
 import com.linchaolong.apktoolplus.core.AppManager;
-import com.linchaolong.apktoolplus.utils.ClassHelper;
-import com.linchaolong.apktoolplus.utils.IO;
-import com.linchaolong.apktoolplus.utils.Debug;
-import com.linchaolong.apktoolplus.utils.TaskHandler;
+import com.linchaolong.apktoolplus.utils.ClassUtils;
+import com.linchaolong.apktoolplus.utils.IOUtils;
+import com.linchaolong.apktoolplus.utils.LogUtils;
+import com.linchaolong.apktoolplus.utils.TaskManager;
 import com.linchaolong.apktoolplus.core.debug.LogManager;
 
 import java.io.*;
@@ -75,7 +75,7 @@ public class Config {
     public static final String kLastEasySDKOpenDir = "lastEasySDKOpenDir";
 
     /** 默认loading图 **/
-    public static final URL DEFAULT_LOADING_IMAGE = ClassHelper.getResourceAsURL("res/gif/loading.gif");
+    public static final URL DEFAULT_LOADING_IMAGE = ClassUtils.getResourceAsURL("res/gif/loading.gif");
 
     /** 博客地址 **/
     public static final String JIANSHU_URL = "http://www.jianshu.com/u/149dc6683cc7";
@@ -106,17 +106,17 @@ public class Config {
     public static void init(){
         // 应用版本
         try {
-            InputStream in = ClassHelper.getResourceAsStream("META-INF/MANIFEST.MF");
+            InputStream in = ClassUtils.getResourceAsStream("META-INF/MANIFEST.MF");
             Manifest manifest = new Manifest(in);
             version = manifest.getMainAttributes().getValue("Manifest-Version");
-            Debug.d("Manifest-Version="+version);
-            IO.close(in);
+            LogUtils.d("Manifest-Version="+version);
+            IOUtils.close(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // 恢复日志级别
-        Debug.setLogLevel(Config.getInt(kLogLevel, Debug.DEBUG));
+        LogUtils.setLogLevel(Config.getInt(kLogLevel, LogUtils.DEBUG));
         // 恢复配置
         LogManager.getInstance().setIsLogFileOutput(TRUE.equals(config.getProperty(kIsLogOutputFile, TRUE)));
         // 默认输出目录
@@ -146,7 +146,7 @@ public class Config {
      * @param callback  保存成功后的回调
      */
     public static void save(final Runnable callback){
-        TaskHandler.get().submit(() -> {
+        TaskManager.get().submit(() -> {
             FileOutputStream out = null;
             try {
                 out = new FileOutputStream(configFile);
@@ -158,7 +158,7 @@ public class Config {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                IO.close(out);
+                IOUtils.close(out);
             }
         });
     }

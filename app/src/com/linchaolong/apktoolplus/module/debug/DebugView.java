@@ -1,10 +1,10 @@
 package com.linchaolong.apktoolplus.module.debug;
 
+import com.linchaolong.apktoolplus.utils.ClassUtils;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import com.linchaolong.apktoolplus.utils.ClassHelper;
 import com.linchaolong.apktoolplus.utils.javafx.ResizeHelper;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 /**
  * 日志调试视图
@@ -24,13 +24,13 @@ public class DebugView {
      * 初始化debug view
      */
     public void initView(){
-        stage = UIHelper.newWindow(getClass().getResource("debug.fxml"), false);
+        stage = ViewUtils.newWindow(getClass().getResource("debug.fxml"), false);
         stage.setTitle("Debug");
         // 设置应用图标
-        UIHelper.setWindowIcon(stage, ClassHelper.getResourceAsURL("res/white_icon/white_icon_Plus.png"));
+        ViewUtils.setWindowIcon(stage, ClassUtils.getResourceAsURL("res/white_icon/white_icon_Plus.png"));
         // 设置拖拽事件
         Parent root = stage.getScene().getRoot();
-        UIHelper.registerDragEvent(stage, root);
+        ViewUtils.registerDragEvent(stage, root);
         // 可变大小
         stage.setMinWidth(800);
         stage.setMinHeight(450);

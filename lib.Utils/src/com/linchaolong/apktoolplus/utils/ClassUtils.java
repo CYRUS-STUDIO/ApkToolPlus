@@ -11,9 +11,9 @@ import java.net.URL;
 /**
  * Created by linchaolong on 2015/9/9.
  */
-public class ClassHelper {
+public class ClassUtils {
 
-    public static final String TAG = ClassHelper.class.getSimpleName();
+    public static final String TAG = ClassUtils.class.getSimpleName();
 
     /**
      * 获取类包名
@@ -31,7 +31,7 @@ public class ClassHelper {
      * @return
      */
     public static File getCodeSourcePath(){
-        return new File(ClassHelper.class.getProtectionDomain().getCodeSource().getLocation().getFile());
+        return new File(ClassUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile());
     }
 
     /**
@@ -53,7 +53,7 @@ public class ClassHelper {
     public static File getResourceAsFile(String resPath){
         URL url = ClassLoader.getSystemResource(resPath);
         if(url == null){
-            Debug.d("getResourceAsFile " + resPath + " not found.");
+            LogUtils.d("getResourceAsFile " + resPath + " not found.");
             return null;
         }
         try {

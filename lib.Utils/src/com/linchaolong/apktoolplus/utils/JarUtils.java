@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -16,19 +17,19 @@ import java.util.jar.JarFile;
  *
  * Created by linchaolong on 2016/1/26.
  */
-public class JarHelper {
+public class JarUtils {
 
-    public static final String TAG = JarHelper.class.getSimpleName();
+    public static final String TAG = JarUtils.class.getSimpleName();
 
     /**
-     * 获取jar文件对象
+     * 获取 class 所在的 jar文件对象
      *
-     * @param clazz    如果传null，默认使用JarHelper.class
+     * @param clazz    如果传null，默认使用 {@link JarUtils} 的 class
      * @return
      */
     public static File getJarFile(Class clazz){
         if(clazz == null){
-            return new File(JarHelper.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+            return new File(JarUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         }
         return new File(clazz.getProtectionDomain().getCodeSource().getLocation().getPath());
     }
@@ -67,7 +68,7 @@ public class JarHelper {
                 try {
                     final File apps = new File(url.toURI());
                     for (File app : apps.listFiles()) {
-                        Debug.d(app.toString());
+                        LogUtils.d(app.toString());
                         entryList.add(app.getAbsolutePath());
                     }
                 } catch (URISyntaxException e) {
@@ -92,7 +93,7 @@ public class JarHelper {
         while(entries.hasMoreElements()) {
             final String name = entries.nextElement().getName();
             if (name.startsWith(path + "/")) { //filter according to the path
-                Debug.d(name);
+                LogUtils.d(name);
                 entryList.add(name);
             }
         }
@@ -120,14 +121,14 @@ public class JarHelper {
         if(f1.isDirectory()){
             FileHelper.copyDir(f1,temp, false);
         }else{
-            ZipHelper.unzip(f1,temp);
+            ZipUtils.unzip(f1,temp);
         }
         // merge
         if(f2.isDirectory()){
             FileHelper.copyDir(f2, temp, false);
         }else{
             // unzip
-            ZipHelper.unzip(f2,temp, false);
+            ZipUtils.unzip(f2,temp, false);
         }
 
         File manifestFile = new File(temp,"META-INF/MANIFEST.MF");
@@ -141,7 +142,7 @@ public class JarHelper {
             cmd = "jar -cvf "+outFile.getAbsolutePath()+" *";
         }
         // 关闭输出就会出现这个问题：Can't read [*] (Unexpected end of ZLIB input stream))
-        Cmd.exec(cmd, temp, true);
+        CmdUtils.exec(cmd, temp, true);
 
         // clean
         FileHelper.delete(temp);
@@ -149,7 +150,7 @@ public class JarHelper {
 
     public static void main(String[] args) {
         try {
-            new JarHelper().test("linchaolong/apktoolplus");
+            new JarUtils().test("linchaolong/apktoolplus");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,4 +183,46 @@ public class JarHelper {
             }
         }
     }
+
+    /**
+     * 返回 jar 中文件的最后更新时间
+     *
+     * 示例代码：
+     * <pre>
+     *     <code>
+     *       String classFilePath = "/com/mysql/jdbc/AuthenticationPlugin.class";
+     *       String jarFilePath = "D:/jars/mysql-connector-java-5.1.34.jar";
+     *       Test test=new Test();
+     *       Date date = JarUtils.getLastUpdatedTime(jarFilePath, classFilePath);
+     *       System.out.println("getLastModificationDate returned: " + date);
+     *     </code>
+     * </pre>
+     *
+     * Returns last update time of a class file inside a jar file
+     *
+     * @param jarFilePath - path of jar file
+     * @param classPath - path of class file inside the jar file with leading slash
+     * @return
+     */
+    public static Long getLastUpdatedTime(String jarFilePath, String classPath) {
+        return getLastUpdatedTime(new File(jarFilePath), classPath);
+    }
+
+    public static Long getLastUpdatedTime(File jarFile, String classPath) {
+        JarFile jar = null;
+        try {
+            jar = new JarFile(jarFile);
+            JarEntry jarEntry = jar.getJarEntry(classPath);
+            if(jarEntry == null){
+                return null;
+            }
+            return jarEntry.getTime();
+        } catch (IOException e) {
+            LogUtils.e(e);
+        } finally {
+            IOUtils.close(jar);
+        }
+        return null;
+    }
+
 }

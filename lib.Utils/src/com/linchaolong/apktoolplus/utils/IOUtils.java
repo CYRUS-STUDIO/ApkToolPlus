@@ -6,9 +6,9 @@ import java.io.IOException;
 /**
  * Created by linchaolong on 2015/10/28.
  */
-public class IO {
+public class IOUtils {
 
-    public static final String TAG = IO.class.getSimpleName();
+    public static final String TAG = IOUtils.class.getSimpleName();
 
     public static final void close(Closeable c) {
         if (c == null) {

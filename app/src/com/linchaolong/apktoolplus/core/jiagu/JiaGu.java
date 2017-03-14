@@ -4,11 +4,8 @@ import com.linchaolong.apktoolplus.core.ApkToolPlus;
 import com.linchaolong.apktoolplus.core.AppManager;
 import com.linchaolong.apktoolplus.core.Callback;
 import com.linchaolong.apktoolplus.core.KeystoreConfig;
-import com.linchaolong.apktoolplus.utils.DataProtector;
-import com.linchaolong.apktoolplus.utils.ClassHelper;
-import com.linchaolong.apktoolplus.utils.Debug;
-import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.ZipHelper;
+import com.linchaolong.apktoolplus.utils.*;
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import net.dongliu.apk.parser.ApkParser;
 import net.dongliu.apk.parser.bean.CertificateMeta;
 import net.lingala.zip4j.core.ZipFile;
@@ -94,7 +91,7 @@ public class JiaGu {
      * @return
      */
     public static boolean isEncrypted(File apk) {
-        return ZipHelper.hasFile(apk, "assets/" + JIAGU_DATA_BIN);
+        return ZipUtils.hasFile(apk, "assets/" + JIAGU_DATA_BIN);
     }
 
     /**
@@ -188,7 +185,7 @@ public class JiaGu {
         try(ApkParser parser = new ApkParser(apk)){
             List<CertificateMeta> certList = parser.getCertificateMetaList();
             String certMD5 = certList.get(0).getCertMd5();
-            byte[] encryptData = DataProtector.encryptXXTEA(certMD5.getBytes());
+            byte[] encryptData = EncryptUtils.encryptXXTEA(certMD5.getBytes());
             FileUtils.writeByteArrayToFile(new File(decompile,"assets/sign.bin"), encryptData);
         } catch (CertificateException e) {
             e.printStackTrace();
@@ -261,7 +258,7 @@ public class JiaGu {
     private static boolean jiagu(File decompileDir) {
         if (!jiaguZip.exists()) {
             // 释放加固库
-            if (!ClassHelper.releaseResourceToFile(JIAGU_ZIP_PATH, jiaguZip)) {
+            if (!ClassUtils.releaseResourceToFile(JIAGU_ZIP_PATH, jiaguZip)) {
                 return false;
             }
         }
@@ -277,18 +274,18 @@ public class JiaGu {
         String[] platforms = lib.list();
         boolean isHasLib = lib.exists() && platforms != null && platforms.length > 0;
 
-        ZipHelper.list(jiaguZip, new ZipHelper.FileFilter() {
+        ZipUtils.list(jiaguZip, new ZipUtils.FileFilter() {
             @Override
             public void handle(ZipFile zipFile, FileHeader fileHeader) {
                 // 1.替换smali目录
                 if (fileHeader.getFileName().startsWith("smali")) {
-                    if (!ZipHelper.unzip(zipFile, fileHeader, smali.getParentFile())) {
-                        Debug.e(fileHeader.getFileName() + " unzip failure from " + zipFile.getFile().getAbsolutePath());
+                    if (!ZipUtils.unzip(zipFile, fileHeader, smali.getParentFile())) {
+                        LogUtils.e(fileHeader.getFileName() + " unzip failure from " + zipFile.getFile().getAbsolutePath());
                     }
                     // 2.拷贝lib
                 } else if (fileHeader.getFileName().startsWith("libs")) {
-                    if (!ZipHelper.unzip(zipFile, fileHeader, decompileDir)) {
-                        Debug.e(fileHeader.getFileName() + " unzip failure from " + zipFile.getFile().getAbsolutePath());
+                    if (!ZipUtils.unzip(zipFile, fileHeader, decompileDir)) {
+                        LogUtils.e(fileHeader.getFileName() + " unzip failure from " + zipFile.getFile().getAbsolutePath());
                     }
                 }
             }
@@ -327,7 +324,7 @@ public class JiaGu {
         try {
             // 解压apk中的classes.dex
             ZipFile zipFile = new ZipFile(apk);
-            ZipHelper.unzip(zipFile, "classes.dex", dexFile.getParentFile());
+            ZipUtils.unzip(zipFile, "classes.dex", dexFile.getParentFile());
         } catch (ZipException e) {
             e.printStackTrace();
             return false;
@@ -339,7 +336,7 @@ public class JiaGu {
         File encryptFile = new File(assets, JIAGU_DATA_BIN);
         encryptFile.delete();
 
-        DataProtector.encrypt(dexFile, encryptFile);
+        EncryptUtils.encrypt(dexFile, encryptFile);
         dexFile.delete();
 
         return true;

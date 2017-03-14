@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 文件工具类
+ *
  * Created by linchaolong on 2015/9/5.
  */
 public class FileHelper {
@@ -66,7 +68,7 @@ public class FileHelper {
                 lastIndexOf = path.lastIndexOf('\\');
             }
             if (lastIndexOf == -1){
-                Debug.w("makePath error : path '" + path + "' is not legal");
+                LogUtils.w("makePath error : path '" + path + "' is not legal");
                 return false;
             }
 
@@ -109,64 +111,64 @@ public class FileHelper {
      * 拷贝一个目录
      *
      * @param dir
-     * @param toDir
+     * @param copy
      */
-    public static boolean copyDir(File dir, File toDir) {
-        return copyDir(dir,toDir,true);
+    public static boolean copyDir(File dir, File copy) {
+        return copyDir(dir,copy,true);
     }
 
     /**
      * 拷贝一个目录
      *
      * @param dir
-     * @param toDir
+     * @param copy
      * @param includeDir    是否包含dir目录
      * @return
      */
-    public static boolean copyDir(File dir, File toDir, boolean includeDir) {
+    public static boolean copyDir(File dir, File copy, boolean includeDir) {
         try {
             if(includeDir){
-                FileUtils.copyDirectoryToDirectory(dir,toDir);
+                FileUtils.copyDirectoryToDirectory(dir,copy);
             }else{
-                FileUtils.copyDirectory(dir,toDir);
+                FileUtils.copyDirectory(dir,copy);
             }
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        return toDir.exists();
+        return copy.exists();
     }
 
     /**
      * 拷贝一个文件
      *
      * @param file
-     * @param toFile
+     * @param copy
      */
-    public static boolean copyFile(File file, File toFile){
+    public static boolean copyFile(File file, File copy){
         try {
-            FileUtils.copyFile(file,toFile);
+            FileUtils.copyFile(file,copy);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        return toFile.exists();
+        return copy.exists();
     }
 
     /**
      * 拷贝一个文件或目录
      *
      * @param file
-     * @param toFile
+     * @param copy
      * @return
      */
-    public static boolean copy(File file, File toFile){
+    public static boolean copy(File file, File copy){
         if(file.isFile()){
-            copyFile(file,toFile);
+            copyFile(file,copy);
         }else{
-            copyDir(file,toFile);
+            copyDir(file,copy);
         }
-        return toFile.exists();
+        return copy.exists();
     }
 
     /**
@@ -283,12 +285,26 @@ public class FileHelper {
      */
     public static void showInExplorer(String path){
         if (StringUtils.isEmpty(path)) return;
-        if(OS.isWindows()){
-            Cmd.exec("explorer.exe /select," + path);
+        if(OSUtils.isWindows()){
+            CmdUtils.exec("explorer.exe /select," + path);
         }else{
             // linux/mac
-            Cmd.exec("open " + path);
+            CmdUtils.exec("open " + path);
         }
     }
 
+    /**
+     * 文件处理器
+     *
+     * @author linchaolong
+     *
+     */
+    public interface FileHandler {
+        /**
+         * 处理文件的方法
+         *
+         * @param file 文件
+         */
+        boolean handle(File file);
+    }
 }

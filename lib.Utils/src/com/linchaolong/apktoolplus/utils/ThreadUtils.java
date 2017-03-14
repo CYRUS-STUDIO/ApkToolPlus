@@ -7,7 +7,7 @@ import javafx.application.Platform;
  *
  * Created by linchaolong on 2016/4/11.
  */
-public class ThreadHelper {
+public class ThreadUtils {
 
     /**
      * 当前线程是否UI线程

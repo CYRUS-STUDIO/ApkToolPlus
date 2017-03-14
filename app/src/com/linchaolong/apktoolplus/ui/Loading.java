@@ -1,5 +1,6 @@
 package com.linchaolong.apktoolplus.ui;
 
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -11,7 +12,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import com.linchaolong.apktoolplus.utils.Debug;
 
 import java.net.URL;
 import java.util.Timer;
@@ -134,10 +134,10 @@ public class Loading extends StackPane {
         btnCancel.setStyle("-fx-font: 20px \"Microsoft YaHei\";");
         btnCancel.setText("取消");
         btnCancel.setOnAction(event -> {
-            Debug.d("click btnCancel");
+            LogUtils.d("click btnCancel");
             Parent parent = getParent();
             if(parent == null){
-                Debug.w("remove loading failure because parent is null");
+                LogUtils.w("remove loading failure because parent is null");
                 return;
             }
             Pane pane = (Pane) parent;

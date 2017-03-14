@@ -15,6 +15,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 /**
+ * Xml 格式化工具类
+ *
  * Pretty-prints xml, supplied as a string.
  * <p/>
  * eg.

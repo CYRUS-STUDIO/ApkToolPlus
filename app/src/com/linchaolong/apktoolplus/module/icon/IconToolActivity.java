@@ -12,7 +12,7 @@ import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.DialogPlus;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
-import com.linchaolong.apktoolplus.utils.UIHelper;
+import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -171,7 +171,7 @@ public class IconToolActivity extends Activity{
             return;
         }
 
-        UIHelper.node2Png(paneIcon, saveFile);
+        ViewUtils.node2Png(paneIcon, saveFile);
 
         // 保存最后打开的目录
         Config.set(Config.kLastSaveIconDir, saveFile.getParentFile().getPath());
@@ -202,7 +202,7 @@ public class IconToolActivity extends Activity{
         for(Map.Entry<String,Double> sizeEntry : iconSizeMap.entrySet()){
             exportDir = new File(saveDir,sizeEntry.getKey());
             exportDir.mkdirs();
-            UIHelper.node2Png(paneIcon, new File(exportDir, "icon.png"),sizeEntry.getValue(),sizeEntry.getValue());
+            ViewUtils.node2Png(paneIcon, new File(exportDir, "icon.png"),sizeEntry.getValue(),sizeEntry.getValue());
         }
 
         // 保存最后打开的目录
@@ -242,11 +242,11 @@ public class IconToolActivity extends Activity{
         sliderY.setDisable(true);
         // 进度监听
         sliderX.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            Debug.d( "sliderX value=" + newValue);
+//            LogUtils.d( "sliderX value=" + newValue);
             imageViewJiaoBiao.setLayoutX(newValue.intValue()-50);
         });
         sliderY.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            Debug.d( "sliderY value=" + newValue);
+//            LogUtils.d( "sliderY value=" + newValue);
             imageViewJiaoBiao.setLayoutY(-(newValue.intValue()-50));
         });
 
