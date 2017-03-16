@@ -10,6 +10,8 @@
 
 ApkToolPlus 是一个可视化的跨平台 apk 分析工具。
 
+> 项目地址：https://github.com/linchaolong/ApkToolPlus
+
 ## 功能说明
 
 ### 1. ApkTool 
@@ -97,9 +99,7 @@ icon 角标生成工具
 
 ## 下载
 
-> 项目地址：https://github.com/linchaolong/ApkToolPlus
-
-点击 [这里](release) 下载 release 版 ApkToolPlus。
+点击 [这里](release) 下载 release 版 ApkToolPlus。安装 jdk 后，双击 jar 文件即可运行 ApkToolPlus。
 
 ## 相关链接
 
