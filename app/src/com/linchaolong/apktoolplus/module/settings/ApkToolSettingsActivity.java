@@ -1,6 +1,9 @@
 package com.linchaolong.apktoolplus.module.settings;
 
-import com.linchaolong.apktoolplus.utils.CmdUtils;
+import com.linchaolong.apktoolplus.core.ApkToolPlus;
+import com.linchaolong.apktoolplus.core.AppManager;
+import com.linchaolong.apktoolplus.core.Global;
+import com.linchaolong.apktoolplus.utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,9 +12,6 @@ import javafx.scene.control.TextField;
 import com.linchaolong.apktoolplus.base.Activity;
 import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
-import com.linchaolong.apktoolplus.utils.ViewUtils;
-import com.linchaolong.apktoolplus.utils.Base64Utils;
-import com.linchaolong.apktoolplus.utils.StringUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -36,21 +36,53 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
     TextField textFieldKeystorePassword;
     @FXML
     TextArea textArea;
+    @FXML
+    Button btnInstallFramework;
+
+    private boolean isInstallFrameworking = false;
 
     /**
      * 选择keystore文件
      */
     public void selectKeystore(){
         File lastDir = Config.getDir(Config.kKeystoreFilePath);
-        File keytoreFile = FileSelecter.create(btnSelect.getParent().getScene().getWindow())
+        File file = FileSelecter.create(btnSelect.getParent().getScene().getWindow())
                 .addFilter("keystore","jks")
                 .addFilter("*")
                 .setInitDir(lastDir)
                 .setTitle("选择keystore文件")
                 .showDialog();
-        if(keytoreFile != null){
-            textFieldFilePath.setText(keytoreFile.getPath());
-            Config.set(Config.kKeystoreFilePath,keytoreFile.getPath());
+        if(file != null){
+            textFieldFilePath.setText(file.getPath());
+            Config.set(Config.kKeystoreFilePath,file.getPath());
+        }
+    }
+
+    /**
+     * 选择并安装 framework
+     */
+    public void selectFramework(){
+        if(isInstallFrameworking){
+            return;
+        }
+        File lastDir = Config.getDir(Config.kFrameworkFilePath);
+        File file = FileSelecter.create(btnSelect.getParent().getScene().getWindow())
+                .addFilter("jar","apk")
+                .addFilter("*")
+                .setInitDir(lastDir)
+                .setTitle("选择framework")
+                .showDialog();
+        if(file != null){
+            Config.set(Config.kFrameworkFilePath,file.getPath());
+            // 安装 framework
+            btnInstallFramework.setText("Installing...");
+            isInstallFrameworking = true;
+            TaskManager.get().queue(() -> {
+                ApkToolPlus.installFramework(AppManager.getApkTool(), file);
+                isInstallFrameworking = false;
+                Global.toast("Install Finish");
+                TaskManager.get().runOnUiThread(() -> btnInstallFramework.setText("Install Framework"));
+            });
         }
     }
 

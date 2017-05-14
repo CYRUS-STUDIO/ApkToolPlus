@@ -133,7 +133,7 @@ public class DexProtector {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            IO.close(in);
+            IOUtils.close(in);
         }
         return null;
     }
@@ -282,8 +282,8 @@ public class DexProtector {
             e.printStackTrace();
         } finally {
             // 释放资源
-            IO.close(in);
-            IO.close(out);
+            IOUtils.close(in);
+            IOUtils.close(out);
         }
         return false;
     }

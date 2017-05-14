@@ -67,6 +67,8 @@ public class Config {
     public static final String kSublimePath = "sublimePath";
     public static final String kSublimeCmdParams = "sublimeCmdParams";
 
+    public static final String kFrameworkFilePath = "frameworkFilePath";
+
     public static final String kKeystoreFilePath = "keystoreFilePath";
     public static final String kKeystoreAlias = "alias";
     public static final String kAliasPassword = "aliasPassword";
