@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="apktool">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib.Res/src/apktool/apktool.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib.Res/src/apktool/apktool.jar!/" />
+    </SOURCES>
+  </library>
+</component>

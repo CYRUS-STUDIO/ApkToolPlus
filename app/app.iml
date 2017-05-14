@@ -14,5 +14,6 @@
     <orderEntry type="module" module-name="lib.Proguard" />
     <orderEntry type="module" module-name="lib.Res" />
     <orderEntry type="module" module-name="lib.Utils" />
+    <orderEntry type="library" name="apktool" level="project" />
   </component>
 </module>

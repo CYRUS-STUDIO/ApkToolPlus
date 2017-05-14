@@ -73,8 +73,8 @@ public class AppManager {
             // 开发中
             // 拷贝工程 src 目录下的apktool.jar
             File apkToolFile = new File(getProjectDir(), "lib.Res/src/" + APKTOOL_PATH);
-            File frameworkResFile = new File(getProjectDir(), "lib.Res/src/" + FRAMEWORK_PATH);
             FileHelper.copyFile(apkToolFile, apkTool);
+            File frameworkResFile = new File(getProjectDir(), "lib.Res/src/" + FRAMEWORK_PATH);
             FileHelper.copyFile(frameworkResFile, frameworkRes);
         }
         ApkToolPlus.installFramework(apkTool, frameworkRes);

@@ -24,8 +24,8 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/d2j-base-cmd-2.1-SNAPSHOT.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-reader-api-2.1-SNAPSHOT.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/dex-translator-2.1-SNAPSHOT.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Utils/libs/apktool-cli.jar" path-in-jar="/" />
       <element id="module-output" name="lib.Res" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib.Res/src/apktool/apktool.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
