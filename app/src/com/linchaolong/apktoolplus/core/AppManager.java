@@ -27,9 +27,6 @@ public class AppManager {
 
     public static final String APKTOOL_FILE = "apktool.jar";
     public static final String APKTOOL_PATH = "apktool/" + APKTOOL_FILE;
-    public static final String FRAMEWORK_FILE = "framework-res.apk";
-    public static final String FRAMEWORK_PATH = "apktool/" + FRAMEWORK_FILE;
-
     private static File apkTool = new File(getTempDir(), APKTOOL_FILE);
 
     public static File getApkTool(){
@@ -63,22 +60,16 @@ public class AppManager {
      */
     private static void updateApkTool() {
         LogUtils.d("updateApkTool...");
-        File frameworkRes = new File(apkTool.getParentFile(), FRAMEWORK_FILE);
         FileHelper.delete(apkTool);
         if(AppManager.isReleased){
             // 已发布
             ClassUtils.releaseResourceToFile(APKTOOL_PATH, apkTool);
-            ClassUtils.releaseResourceToFile(FRAMEWORK_PATH, frameworkRes);
         }else{
             // 开发中
             // 拷贝工程 src 目录下的apktool.jar
             File apkToolFile = new File(getProjectDir(), "lib.Res/src/" + APKTOOL_PATH);
             FileHelper.copyFile(apkToolFile, apkTool);
-            File frameworkResFile = new File(getProjectDir(), "lib.Res/src/" + FRAMEWORK_PATH);
-            FileHelper.copyFile(frameworkResFile, frameworkRes);
         }
-        ApkToolPlus.installFramework(apkTool, frameworkRes);
-        FileHelper.delete(frameworkRes);
     }
 
     public static void init() {
