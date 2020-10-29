@@ -1,4 +1,4 @@
-package com.linchaolong.apktoolplus.core.xml;
+package com.linchaolong.apktoolplus.core.manifest;
 
 import com.android.manifmerger.*;
 import com.android.utils.StdLogger;
