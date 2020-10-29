@@ -25,9 +25,13 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
     public static final String TAG = ApkToolSettingsActivity.class.getSimpleName();
 
     @FXML
-    TextField textFieldFilePath;
+    TextField textFieldApkToolPath;
     @FXML
-    Button btnSelect;
+    TextField textFieldKeystorePath;
+    @FXML
+    Button btnSelectApkTool;
+    @FXML
+    Button btnSelectKeystore;
     @FXML
     TextField textFieldAlias;
     @FXML
@@ -46,15 +50,31 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
      */
     public void selectKeystore(){
         File lastDir = Config.getDir(Config.kKeystoreFilePath);
-        File file = FileSelecter.create(btnSelect.getParent().getScene().getWindow())
+        File file = FileSelecter.create(btnSelectKeystore.getParent().getScene().getWindow())
                 .addFilter("keystore","jks")
                 .addFilter("*")
                 .setInitDir(lastDir)
                 .setTitle("选择keystore文件")
                 .showDialog();
         if(file != null){
-            textFieldFilePath.setText(file.getPath());
+            textFieldKeystorePath.setText(file.getPath());
             Config.set(Config.kKeystoreFilePath,file.getPath());
+        }
+    }
+
+    /**
+     * 选择ApkTool文件
+     */
+    public void selectApkTool(){
+        File lastDir = Config.getDir(Config.kApkToolPath);
+        File file = FileSelecter.create(btnSelectApkTool.getParent().getScene().getWindow())
+                .addFilter("jar")
+                .setInitDir(lastDir)
+                .setTitle("选择自定义apktool文件")
+                .showDialog();
+        if(file != null){
+            textFieldApkToolPath.setText(file.getPath());
+            Config.set(Config.kApkToolPath,file.getPath());
         }
     }
 
@@ -66,7 +86,7 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
             return;
         }
         File lastDir = Config.getDir(Config.kFrameworkFilePath);
-        File file = FileSelecter.create(btnSelect.getParent().getScene().getWindow())
+        File file = FileSelecter.create(btnSelectKeystore.getParent().getScene().getWindow())
                 .addFilter("jar","apk")
                 .addFilter("*")
                 .setInitDir(lastDir)
@@ -100,8 +120,10 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
      * 视图数据显示恢复
      */
     private void initData() {
+        // 自定义ApkTool文件路径
+        ViewUtils.review(textFieldApkToolPath,Config.kApkToolPath);
         // keystore文件
-        String keystorePath = ViewUtils.review(textFieldFilePath,Config.kKeystoreFilePath);
+        String keystorePath = ViewUtils.review(textFieldKeystorePath,Config.kKeystoreFilePath);
         // keystore password
         String keystorePassword = ViewUtils.review(textFieldKeystorePassword,Config.kKeystorePassword);
         // alias

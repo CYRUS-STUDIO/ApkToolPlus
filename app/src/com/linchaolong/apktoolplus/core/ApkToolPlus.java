@@ -1,17 +1,16 @@
 package com.linchaolong.apktoolplus.core;
 
 import brut.androlib.AndrolibException;
-import brut.androlib.res.util.ExtFile;
 import brut.androlib.src.SmaliBuilder;
-import brut.androlib.src.SmaliDecoder;
 import brut.apktool.Main;
 import brut.common.BrutException;
+import brut.directory.ExtFile;
 import com.googlecode.dex2jar.tools.Dex2jarCmd;
 import com.googlecode.dex2jar.tools.Jar2Dex;
 import com.googlecode.dex2jar.tools.StdApkCmd;
 import com.linchaolong.apktoolplus.utils.CmdUtils;
-import com.linchaolong.apktoolplus.utils.LogUtils;
 import com.linchaolong.apktoolplus.utils.FileHelper;
+import com.linchaolong.apktoolplus.utils.LogUtils;
 import com.linchaolong.apktoolplus.utils.ZipUtils;
 import org.jf.baksmali.Baksmali;
 import org.jf.baksmali.BaksmaliOptions;
@@ -21,7 +20,8 @@ import org.jf.dexlib2.analysis.InlineMethodResolver;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.DexBackedOdexFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -408,6 +408,10 @@ public class ApkToolPlus {
 
     public static void installFramework(File apkToolFile, File frameworkFile){
         CmdUtils.exec("java -jar " + apkToolFile.getAbsolutePath() + " if " + frameworkFile.getAbsolutePath());
+    }
+
+    public static void installApk(File apkFile){
+        CmdUtils.exec("adb install " + apkFile.getAbsolutePath());
     }
 
     private static void runApkTool(String[] args) throws InterruptedException, BrutException, IOException {

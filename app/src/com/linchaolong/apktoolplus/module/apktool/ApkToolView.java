@@ -63,6 +63,8 @@ public class ApkToolView extends Activity implements Initializable {
     TextField textFieldSignApkList;
     @FXML
     Button btnOpenApkSignOut;
+    @FXML
+    Button btnInstallSignApk;
 
     /**
      * 页面切换
@@ -114,7 +116,7 @@ public class ApkToolView extends Activity implements Initializable {
         // 默认不显示打开输出目录按钮
         btnOpenDecompileOut.setVisible(false);
         btnOpenRecompileOut.setVisible(false);
-        btnOpenApkSignOut.setVisible(false);
+//        btnOpenApkSignOut.setVisible(false);
     }
 
 }

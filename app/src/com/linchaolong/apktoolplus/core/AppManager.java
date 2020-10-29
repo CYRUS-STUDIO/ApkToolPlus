@@ -30,6 +30,11 @@ public class AppManager {
     private static File apkTool = new File(getTempDir(), APKTOOL_FILE);
 
     public static File getApkTool(){
+        // 判断是否使用自定义apktool
+        File file = Config.getFile(Config.kApkToolPath);
+        if (file != null && file.exists()) {
+            return file;
+        }
         initApkTool();
         return apkTool;
     }

@@ -22,7 +22,37 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </Button>
-                  <VBox layoutX="30.0" layoutY="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                  <VBox layoutX="30.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="使用自定义ApkTool：">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                        <HBox>
+                           <children>
+                              <TextField fx:id="textFieldApkToolPath" editable="false" layoutX="109.0" layoutY="35.0" prefHeight="23.0" prefWidth="280.0" styleClass="field" stylesheets="@../../../../../css/settings.css">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="btnSelectApkTool" mnemonicParsing="false" onAction="#selectApkTool" prefWidth="98.0" styleClass="button_positive" text="选择" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </VBox>
+
+                  <VBox layoutX="30.0" layoutY="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="keystore文件：">
                            <HBox.margin>
@@ -34,12 +64,12 @@
                         </Text>
                         <HBox>
                            <children>
-                              <TextField fx:id="textFieldFilePath" editable="false" layoutX="109.0" layoutY="35.0" prefHeight="23.0" prefWidth="280.0" styleClass="field" stylesheets="@../../../../../css/settings.css">
+                              <TextField fx:id="textFieldKeystorePath" editable="false" layoutX="109.0" layoutY="35.0" prefHeight="23.0" prefWidth="280.0" styleClass="field" stylesheets="@../../../../../css/settings.css">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button fx:id="btnSelect" mnemonicParsing="false" onAction="#selectKeystore" prefWidth="98.0" styleClass="button_positive" text="选择" />
+                              <Button fx:id="btnSelectKeystore" mnemonicParsing="false" onAction="#selectKeystore" prefWidth="98.0" styleClass="button_positive" text="选择" />
                            </children>
                            <VBox.margin>
                               <Insets top="10.0" />
@@ -50,7 +80,8 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </VBox>
-                  <HBox layoutX="56.0" layoutY="84.0" AnchorPane.leftAnchor="0.0">
+
+                  <HBox layoutX="56.0" layoutY="125.0" AnchorPane.leftAnchor="0.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Alias：">
                            <HBox.margin>
@@ -69,6 +100,7 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </HBox>
+
                   <HBox>
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="keystore密码：">
@@ -79,6 +111,7 @@
                         <PasswordField fx:id="textFieldKeystorePassword" styleClass="field" />
                      </children>
                   </HBox>
+
                   <TextArea fx:id="textArea" editable="false" prefHeight="200.0" prefWidth="200.0">
                      <VBox.margin>
                         <Insets top="20.0" />

@@ -110,7 +110,8 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                        <Button fx:id="btnOpenApkSignOut" layoutX="435.0" layoutY="165.0" mnemonicParsing="false" onAction="#openApkSignOut" styleClass="button_line_white" stylesheets="@../../../../../css/common.css" text="打开输出目录" />
+                        <Button fx:id="btnOpenApkSignOut" layoutX="385.0" layoutY="165.0" mnemonicParsing="false" onAction="#openApkSignOut" styleClass="button_line_white" stylesheets="@../../../../../css/common.css" text="打开输出目录" />
+                        <Button fx:id="btnInstallSignApk" layoutX="500.0" layoutY="165.0" mnemonicParsing="false" onAction="#installSignApk" styleClass="button_line_white" stylesheets="@../../../../../css/common.css" text="安装apk" />
                      </children>
                   </AnchorPane>
                </children>

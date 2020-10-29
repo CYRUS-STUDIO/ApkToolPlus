@@ -1,10 +1,7 @@
 package com.linchaolong.apktoolplus.module.apktool;
 
+import com.linchaolong.apktoolplus.core.*;
 import javafx.fxml.FXML;
-import com.linchaolong.apktoolplus.core.ApkToolPlus;
-import com.linchaolong.apktoolplus.core.Callback;
-import com.linchaolong.apktoolplus.core.KeystoreConfig;
-import com.linchaolong.apktoolplus.core.SettingHelper;
 import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
@@ -271,6 +268,27 @@ public class ApkToolActivity extends ApkToolView {
             FileHelper.showInExplorer(lastSignedApk);
         } else {
             FileHelper.showInExplorer(Config.getDir(Config.kLastOpenApkSignDir));
+        }
+    }
+
+    /**
+     * 安装签名后的apk
+     */
+    @FXML
+    public void installSignApk() {
+        if (FileHelper.exists(lastSignedApk)) {
+            Global.toast("正在安装...");
+            ApkToolPlus.installApk(lastSignedApk);
+            Global.toast(lastSignedApk.getName() + "安装完成");
+        } else {
+            if (signApkList != null && !signApkList.isEmpty()) {
+                File signApk = signApkList.get(0);
+                Global.toast("正在安装...");
+                ApkToolPlus.installApk(signApk);
+                Global.toast(signApk.getName() + "安装完成");
+            } else {
+                Global.toast("apk文件不存在");
+            }
         }
     }
 

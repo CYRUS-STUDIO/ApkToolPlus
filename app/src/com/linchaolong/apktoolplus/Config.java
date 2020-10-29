@@ -1,10 +1,7 @@
 package com.linchaolong.apktoolplus;
 
 import com.linchaolong.apktoolplus.core.AppManager;
-import com.linchaolong.apktoolplus.utils.ClassUtils;
-import com.linchaolong.apktoolplus.utils.IOUtils;
-import com.linchaolong.apktoolplus.utils.LogUtils;
-import com.linchaolong.apktoolplus.utils.TaskManager;
+import com.linchaolong.apktoolplus.utils.*;
 import com.linchaolong.apktoolplus.core.debug.LogManager;
 
 import java.io.*;
@@ -68,6 +65,8 @@ public class Config {
     public static final String kSublimeCmdParams = "sublimeCmdParams";
 
     public static final String kFrameworkFilePath = "frameworkFilePath";
+
+    public static final String kApkToolPath = "keyApkToolPath";
 
     public static final String kKeystoreFilePath = "keystoreFilePath";
     public static final String kKeystoreAlias = "alias";
@@ -209,6 +208,15 @@ public class Config {
     public static String get(String key){
         return get(key,null);
     }
+
+    public static File getFile(String key){
+        String path = get(key);
+        if (!StringUtils.isEmpty(path)) {
+            return new File(path);
+        }
+        return null;
+    }
+
     public static String get(String key, String defaultVal){
         return config.getProperty(key,defaultVal);
     }
