@@ -127,10 +127,12 @@ public class FileHelper {
      */
     public static boolean copyDir(File dir, File copy, boolean includeDir) {
         try {
-            if(includeDir){
-                FileUtils.copyDirectoryToDirectory(dir,copy);
-            }else{
-                FileUtils.copyDirectory(dir,copy);
+            if (dir.exists()) {
+                if(includeDir){
+                    FileUtils.copyDirectoryToDirectory(dir,copy);
+                }else{
+                    FileUtils.copyDirectory(dir,copy);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
