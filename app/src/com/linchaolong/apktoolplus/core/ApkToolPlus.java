@@ -40,10 +40,10 @@ public class ApkToolPlus {
      * 该方法会创建一个ClassLoader，并把classpaths设置为默认搜索路径，然后设置为当前线程的上下文ClassLoader
      * ，原上下文ClassLoader为父ClassLoader
      *
-     * @param classpaths    类路径数组
-     * @return  ClassLoader
+     * @param classpaths 类路径数组
+     * @return ClassLoader
      */
-    public static ClassLoader initClassPath(String[] classpaths){
+    public static ClassLoader initClassPath(String[] classpaths) {
         if (classpaths == null || classpaths.length == 0)
             return null;
         //这里假定任何以 '/' 结束的 URL 都是指向目录的。如果不是以该字符结束，则认为该 URL 指向一个将根据需要下载和打开的 JAR 文件。
@@ -51,7 +51,7 @@ public class ApkToolPlus {
         // Chain the current thread classloader
         try {
             List<URL> urls = new ArrayList<>(classpaths.length);
-            for(String path : classpaths) {
+            for (String path : classpaths) {
                 urls.add(new File(path).toURI().toURL());
             }
             ClassLoader currentThreadClassLoader = Thread.currentThread().getContextClassLoader();
@@ -69,24 +69,24 @@ public class ApkToolPlus {
     /**
      * 反编译apk
      *
-     * @param apk           apk文件
-     * @param outDir        输出目录
-     * @param onExceptioin  异常处理
-     * @return  是否正常
+     * @param apk          apk文件
+     * @param outDir       输出目录
+     * @param onExceptioin 异常处理
+     * @return 是否正常
      */
-    public static boolean decompile(File apk, File outDir, Callback<Exception> onExceptioin){
+    public static boolean decompile(File apk, File outDir, Callback<Exception> onExceptioin) {
         try {
-            if(!outDir.exists()){
+            if (!outDir.exists()) {
                 outDir.mkdirs();
             }
-            if(outDir == null){
+            if (outDir == null) {
                 runApkTool(new String[]{"d", apk.getPath()});
-            }else{
+            } else {
                 runApkTool(new String[]{"d", apk.getPath(), "-o", outDir.getPath(), "-f"});
             }
         } catch (Exception e) {
             e.printStackTrace();
-            if(onExceptioin != null){
+            if (onExceptioin != null) {
                 onExceptioin.callback(e);
             }
             return false;
@@ -97,21 +97,21 @@ public class ApkToolPlus {
     /**
      * 回编译apk
      *
-     * @param folder        apk反编译目录
-     * @param outApk        apk输出路径，如果为null，则输出到默认路径
-     * @param onExceptioin  异常处理，可为null
-     * @return  是否正常
+     * @param folder       apk反编译目录
+     * @param outApk       apk输出路径，如果为null，则输出到默认路径
+     * @param onExceptioin 异常处理，可为null
+     * @return 是否正常
      */
-    public static boolean recompile(File folder, File outApk, Callback<Exception> onExceptioin){
+    public static boolean recompile(File folder, File outApk, Callback<Exception> onExceptioin) {
         try {
-            if(outApk == null){
+            if (outApk == null) {
                 runApkTool(new String[]{"b", folder.getPath()});
-            }else{
+            } else {
                 runApkTool(new String[]{"b", folder.getPath(), "-o", outApk.getPath()});
             }
         } catch (Exception e) {
             e.printStackTrace();
-            if(onExceptioin != null){
+            if (onExceptioin != null) {
                 onExceptioin.callback(e);
             }
             return false;
@@ -122,32 +122,32 @@ public class ApkToolPlus {
     /**
      * .class转换为.dex
      *
-     * @param jarFile           jar文件
-     * @param outputDexPath     dex文件输出路径
-     * @return  是否转换成功
+     * @param jarFile       jar文件
+     * @param outputDexPath dex文件输出路径
+     * @return 是否转换成功
      */
-    public static boolean jar2dex(File jarFile, String outputDexPath){
-        return class2dex(jarFile,outputDexPath);
+    public static boolean jar2dex(File jarFile, String outputDexPath) {
+        return class2dex(jarFile, outputDexPath);
     }
 
     /**
      * .class转换为.dex
      *
-     * @param classesDir        类路径
-     * @param outputDexPath    dex文件输出路径
-     * @return  是否转换成功
+     * @param classesDir    类路径
+     * @param outputDexPath dex文件输出路径
+     * @return 是否转换成功
      */
-    public static boolean class2dex(File classesDir, String outputDexPath){
+    public static boolean class2dex(File classesDir, String outputDexPath) {
 
         // 检查类路径
-        if (!classesDir.exists()){
+        if (!classesDir.exists()) {
             LogUtils.w("class2dex error : classPath is not exists.");
             return false;
         }
 
         // 创建输出路径
-        if (!FileHelper.makePath(outputDexPath)){
-            LogUtils.w( "makePath error : outputDexPath '" + outputDexPath + "' make fail");
+        if (!FileHelper.makePath(outputDexPath)) {
+            LogUtils.w("makePath error : outputDexPath '" + outputDexPath + "' make fail");
             return false;
         }
 
@@ -168,14 +168,14 @@ public class ApkToolPlus {
     /**
      * .dex转换为smali
      *
-     * @param dexFile       dex/apk文件
-     * @param outDir        smali文件输出目录
-     * @return  是否转换成功
+     * @param dexFile dex/apk文件
+     * @param outDir  smali文件输出目录
+     * @return 是否转换成功
      */
-    public static boolean dex2smali(File dexFile, File outDir){
+    public static boolean dex2smali(File dexFile, File outDir) {
 
-        if (dexFile == null || !dexFile.exists()){
-            LogUtils.w( "dex2smali dexFile is null or not exists : " + dexFile.getPath());
+        if (dexFile == null || !dexFile.exists()) {
+            LogUtils.w("dex2smali dexFile is null or not exists : " + dexFile.getPath());
             return false;
         }
 
@@ -211,7 +211,7 @@ public class ApkToolPlus {
 
             if (dexBackedDexFile instanceof DexBackedOdexFile) {
                 options.inlineResolver =
-                        InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile)dexBackedDexFile).getOdexVersion());
+                        InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile) dexBackedDexFile).getOdexVersion());
             }
 
             Baksmali.disassembleDexFile(dexBackedDexFile, outDir, jobs, options);
@@ -224,14 +224,14 @@ public class ApkToolPlus {
     /**
      * .jar转换为.smali
      *
-     * @param jarFile      Jar文件
-     * @param outDir       smali文件输出目录
-     * @return  是否转换成功
+     * @param jarFile Jar文件
+     * @param outDir  smali文件输出目录
+     * @return 是否转换成功
      */
-    public static boolean jar2smali(File jarFile, File outDir){
+    public static boolean jar2smali(File jarFile, File outDir) {
 
         if (!jarFile.exists() || jarFile.isDirectory()) {
-            LogUtils.w( "jar2smali error : jar file '" + jarFile.getPath() + "' is not exists or is a directory.");
+            LogUtils.w("jar2smali error : jar file '" + jarFile.getPath() + "' is not exists or is a directory.");
             return false;
         }
         return class2smali(jarFile, outDir);
@@ -240,12 +240,12 @@ public class ApkToolPlus {
     /**
      * .class转换为.smali
      *
-     * @param classesDir     类路径
-     * @param outDir        smali文件输出目录
-     * @return  是否转换成功
+     * @param classesDir 类路径
+     * @param outDir     smali文件输出目录
+     * @return 是否转换成功
      */
-    public static boolean class2smali(File classesDir, File outDir){
-        if (!classesDir.exists()){
+    public static boolean class2smali(File classesDir, File outDir) {
+        if (!classesDir.exists()) {
             LogUtils.w("class2smali error : classpath '" + classesDir.getPath() + "' is not exists.");
             return false;
         }
@@ -255,39 +255,39 @@ public class ApkToolPlus {
         dexFile.delete();
 
         // class -> dex
-        if (class2dex(classesDir, dexFile.getPath())){
+        if (class2dex(classesDir, dexFile.getPath())) {
             // dex -> smali
-            if (dex2smali(dexFile,outDir)){
+            if (dex2smali(dexFile, outDir)) {
                 LogUtils.d("class2smali succcess");
-            }else{
+            } else {
                 LogUtils.e("class2smali error : dex2smali error");
             }
 
             // clean temp
             dexFile.delete();
             return true;
-        }else {
-            LogUtils.e( "class2smali error : class2dex error");
+        } else {
+            LogUtils.e("class2smali error : class2dex error");
             return false;
         }
     }
 
     /**
-     *  .smali转换.dex
+     * .smali转换.dex
      *
-     * @param smaliDirPath      smali文件目录或zip文件路径
-     * @param dexOutputPath     dex文件输出路径
+     * @param smaliDirPath  smali文件目录或zip文件路径
+     * @param dexOutputPath dex文件输出路径
      * @return 是否转换成功
      */
-    public static boolean smali2dex(String smaliDirPath, String dexOutputPath){
+    public static boolean smali2dex(String smaliDirPath, String dexOutputPath) {
         ExtFile smaliDir = new ExtFile(new File(smaliDirPath));
-        if (!smaliDir.exists()){
+        if (!smaliDir.exists()) {
             LogUtils.w("smali2dex error : smali dir '" + smaliDirPath + "' is not exists");
             return false;
         }
 
         // 创建输出路径
-        if (!FileHelper.makePath(dexOutputPath)){
+        if (!FileHelper.makePath(dexOutputPath)) {
             LogUtils.w("makePath error : dexOutputPath '" + dexOutputPath + "' make fail");
             return false;
         }
@@ -308,16 +308,16 @@ public class ApkToolPlus {
     /**
      * dex2jar
      *
-     * @param file      dex文件或者apk文件，如果是apk会直接读取apk中的classes.dex
+     * @param file    dex文件或者apk文件，如果是apk会直接读取apk中的classes.dex
      * @param jarFile
      */
-    public static boolean dex2jar(File file, File jarFile){
+    public static boolean dex2jar(File file, File jarFile) {
         //d2j-dex2jar classes.dex --output output.jar
-        if(file == null || !file.exists() || jarFile == null){
+        if (file == null || !file.exists() || jarFile == null) {
             return false;
         }
         // dex2jar会判断如果是apk则读取apk中的classes.dex文件
-        Dex2jarCmd.main(file.getPath(),"--output",jarFile.getPath(),"--force"); //--force覆盖存在文件
+        Dex2jarCmd.main(file.getPath(), "--output", jarFile.getPath(), "--force"); //--force覆盖存在文件
         return jarFile.exists();
     }
 
@@ -328,11 +328,11 @@ public class ApkToolPlus {
      * @param dexFile
      * @return
      */
-    public static boolean jar2dex(File jarFile, File dexFile){
-        if(jarFile == null || !jarFile.exists() || dexFile == null){
+    public static boolean jar2dex(File jarFile, File dexFile) {
+        if (jarFile == null || !jarFile.exists() || dexFile == null) {
             return false;
         }
-        Jar2Dex.main(jarFile.getPath(),"--output",dexFile.getPath());
+        Jar2Dex.main(jarFile.getPath(), "--output", dexFile.getPath());
         return dexFile.exists();
     }
 
@@ -344,34 +344,34 @@ public class ApkToolPlus {
      * @param zipFile
      * @return
      */
-    public static boolean apk2zip(File apkFile, File zipFile){
+    public static boolean apk2zip(File apkFile, File zipFile) {
         //d2j-std-apk hqg.apk -o hqg.zip
-        if(apkFile == null || !apkFile.exists() || zipFile == null){
+        if (apkFile == null || !apkFile.exists() || zipFile == null) {
             return false;
         }
-        StdApkCmd.main(apkFile.getPath(),"-o",zipFile.getPath());
+        StdApkCmd.main(apkFile.getPath(), "-o", zipFile.getPath());
         return zipFile.exists();
     }
 
     /**
      * 对apk进行签名，签名apk将被输出到该apk相同目录下，名称格式为APK_NAME_signed.apk。
      *
-     * @param apk       apk文件
-     * @param config    keystore文件配置
-     * @return  返回签名apk
+     * @param apk    apk文件
+     * @param config keystore文件配置
+     * @return 返回签名apk
      */
-    public static File signApk(File apk, KeystoreConfig config){
+    public static File signApk(File apk, KeystoreConfig config) {
 
-        if (!apk.exists() || !apk.isFile()){
+        if (!apk.exists() || !apk.isFile()) {
             throw new RuntimeException("sign apk error : file '" + apk.getPath() + "' is no exits or not a file.");
         }
 
-        File apkCopy = new File(apk.getParentFile(), "copy_"+apk.getName());
+        File apkCopy = new File(apk.getParentFile(), "copy_" + apk.getName());
         FileHelper.delete(apkCopy);
 
-        FileHelper.copyFile(apk,apkCopy);
+        FileHelper.copyFile(apk, apkCopy);
         //删除META-INF目录，防止包含多个签名问题
-        ZipUtils.removeFileFromZip(apkCopy,"META-INF");
+        ZipUtils.removeFileFromZip(apkCopy, "META-INF");
 
         File signedApk = new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk");
         FileHelper.delete(signedApk);
@@ -394,7 +394,51 @@ public class ApkToolPlus {
         return signedApk;
     }
 
-    private static void safeRunApkTool(String[] args){
+    /**
+     * 对apk进行v2签名，签名apk将被输出到该apk相同目录下，名称格式为APK_NAME_signed.apk。
+     *
+     * @param apksigner apk文件
+     * @param apk       apk文件
+     * @param output    签名后的apk文件输出路径
+     * @param config    keystore文件配置
+     * @return 返回签名apk
+     */
+    public static File signApkV2(File apksigner, File apk, File output, KeystoreConfig config) {
+
+        if (!apk.exists() || !apk.isFile()) {
+            throw new RuntimeException("sign apk error : file '" + apk.getPath() + "' is no exits or not a file.");
+        }
+
+        File apkCopy = new File(apk.getParentFile(), "copy_" + apk.getName());
+        FileHelper.delete(apkCopy);
+
+        FileHelper.copyFile(apk, apkCopy);
+        //删除META-INF目录，防止包含多个签名问题
+        ZipUtils.removeFileFromZip(apkCopy, "META-INF");
+
+        File signedApk = output == null ? new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk") : output;
+        FileHelper.delete(signedApk);
+
+        //apksigner sign --ks [jks path] --ks-key-alias [alias] --ks-pass pass:[key store password] --key-pass pass:[key password] --out [output path] [apk path]
+        StringBuilder cmdBuilder = new StringBuilder(apksigner.getPath() + " sign");
+        cmdBuilder.append(" --ks ").append(config.keystorePath);
+        cmdBuilder.append(" --ks-pass pass:").append(config.keystorePassword);
+        cmdBuilder.append(" --ks-key-alias ").append(config.alias);
+        cmdBuilder.append(" --key-pass pass:").append(config.aliasPassword);
+        cmdBuilder.append(" --out ").append(signedApk.getPath()).append(" ").append(apkCopy.getPath());
+        String cmd = cmdBuilder.toString();
+
+        // 执行命令
+        CmdUtils.exec(cmd);
+
+        // clean
+        FileHelper.delete(apkCopy);
+
+        return signedApk;
+    }
+
+
+    private static void safeRunApkTool(String[] args) {
         try {
             Main.main(args);
         } catch (IOException e) {
@@ -406,11 +450,11 @@ public class ApkToolPlus {
         }
     }
 
-    public static void installFramework(File apkToolFile, File frameworkFile){
+    public static void installFramework(File apkToolFile, File frameworkFile) {
         CmdUtils.exec("java -jar " + apkToolFile.getAbsolutePath() + " if " + frameworkFile.getAbsolutePath());
     }
 
-    public static void installApk(File apkFile){
+    public static void installApk(File apkFile) {
         CmdUtils.exec("adb install " + apkFile.getAbsolutePath());
     }
 
@@ -420,7 +464,7 @@ public class ApkToolPlus {
         StringBuilder cmdBuilder = new StringBuilder();
         cmdBuilder.append("java -jar ")
                 .append(AppManager.getApkTool().getPath());
-        for(String arg : args){
+        for (String arg : args) {
             cmdBuilder.append(" ").append(arg);
         }
         // 执行命令

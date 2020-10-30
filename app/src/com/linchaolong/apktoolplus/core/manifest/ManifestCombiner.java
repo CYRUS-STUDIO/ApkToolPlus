@@ -106,15 +106,24 @@ public class ManifestCombiner {
 
             Optional<XmlDocument> mergedDocument = mergingReport.getMergedDocument();
 
-            XmlDocument xmlDocument = mergedDocument.get();
+            if (mergedDocument.isPresent()) {
 
-            String prettyPrint = xmlDocument.prettyPrint();
+                XmlDocument xmlDocument = mergedDocument.get();
 
-            FileUtils.write(output, prettyPrint);
+                String prettyPrint = xmlDocument.prettyPrint();
 
+                FileUtils.write(output, prettyPrint);
+
+                Logger.print("Manifest merge success");
+
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Logger.print("Manifest merge fail");
+
         return false;
     }
 
