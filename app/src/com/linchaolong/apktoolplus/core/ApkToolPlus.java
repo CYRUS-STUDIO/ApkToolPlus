@@ -455,7 +455,7 @@ public class ApkToolPlus {
     }
 
     public static void installApk(File apkFile) {
-        CmdUtils.exec("adb install " + apkFile.getAbsolutePath());
+        CmdUtils.exec("adb install \"" + apkFile.getAbsolutePath()+"\"");
     }
 
     private static void runApkTool(String[] args) throws InterruptedException, BrutException, IOException {
