@@ -5,7 +5,9 @@ import com.android.utils.StdLogger;
 import com.google.common.base.Optional;
 import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;
+import com.linchaolong.apktoolplus.utils.StringUtils;
 import org.apache.commons.io.FileUtils;
+import org.jf.util.TextUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -27,6 +29,7 @@ public class ManifestCombiner {
     private File output;
 
     private String applicationId;
+    private String icon;
 
     /**
      * 创建一个 AndroidManifest.xml Merger
@@ -39,6 +42,7 @@ public class ManifestCombiner {
         this.mainFile = mainFile;
         this.libFiles = libFiles;
         this.output = output;
+        init();
     }
 
     protected boolean checkFile() {
@@ -49,25 +53,9 @@ public class ManifestCombiner {
     }
 
     /**
-     * 合并 Manifest
-     *
-     * @return 是否合并成功
-     */
-    @Deprecated
-    private boolean combineOld() {
-        if (!checkFile()) {
-            return false;
-        }
-
-        ManifestMerger mm = new ManifestMerger(MergerLog.wrapSdkLog(new StdLogger(StdLogger.Level.VERBOSE)), null);
-        return mm.process(output, mainFile, libFiles, null, null);
-    }
-
-
-    /**
      * 处理占位符
      */
-    private void handlePlaceHolder() {
+    private void init() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder mainBuilder = factory.newDocumentBuilder();
@@ -83,6 +71,28 @@ public class ManifestCombiner {
     }
 
     /**
+     * 设置包名
+     *
+     * @param applicationId 包名
+     * @return
+     */
+    public ManifestCombiner setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+        return this;
+    }
+
+    /**
+     * 设置icon
+     *
+     * @param icon
+     * @return
+     */
+    public ManifestCombiner setIcon(String icon) {
+        this.icon = icon;
+        return this;
+    }
+
+    /**
      * 合并 Manifest
      *
      * @return 是否合并成功
@@ -93,11 +103,11 @@ public class ManifestCombiner {
         }
 
         try {
-            handlePlaceHolder();
 
             ManifestMerger2.Invoker merger = ManifestMerger2.newMerger(mainFile, new StdLogger(StdLogger.Level.VERBOSE), ManifestMerger2.MergeType.APPLICATION)
                     .addLibraryManifests(libFiles)
-                    .setPlaceHolderValue(PlaceholderHandler.APPLICATION_ID, applicationId)
+//                    .setPlaceHolderValue(PlaceholderHandler.APPLICATION_ID, applicationId)
+                    .setOverride(ManifestMerger2.SystemProperty.PACKAGE, applicationId)
                     .withFeatures(ManifestMerger2.Invoker.Feature.REMOVE_TOOLS_DECLARATIONS);
 
             Logger.print("ManifestCombiner applicationId=" + applicationId);
@@ -109,6 +119,10 @@ public class ManifestCombiner {
             if (mergedDocument.isPresent()) {
 
                 XmlDocument xmlDocument = mergedDocument.get();
+
+                if (!StringUtils.isEmpty(icon)) {
+                    xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:icon").setNodeValue(icon);
+                }
 
                 String prettyPrint = xmlDocument.prettyPrint();
 

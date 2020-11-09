@@ -10,5 +10,9 @@ public class Logger {
     public static void print(String msg){
         System.out.println(msg);
     }
+    public static void print(String format, String... msg){
+        System.out.printf((format) + "%n", msg);
+    }
+
 
 }
