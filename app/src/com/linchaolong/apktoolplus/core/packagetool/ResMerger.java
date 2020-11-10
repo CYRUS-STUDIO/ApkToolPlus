@@ -1,4 +1,4 @@
-package com.linchaolong.apktoolplus.core.res;
+package com.linchaolong.apktoolplus.core.packagetool;
 
 import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;

@@ -1,4 +1,4 @@
-package com.linchaolong.apktoolplus.core.manifest;
+package com.linchaolong.apktoolplus.core.packagetool;
 
 import com.android.manifmerger.*;
 import com.android.utils.StdLogger;
@@ -7,8 +7,8 @@ import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;
 import com.linchaolong.apktoolplus.utils.StringUtils;
 import org.apache.commons.io.FileUtils;
-import org.jf.util.TextUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
@@ -17,6 +17,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 /**
@@ -30,6 +32,7 @@ public class ManifestCombiner {
 
     private String applicationId;
     private String icon;
+    private Map<String, String> metaDataMap = new LinkedHashMap<>();
 
     /**
      * 创建一个 AndroidManifest.xml Merger
@@ -85,11 +88,45 @@ public class ManifestCombiner {
      * 设置icon
      *
      * @param icon
-     * @return
      */
     public ManifestCombiner setIcon(String icon) {
         this.icon = icon;
         return this;
+    }
+
+    /**
+     * 设置 mata-data
+     *
+     * @param key
+     * @param value
+     */
+    public ManifestCombiner setMetadata(String key, String value) {
+        metaDataMap.put(key, value);
+        return this;
+    }
+
+    /**
+     * 添加 meta-data
+     *
+     * @param xmlDocument
+     */
+    private void addMetadata(XmlDocument xmlDocument){
+        if (metaDataMap.isEmpty()) {
+            return;
+        }
+        Document xml = xmlDocument.getXml();
+
+        Node application = xml.getElementsByTagName("application").item(0);
+
+        for (Map.Entry<String, String> entry : metaDataMap.entrySet()) {
+
+            Element metaData = xml.createElement("meta-data");
+
+            metaData.setAttribute("android:name", entry.getKey());
+            metaData.setAttribute("android:value", entry.getValue());
+
+            application.appendChild(metaData);
+        }
     }
 
     /**
@@ -123,6 +160,8 @@ public class ManifestCombiner {
                 if (!StringUtils.isEmpty(icon)) {
                     xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:icon").setNodeValue(icon);
                 }
+
+                addMetadata(xmlDocument);
 
                 String prettyPrint = xmlDocument.prettyPrint();
 
