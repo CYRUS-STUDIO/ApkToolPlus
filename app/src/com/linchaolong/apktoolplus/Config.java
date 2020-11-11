@@ -67,6 +67,7 @@ public class Config {
     public static final String kFrameworkFilePath = "frameworkFilePath";
 
     public static final String kApkToolPath = "keyApkToolPath";
+    public static final String kApkSignerPath = "keyApkSignerPath";
 
     public static final String kKeystoreFilePath = "keystoreFilePath";
     public static final String kKeystoreAlias = "alias";

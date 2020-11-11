@@ -2,8 +2,12 @@ package com.linchaolong.apktoolplus.core.packagetool;
 
 import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;
+import org.apache.commons.io.FileUtils;
+import org.dom4j.*;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.util.Map;
 
 public class ResMerger {
 
@@ -57,6 +61,31 @@ public class ResMerger {
             }
         } else {
             FileHelper.copyDir(srcDir, destDir, false);
+        }
+    }
+
+    public static void setString(File stringsXml, File output, Map<String, String> values) {
+        try {
+            String content = FileUtils.readFileToString(stringsXml);
+            Document document = DocumentHelper.parseText(content);
+
+            for (Map.Entry<String, String> entry : values.entrySet()) {
+                Node nameNode = document.selectSingleNode("//resources/string[@name='" + entry.getKey() + "']");
+                if (nameNode != null) {
+                    nameNode.setText(entry.getValue());
+                } else {
+                    Element resourcesNode = (Element) document.selectSingleNode("//resources");
+                    Element element = resourcesNode.addElement("string");
+                    element.addAttribute("name", entry.getKey());
+                    element.setText(entry.getValue());
+                }
+            }
+
+            FileWriter fileWriter = new FileWriter(output);
+            document.write(fileWriter);
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

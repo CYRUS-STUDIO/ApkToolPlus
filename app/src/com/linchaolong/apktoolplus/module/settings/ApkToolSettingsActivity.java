@@ -27,9 +27,13 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
     @FXML
     TextField textFieldApkToolPath;
     @FXML
+    TextField textFieldApkSignerPath;
+    @FXML
     TextField textFieldKeystorePath;
     @FXML
     Button btnSelectApkTool;
+    @FXML
+    Button btnSelectApkSigner;
     @FXML
     Button btnSelectKeystore;
     @FXML
@@ -78,6 +82,24 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
         }
     }
 
+
+    /**
+     * 选择ApkSigner文件
+     */
+    public void selectApkSigner(){
+        File lastDir = Config.getDir(Config.kApkSignerPath);
+        File file = FileSelecter.create(btnSelectApkSigner.getParent().getScene().getWindow())
+                .addFilter("bat", "sh")
+                .setInitDir(lastDir)
+                .setTitle("选择apksigner文件")
+                .showDialog();
+        if(file != null){
+            textFieldApkSignerPath.setText(file.getPath());
+            Config.set(Config.kApkSignerPath,file.getPath());
+        }
+    }
+
+
     /**
      * 选择并安装 framework
      */
@@ -122,6 +144,8 @@ public class ApkToolSettingsActivity extends Activity implements Initializable {
     private void initData() {
         // 自定义ApkTool文件路径
         ViewUtils.review(textFieldApkToolPath,Config.kApkToolPath);
+        // apksigner
+        ViewUtils.review(textFieldApkSignerPath,Config.kApkSignerPath);
         // keystore文件
         String keystorePath = ViewUtils.review(textFieldKeystorePath,Config.kKeystoreFilePath);
         // keystore password

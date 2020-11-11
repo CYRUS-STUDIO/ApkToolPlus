@@ -32,6 +32,7 @@ public class ManifestCombiner {
 
     private String applicationId;
     private String icon;
+    private String label;
     private Map<String, String> metaDataMap = new LinkedHashMap<>();
 
     /**
@@ -80,7 +81,9 @@ public class ManifestCombiner {
      * @return
      */
     public ManifestCombiner setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
+        if (!StringUtils.isEmpty(applicationId)) {
+            this.applicationId = applicationId;
+        }
         return this;
     }
 
@@ -91,6 +94,17 @@ public class ManifestCombiner {
      */
     public ManifestCombiner setIcon(String icon) {
         this.icon = icon;
+        return this;
+    }
+
+    /**
+     * 设置游戏名
+     *
+     * @param label
+     * @return
+     */
+    public ManifestCombiner setLabel(String label) {
+        this.label = label;
         return this;
     }
 
@@ -159,6 +173,10 @@ public class ManifestCombiner {
 
                 if (!StringUtils.isEmpty(icon)) {
                     xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:icon").setNodeValue(icon);
+                }
+
+                if (!StringUtils.isEmpty(label)) {
+                    xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:label").setNodeValue(label);
                 }
 
                 addMetadata(xmlDocument);

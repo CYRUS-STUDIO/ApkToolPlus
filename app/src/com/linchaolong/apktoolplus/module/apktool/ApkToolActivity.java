@@ -1,15 +1,12 @@
 package com.linchaolong.apktoolplus.module.apktool;
 
 import com.linchaolong.apktoolplus.core.*;
+import com.linchaolong.apktoolplus.utils.*;
 import javafx.fxml.FXML;
 import com.linchaolong.apktoolplus.Config;
 import com.linchaolong.apktoolplus.ui.DirectorySelecter;
 import com.linchaolong.apktoolplus.ui.FileSelecter;
 import com.linchaolong.apktoolplus.ui.Loading;
-import com.linchaolong.apktoolplus.utils.LogUtils;
-import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.TaskManager;
-import com.linchaolong.apktoolplus.utils.ViewUtils;
 
 import java.io.File;
 import java.util.List;
@@ -223,7 +220,7 @@ public class ApkToolActivity extends ApkToolView {
      * 开始签名
      */
     @FXML
-    public void startApkSign() {
+    public void startApkSignV1() {
         KeystoreConfig config = SettingHelper.getKeystoreConfig();
         if (config == null) {
             showToast("keytore配置不正确，请到设置界面确认配置");
@@ -258,6 +255,64 @@ public class ApkToolActivity extends ApkToolView {
             btnOpenApkSignOut.setVisible(true);
         });
     }
+
+    /**
+     * 开始签名
+     */
+    @FXML
+    public void startApkSignV2() {
+        KeystoreConfig config = SettingHelper.getKeystoreConfig();
+        if (config == null) {
+            showToast("keytore配置不正确，请到设置界面确认配置");
+            return;
+        }
+
+        String apkSignerPath = Config.get(Config.kApkSignerPath);
+        if (StringUtils.isEmpty(apkSignerPath)) {
+            showToast("请先设置apkSigner文件路径");
+            return;
+        }
+
+        File apkSigner = new File(apkSignerPath);
+        if (!apkSigner.exists()) {
+            showToast("请先设置apkSigner文件路径");
+            return;
+        }
+
+        if (signApkList == null || signApkList.isEmpty()) {
+            showToast("请先选择需要签名的apk（可多选）");
+            return;
+        }
+
+        if (isSigning) {
+            showToast("正在签名..");
+            return;
+        }
+
+        isSigning = true;
+        Loading loading = ViewUtils.showLoading(paneApkSign, "正在签名,请稍候...", 15000);
+
+        TaskManager.get().queue(() -> {
+
+            for (File apk : signApkList) {
+
+                String name = apk.getName();
+
+                showToast(name + "正在签名...");
+
+                File signedApk = new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk");
+                lastSignedApk = ApkToolPlus.signApkV2(apkSigner, apk, signedApk, config);
+
+                showToast(name + "签名完成。");
+            }
+
+            isSigning = false;
+            ViewUtils.hideLoading(paneApkSign, loading);
+            // 显示打开输出目录
+            btnOpenApkSignOut.setVisible(true);
+        });
+    }
+
 
     /**
      * 打开输出目录

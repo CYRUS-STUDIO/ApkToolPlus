@@ -58,7 +58,9 @@ public class ApkToolView extends Activity implements Initializable {
     @FXML
     Button btnSelectSignApk;
     @FXML
-    Button btnApkSign;
+    Button btnApkSignV1;
+    @FXML
+    Button btnApkSignV2;
     @FXML
     TextField textFieldSignApkList;
     @FXML

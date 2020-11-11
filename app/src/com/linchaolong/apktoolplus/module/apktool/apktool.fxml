@@ -105,7 +105,8 @@
                                        </styleClass>
                                     </TextField>
                                     <Button fx:id="btnSelectSignApk" layoutX="489.0" layoutY="13.0" mnemonicParsing="false" onAction="#selectSignApk" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="选择apk" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="12.0" />
-                                    <Button fx:id="btnApkSign" layoutX="572.0" layoutY="13.0" mnemonicParsing="false" onAction="#startApkSign" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="开始签名" AnchorPane.rightAnchor="35.0" />
+                                    <Button fx:id="btnApkSignV1" layoutX="572.0" layoutY="13.0" mnemonicParsing="false" onAction="#startApkSignV1" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="v1签名" AnchorPane.rightAnchor="35.0" />
+                                    <Button fx:id="btnApkSignV2" layoutX="650.0" layoutY="13.0" mnemonicParsing="false" onAction="#startApkSignV2" styleClass="button_white" stylesheets="@../../../../../css/common.css" text="v2签名" AnchorPane.rightAnchor="35.0" />
                                  </children>
                               </HBox>
                            </children>
