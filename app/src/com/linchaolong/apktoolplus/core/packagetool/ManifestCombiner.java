@@ -120,6 +120,16 @@ public class ManifestCombiner {
     }
 
     /**
+     * 设置 mata-data
+     *
+     * @param metadata
+     */
+    public ManifestCombiner setMetadata(Map<String, String> metadata) {
+        metaDataMap.putAll(metadata);
+        return this;
+    }
+
+    /**
      * 添加 meta-data
      *
      * @param xmlDocument
@@ -193,7 +203,7 @@ public class ManifestCombiner {
             e.printStackTrace();
         }
 
-        Logger.print("Manifest merge fail");
+        Logger.error("Manifest merge fail");
 
         return false;
     }
