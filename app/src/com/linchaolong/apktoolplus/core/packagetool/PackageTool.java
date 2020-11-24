@@ -45,6 +45,9 @@ public class PackageTool {
             manifest = new File(sdk.path, "AndroidManifest.xml");
         } else {
             manifest = new File(sdk.path, "AndroidManifest-port.xml");
+            if (!manifest.exists()) {
+                manifest = new File(sdk.path, "AndroidManifest.xml");
+            }
         }
 
         if (!manifest.exists()) {
@@ -145,6 +148,7 @@ public class PackageTool {
     public static class SDKConfig {
         public File path;
         public Map<String, String> metaData;
+        public Map<String, String> placeHolderValues;
     }
 
     public static class BuildConfig {

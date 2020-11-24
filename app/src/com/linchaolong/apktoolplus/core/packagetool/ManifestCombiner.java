@@ -34,6 +34,7 @@ public class ManifestCombiner {
     private String icon;
     private String label;
     private Map<String, String> metaDataMap = new LinkedHashMap<>();
+    private Map<String, String> placeHolderValues = new LinkedHashMap<>();
 
     /**
      * 创建一个 AndroidManifest.xml Merger
@@ -130,6 +131,27 @@ public class ManifestCombiner {
     }
 
     /**
+     * 设置 PlaceHolderValue
+     *
+     * @param key
+     * @param value
+     */
+    public ManifestCombiner setPlaceHolderValue(String key, String value) {
+        placeHolderValues.put(key, value);
+        return this;
+    }
+
+    /**
+     * 设置 PlaceHolderValues
+     *
+     * @param metadata
+     */
+    public ManifestCombiner setPlaceHolderValues(Map<String, String> metadata) {
+        placeHolderValues.putAll(metadata);
+        return this;
+    }
+
+    /**
      * 添加 meta-data
      *
      * @param xmlDocument
@@ -170,6 +192,10 @@ public class ManifestCombiner {
 //                    .setPlaceHolderValue(PlaceholderHandler.APPLICATION_ID, applicationId)
                     .setOverride(ManifestMerger2.SystemProperty.PACKAGE, applicationId)
                     .withFeatures(ManifestMerger2.Invoker.Feature.REMOVE_TOOLS_DECLARATIONS);
+
+            if (placeHolderValues != null && !placeHolderValues.isEmpty()) {
+                merger.setPlaceHolderValues(placeHolderValues);
+            }
 
             Logger.print("ManifestCombiner applicationId=" + applicationId);
 
