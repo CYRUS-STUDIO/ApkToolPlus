@@ -64,6 +64,10 @@ public class PackageTool {
                 manifestCombiner.setMetadata(sdk.metaData);
             }
 
+            if (sdk.placeHolderValues != null && !sdk.placeHolderValues.isEmpty()) {
+                manifestCombiner.setPlaceHolderValues(sdk.placeHolderValues);
+            }
+
             // copy icon
             if (icon != null) {
                 FileHelper.copyFile(icon, new File(decompileDir, "res\\mipmap-xxxhdpi-v4\\" + appIconName + ".png"));
