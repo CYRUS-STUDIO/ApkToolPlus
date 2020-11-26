@@ -1,6 +1,7 @@
 package com.linchaolong.apktoolplus.core.packagetool;
 
 import com.linchaolong.apktoolplus.core.ApkToolPlus;
+import com.linchaolong.apktoolplus.core.ApkToolYml;
 import com.linchaolong.apktoolplus.core.KeystoreConfig;
 import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;
@@ -136,6 +137,11 @@ public class PackageTool {
         // copy file
         copyFile(decompileDir, buildConfig.copyFile);
 
+        // targetSdkVersion
+        if (!StringUtils.isEmpty(buildConfig.targetSdkVersion)) {
+            new ApkToolYml(new File(decompileDir, "apktool.yml")).setTargetVersion(buildConfig.targetSdkVersion).save();
+        }
+
         // 回编译
         FileHelper.delete(recompileApk);
         ApkToolPlus.recompile(decompileDir, recompileApk, null);
@@ -165,6 +171,7 @@ public class PackageTool {
         public Map<File, String> copyFile;
         public boolean landscape;
         public File apkSigner;
+        public String targetSdkVersion;
     }
 
 }

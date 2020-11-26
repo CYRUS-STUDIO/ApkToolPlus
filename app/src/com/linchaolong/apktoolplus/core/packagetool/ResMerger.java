@@ -1,12 +1,14 @@
 package com.linchaolong.apktoolplus.core.packagetool;
 
-import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.Logger;
+import com.linchaolong.apktoolplus.utils.*;
+import net.lingala.zip4j.model.FileHeader;
 import org.apache.commons.io.FileUtils;
 import org.dom4j.*;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ResMerger {
@@ -86,6 +88,66 @@ public class ResMerger {
             fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static void mergeRes(File[] dirList, File outDir) {
+
+        FileHelper.cleanDirectory(outDir);
+
+        for (File dir : dirList) {
+
+            String rootName = dir.getName().toLowerCase().replace("-", "_").replace(".", "_");
+
+            new FileWalker() {
+                @Override
+                public void handle(File file) {
+                    // res目录
+                    if (file.isDirectory() && file.getName().equals("res")) {
+
+                        Logger.print(file.getPath());
+
+                        // res目录下所有文件
+                        new FileWalker() {
+
+                            @Override
+                            public void handle(File file) {
+
+                                if (file.isFile() && !file.getName().equals(".gitignore")) {
+
+                                    String parentName = file.getParentFile().getName();
+
+                                    boolean isValues = parentName.contains("values");
+
+                                    String name = parentName + "/" + (isValues ? rootName + "_" : "");
+
+                                    File destFile = new File(outDir, name + file.getName());
+
+                                    if (isValues && destFile.exists()) {
+
+                                        for (int i = 0; i < 10; i++) {
+                                            destFile = new File(outDir, name + i + "_" + file.getName());
+
+                                            if (!destFile.exists()) {
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if (destFile.exists()) {
+                                        Logger.error(destFile.getPath() + " is exist!!!");
+                                    }
+
+                                    FileHelper.copyFile(file, destFile);
+
+                                    Logger.print("copy " + file.getPath() + " to " + destFile.getPath());
+                                }
+                            }
+                        }.walk(file.getAbsolutePath());
+                    }
+                }
+            }.walk(dir.getAbsolutePath());
         }
     }
 
