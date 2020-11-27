@@ -33,8 +33,11 @@ public class ManifestCombiner {
     private String applicationId;
     private String icon;
     private String label;
+    private String versionCode;
+    private String versionName;
     private Map<String, String> metaDataMap = new LinkedHashMap<>();
     private Map<String, String> placeHolderValues = new LinkedHashMap<>();
+
 
     /**
      * 创建一个 AndroidManifest.xml Merger
@@ -106,6 +109,27 @@ public class ManifestCombiner {
      */
     public ManifestCombiner setLabel(String label) {
         this.label = label;
+        return this;
+    }
+
+    /**
+     * 设置 versionCode
+     * @param versionCode
+     * @return
+     */
+    public ManifestCombiner setVersionCode(String versionCode) {
+        this.versionCode = versionCode;
+        return this;
+    }
+
+    /**
+     * 设置 versionName
+     *
+     * @param versionName
+     * @return
+     */
+    public ManifestCombiner setVersionName(String versionName) {
+        this.versionName = versionName;
         return this;
     }
 
@@ -192,6 +216,14 @@ public class ManifestCombiner {
 //                    .setPlaceHolderValue(PlaceholderHandler.APPLICATION_ID, applicationId)
                     .setOverride(ManifestMerger2.SystemProperty.PACKAGE, applicationId)
                     .withFeatures(ManifestMerger2.Invoker.Feature.REMOVE_TOOLS_DECLARATIONS);
+
+            if (!StringUtils.isEmpty(versionCode)) {
+                merger.setOverride(ManifestMerger2.SystemProperty.VERSION_CODE, versionCode);
+            }
+
+            if (!StringUtils.isEmpty(versionName)) {
+                merger.setOverride(ManifestMerger2.SystemProperty.VERSION_NAME, versionName);
+            }
 
             if (placeHolderValues != null && !placeHolderValues.isEmpty()) {
                 merger.setPlaceHolderValues(placeHolderValues);

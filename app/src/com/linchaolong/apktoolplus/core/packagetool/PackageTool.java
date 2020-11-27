@@ -34,7 +34,7 @@ public class PackageTool {
         }
     }
 
-    private void mergeSDK(SDKConfig sdk, File decompileDir, String packageName, File icon, String label, boolean landscape) {
+    private void mergeSDK(SDKConfig sdk, BuildConfig buildConfig, File decompileDir) {
 
         File smaliDir = new File(sdk.path, "smali");
 
@@ -42,7 +42,7 @@ public class PackageTool {
         jar2smali(new File(sdk.path, "jar"), smaliDir);
 
         File manifest;
-        if (landscape) {
+        if (buildConfig.landscape) {
             manifest = new File(sdk.path, "AndroidManifest.xml");
         } else {
             manifest = new File(sdk.path, "AndroidManifest-port.xml");
@@ -58,8 +58,16 @@ public class PackageTool {
                     new File(decompileDir, "AndroidManifest.xml"),
                     new File[]{manifest},
                     new File(decompileDir, "AndroidManifest.xml"))
-                    .setApplicationId(packageName)
-                    .setLabel(label);
+                    .setApplicationId(buildConfig.packageName)
+                    .setLabel(buildConfig.label);
+
+            if (!StringUtils.isEmpty(buildConfig.versionCode)) {
+                manifestCombiner.setVersionCode(buildConfig.versionCode);
+            }
+
+            if (!StringUtils.isEmpty(buildConfig.versionName)) {
+                manifestCombiner.setVersionName(buildConfig.versionName);
+            }
 
             if (sdk.metaData != null && !sdk.metaData.isEmpty()) {
                 manifestCombiner.setMetadata(sdk.metaData);
@@ -70,8 +78,8 @@ public class PackageTool {
             }
 
             // copy icon
-            if (icon != null) {
-                FileHelper.copyFile(icon, new File(decompileDir, "res\\mipmap-xxxhdpi-v4\\" + appIconName + ".png"));
+            if (buildConfig.icon != null) {
+                FileHelper.copyFile(buildConfig.icon, new File(decompileDir, "res\\mipmap-xxxhdpi-v4\\" + appIconName + ".png"));
                 manifestCombiner.setIcon("@mipmap/" + appIconName);
             }
 
@@ -91,9 +99,9 @@ public class PackageTool {
 
         // 修改游戏名
         File stringsXml = new File(decompileDir, "res\\values\\strings.xml");
-        if (!StringUtils.isEmpty(label) && stringsXml.exists()) {
+        if (!StringUtils.isEmpty(buildConfig.label) && stringsXml.exists()) {
             Map<String, String> stringMap = new LinkedHashMap<>();
-            stringMap.put("app_name", label);
+            stringMap.put("app_name", buildConfig.label);
             ResMerger.setString(stringsXml, stringsXml, stringMap);
         }
 
@@ -131,7 +139,7 @@ public class PackageTool {
 
         // 合并sdk
         for (SDKConfig sdk : buildConfig.sdkList) {
-            mergeSDK(sdk, decompileDir, buildConfig.packageName, buildConfig.icon, buildConfig.label, buildConfig.landscape);
+            mergeSDK(sdk, buildConfig, decompileDir);
         }
 
         // copy file
@@ -172,6 +180,8 @@ public class PackageTool {
         public boolean landscape;
         public File apkSigner;
         public String targetSdkVersion;
+        public String versionCode;
+        public String versionName;
     }
 
 }
