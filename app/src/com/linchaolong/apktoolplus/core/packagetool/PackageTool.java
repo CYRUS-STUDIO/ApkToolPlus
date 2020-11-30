@@ -69,6 +69,10 @@ public class PackageTool {
                 manifestCombiner.setVersionName(buildConfig.versionName);
             }
 
+            if (!StringUtils.isEmpty(buildConfig.applicationName)) {
+                manifestCombiner.setApplicationName(buildConfig.applicationName);
+            }
+
             if (sdk.metaData != null && !sdk.metaData.isEmpty()) {
                 manifestCombiner.setMetadata(sdk.metaData);
             }
@@ -92,6 +96,14 @@ public class PackageTool {
 
         // copy assets
         FileHelper.copyDir(new File(sdk.path, "assets"), new File(decompileDir, "assets"), false);
+
+        if (sdk.assetsFileList != null && !sdk.assetsFileList.isEmpty()) {
+            for (Map.Entry<File, String> entry : sdk.assetsFileList.entrySet()) {
+                File destFile = new File(decompileDir, "assets\\" + entry.getValue());
+                FileHelper.copyFile(entry.getKey(), destFile);
+                Logger.print("copy %s to %s", entry.getKey().getPath(), destFile.getPath());
+            }
+        }
 
         // copy res
 //        FileHelper.copyDir(new File(sdk, "res"), new File(decompileDir, "res"), false);
@@ -167,6 +179,7 @@ public class PackageTool {
         public File path;
         public Map<String, String> metaData;
         public Map<String, String> placeHolderValues;
+        public Map<File, String> assetsFileList;
     }
 
     public static class BuildConfig {
@@ -182,6 +195,7 @@ public class PackageTool {
         public String targetSdkVersion;
         public String versionCode;
         public String versionName;
+        public String applicationName;
     }
 
 }

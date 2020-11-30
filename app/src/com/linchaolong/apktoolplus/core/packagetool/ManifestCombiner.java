@@ -31,6 +31,7 @@ public class ManifestCombiner {
     private File output;
 
     private String applicationId;
+    private String applicationName;
     private String icon;
     private String label;
     private String versionCode;
@@ -109,6 +110,17 @@ public class ManifestCombiner {
      */
     public ManifestCombiner setLabel(String label) {
         this.label = label;
+        return this;
+    }
+
+    /**
+     * 设置 application name
+     *
+     * @param applicationName
+     * @return
+     */
+    public ManifestCombiner setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
         return this;
     }
 
@@ -245,6 +257,10 @@ public class ManifestCombiner {
 
                 if (!StringUtils.isEmpty(label)) {
                     xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:label").setNodeValue(label);
+                }
+
+                if (!StringUtils.isEmpty(applicationName)) {
+                    xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:name").setNodeValue(applicationName);
                 }
 
                 addMetadata(xmlDocument);
