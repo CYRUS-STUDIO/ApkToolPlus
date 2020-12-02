@@ -58,6 +58,7 @@ public class PackageTool {
                     new File(decompileDir, "AndroidManifest.xml"),
                     new File[]{manifest},
                     new File(decompileDir, "AndroidManifest.xml"))
+                    .setSmaliDir(new File(decompileDir, "smali"))
                     .setApplicationId(buildConfig.packageName)
                     .setLabel(buildConfig.label);
 

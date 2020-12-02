@@ -38,7 +38,7 @@ public class ManifestCombiner {
     private String versionName;
     private Map<String, String> metaDataMap = new LinkedHashMap<>();
     private Map<String, String> placeHolderValues = new LinkedHashMap<>();
-
+    private File smaliDir;
 
     /**
      * 创建一个 AndroidManifest.xml Merger
@@ -126,6 +126,7 @@ public class ManifestCombiner {
 
     /**
      * 设置 versionCode
+     *
      * @param versionCode
      * @return
      */
@@ -192,7 +193,7 @@ public class ManifestCombiner {
      *
      * @param xmlDocument
      */
-    private void addMetadata(XmlDocument xmlDocument){
+    private void addMetadata(XmlDocument xmlDocument) {
         if (metaDataMap.isEmpty()) {
             return;
         }
@@ -209,6 +210,17 @@ public class ManifestCombiner {
 
             application.appendChild(metaData);
         }
+    }
+
+    /**
+     * smali目录
+     *
+     * @param smaliDir
+     * @return
+     */
+    public ManifestCombiner setSmaliDir(File smaliDir) {
+        this.smaliDir = smaliDir;
+        return this;
     }
 
     /**
@@ -260,7 +272,28 @@ public class ManifestCombiner {
                 }
 
                 if (!StringUtils.isEmpty(applicationName)) {
-                    xmlDocument.getXml().getElementsByTagName("application").item(0).getAttributes().getNamedItem("android:name").setNodeValue(applicationName);
+                    Node applicationNode = xmlDocument.getXml().getElementsByTagName("application").item(0);
+                    Node applicationNameNode = applicationNode.getAttributes().getNamedItem("android:name");
+
+                    if (applicationNameNode != null) {
+
+                        String originalApplicationName = applicationNameNode.getNodeValue();
+
+                        if (!originalApplicationName.equals(applicationName)) {
+                            if (smaliDir != null && smaliDir.exists()) {
+                                SmaliTool smaliTool = new SmaliTool(new File(smaliDir, originalApplicationName.replace(".", "/") + ".smali"));
+                                smaliTool.setSuper(applicationName);
+                                smaliTool.save();
+                            } else {
+                                Logger.error("try to change " + originalApplicationName + " super class fail, cause smaliDir=" + smaliDir + " is null or not exists.");
+                            }
+                        } else {
+                            Logger.error(originalApplicationName + " equals applicationName");
+                        }
+
+                    } else {
+                        ((Element) applicationNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:name", applicationName);
+                    }
                 }
 
                 addMetadata(xmlDocument);
