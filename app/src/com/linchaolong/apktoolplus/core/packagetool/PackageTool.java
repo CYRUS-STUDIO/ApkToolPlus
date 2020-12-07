@@ -123,6 +123,13 @@ public class PackageTool {
 
         // copy so
         ResMerger.copySo(new File(sdk.path, "lib"), new File(decompileDir, "lib"));
+
+        // file config
+        if (sdk.fileConfig != null) {
+            new FileConfigTool(new File(decompileDir, sdk.fileConfig.path))
+                    .setParams(sdk.fileConfig.config)
+                    .save();
+        }
     }
 
     public void copyFile(File decompileDir, Map<File, String> copyFile) {
@@ -181,6 +188,12 @@ public class PackageTool {
         public Map<String, String> metaData;
         public Map<String, String> placeHolderValues;
         public Map<File, String> assetsFileList;
+        public FileConfig fileConfig;
+    }
+
+    public static class FileConfig{
+        public String path;
+        public Map<String, String> config;
     }
 
     public static class BuildConfig {
