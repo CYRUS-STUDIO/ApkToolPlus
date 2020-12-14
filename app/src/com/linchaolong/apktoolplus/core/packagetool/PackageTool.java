@@ -149,7 +149,8 @@ public class PackageTool {
 
         File decompileDir = new File(dir, name);
         File recompileApk = new File(dir, name + "_recompile.apk");
-        File signedApk = new File(dir, name + "_signed.apk");
+        String suffix = StringUtils.isEmpty(buildConfig.suffix) ? "" : "_" + buildConfig.suffix;
+        File signedApk = new File(dir, name + "_signed" + suffix + ".apk");
 
         // 清理目录
         FileHelper.delete(decompileDir);
@@ -191,7 +192,7 @@ public class PackageTool {
         public FileConfig fileConfig;
     }
 
-    public static class FileConfig{
+    public static class FileConfig {
         public String path;
         public Map<String, String> config;
     }
@@ -210,6 +211,7 @@ public class PackageTool {
         public String versionCode;
         public String versionName;
         public String applicationName;
+        public String suffix;
     }
 
 }
