@@ -6,8 +6,10 @@ import com.linchaolong.apktoolplus.core.KeystoreConfig;
 import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;
 import com.linchaolong.apktoolplus.utils.StringUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -119,7 +121,11 @@ public class PackageTool {
         }
 
         // copy appcompat_res
-//        ResMerger.copyRes(new File(sdk, "appcompat_res"), new File(decompileDir, "res"));
+        if (!hasSupportV7(decompileDir)) {
+            ResMerger.copyRes(new File(sdk.path, "appcompat-v7_res"), new File(decompileDir, "res"));
+        }else{
+            Logger.print("has supportV7");
+        }
 
         // copy so
         ResMerger.copySo(new File(sdk.path, "lib"), new File(decompileDir, "lib"));
@@ -130,6 +136,16 @@ public class PackageTool {
                     .setParams(sdk.fileConfig.config)
                     .save();
         }
+    }
+
+    private boolean hasSupportV7(File decompileDir){
+        try {
+            String str = FileUtils.readFileToString(new File(decompileDir, "res/values/styles.xml"));
+            return str.contains("Theme.AppCompat.Light.NoActionBar");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public void copyFile(File decompileDir, Map<File, String> copyFile) {
