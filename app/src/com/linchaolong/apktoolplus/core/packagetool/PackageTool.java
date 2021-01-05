@@ -64,6 +64,10 @@ public class PackageTool {
                     .setApplicationId(buildConfig.packageName)
                     .setLabel(buildConfig.label);
 
+            if (sdk.splashSetting != null) {
+                manifestCombiner.setSplashSetting(sdk.splashSetting);
+            }
+
             if (!StringUtils.isEmpty(buildConfig.versionCode)) {
                 manifestCombiner.setVersionCode(buildConfig.versionCode);
             }
@@ -73,7 +77,7 @@ public class PackageTool {
             }
 
             if (!StringUtils.isEmpty(buildConfig.applicationName)) {
-                manifestCombiner.setApplicationName(buildConfig.applicationName);
+                manifestCombiner.setApplicationName(buildConfig.applicationName, buildConfig.overrideApplication);
             }
 
             if (sdk.metaData != null && !sdk.metaData.isEmpty()) {
@@ -206,6 +210,7 @@ public class PackageTool {
         public Map<String, String> placeHolderValues;
         public Map<File, String> assetsFileList;
         public FileConfig fileConfig;
+        public ManifestCombiner.SplashSetting splashSetting;
     }
 
     public static class FileConfig {
@@ -227,6 +232,7 @@ public class PackageTool {
         public String versionCode;
         public String versionName;
         public String applicationName;
+        public boolean overrideApplication;
         public String suffix;
     }
 

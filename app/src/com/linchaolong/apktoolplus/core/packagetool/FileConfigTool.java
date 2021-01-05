@@ -1,10 +1,7 @@
 package com.linchaolong.apktoolplus.core.packagetool;
 
-import com.linchaolong.apktoolplus.utils.FileHelper;
 import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

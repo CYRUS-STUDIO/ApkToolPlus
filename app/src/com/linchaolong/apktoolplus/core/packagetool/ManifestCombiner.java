@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -32,6 +33,7 @@ public class ManifestCombiner {
 
     private String applicationId;
     private String applicationName;
+    private boolean overrideApplication;
     private String icon;
     private String label;
     private String versionCode;
@@ -39,6 +41,7 @@ public class ManifestCombiner {
     private Map<String, String> metaDataMap = new LinkedHashMap<>();
     private Map<String, String> placeHolderValues = new LinkedHashMap<>();
     private File smaliDir;
+    private SplashSetting splashSetting;
 
     /**
      * 创建一个 AndroidManifest.xml Merger
@@ -119,9 +122,14 @@ public class ManifestCombiner {
      * @param applicationName
      * @return
      */
-    public ManifestCombiner setApplicationName(String applicationName) {
+    public ManifestCombiner setApplicationName(String applicationName, boolean overrideApplication) {
         this.applicationName = applicationName;
+        this.overrideApplication = overrideApplication;
         return this;
+    }
+
+    public ManifestCombiner setApplicationName(String applicationName) {
+        return setApplicationName(applicationName, false);
     }
 
     /**
@@ -224,6 +232,15 @@ public class ManifestCombiner {
     }
 
     /**
+     * 闪屏设置
+     *
+     * @param splashSetting
+     */
+    public void setSplashSetting(SplashSetting splashSetting) {
+        this.splashSetting = splashSetting;
+    }
+
+    /**
      * 合并 Manifest
      *
      * @return 是否合并成功
@@ -275,8 +292,9 @@ public class ManifestCombiner {
                     Node applicationNode = xmlDocument.getXml().getElementsByTagName("application").item(0);
                     Node applicationNameNode = applicationNode.getAttributes().getNamedItem("android:name");
 
-                    if (applicationNameNode != null) {
-
+                    if (applicationNameNode == null || overrideApplication) {
+                        ((Element) applicationNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:name", applicationName);
+                    }else{
                         String originalApplicationName = applicationNameNode.getNodeValue();
 
                         if (!originalApplicationName.equals(applicationName)) {
@@ -290,10 +308,13 @@ public class ManifestCombiner {
                         } else {
                             Logger.error(originalApplicationName + " equals applicationName");
                         }
-
-                    } else {
-                        ((Element) applicationNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:name", applicationName);
                     }
+                }
+
+                // 闪屏设置
+                if (splashSetting != null) {
+                    String mainActivity = setSplashActivity(xmlDocument, splashSetting.splashActivity);
+                    setMetadata(splashSetting.mainActivityMetaKey, mainActivity);
                 }
 
                 addMetadata(xmlDocument);
@@ -315,5 +336,67 @@ public class ManifestCombiner {
         return false;
     }
 
+    private String setSplashActivity(XmlDocument xmlDocument, String splashActivity) {
+
+        NodeList activityList = xmlDocument.getXml().getElementsByTagName("activity");
+
+        Logger.print(activityList.toString());
+
+        Node applicationNode = xmlDocument.getXml().getElementsByTagName("application").item(0);
+
+        for (int i = 0; i < activityList.getLength(); i++) {
+
+            Node activityItem = activityList.item(i);
+
+            NodeList activityChildNodes = activityItem.getChildNodes();
+
+            for (int j = 0; j < activityChildNodes.getLength(); j++) {
+
+                if (StringUtils.isEquals("intent-filter", activityChildNodes.item(j).getNodeName())) {
+
+                    NodeList intentFilterChildNodes = activityChildNodes.item(j).getChildNodes();
+
+                    for (int k = 0; k < intentFilterChildNodes.getLength(); j++) {
+
+                        if (StringUtils.isEquals("action", intentFilterChildNodes.item(j).getNodeName())) {
+
+                            if (StringUtils.isEquals("android.intent.action.MAIN", intentFilterChildNodes.item(j).getAttributes().getNamedItem("android:name").getNodeValue())) {
+
+                                // add splash activity config
+                                Node splashNode = activityItem.cloneNode(true);
+
+                                Node nameItem = splashNode.getAttributes().getNamedItem("android:name");
+
+                                String mainActivity = nameItem.getNodeValue();
+
+                                Logger.print("MainActivity=" + mainActivity);
+
+                                nameItem.setNodeValue(splashActivity);
+
+                                applicationNode.appendChild(splashNode);
+
+                                // remove intent-filter from main activity
+                                activityItem.removeChild(activityChildNodes.item(j));
+
+                                return mainActivity;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static class SplashSetting {
+
+        public String splashActivity;
+        public String mainActivityMetaKey;
+
+        public SplashSetting(String splashActivity, String mainActivityMetaKey) {
+            this.splashActivity = splashActivity;
+            this.mainActivityMetaKey = mainActivityMetaKey;
+        }
+    }
 
 }
