@@ -7,9 +7,7 @@ import com.linchaolong.apktoolplus.utils.FileHelper;
 import com.linchaolong.apktoolplus.utils.Logger;
 import com.linchaolong.apktoolplus.utils.StringUtils;
 import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -144,8 +142,11 @@ public class PackageTool {
 
     private boolean hasSupportV7(File decompileDir){
         try {
-            String str = FileUtils.readFileToString(new File(decompileDir, "res/values/styles.xml"));
-            return str.contains("Theme.AppCompat.Light.NoActionBar");
+            File styleFile = new File(decompileDir, "res/values/styles.xml");
+            if (styleFile.exists()) {
+                String str = FileUtils.readFileToString(styleFile);
+                return str.contains("Theme.AppCompat.Light.NoActionBar");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
