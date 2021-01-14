@@ -313,7 +313,7 @@ public class ManifestCombiner {
 
                 // 闪屏设置
                 if (splashSetting != null) {
-                    String mainActivity = setSplashActivity(xmlDocument, splashSetting.splashActivity);
+                    String mainActivity = setSplashActivity(xmlDocument, splashSetting);
                     setMetadata(splashSetting.mainActivityMetaKey, mainActivity);
                 }
 
@@ -336,7 +336,7 @@ public class ManifestCombiner {
         return false;
     }
 
-    private String setSplashActivity(XmlDocument xmlDocument, String splashActivity) {
+    private String setSplashActivity(XmlDocument xmlDocument, SplashSetting splashSetting) {
 
         NodeList activityList = xmlDocument.getXml().getElementsByTagName("activity");
 
@@ -371,12 +371,22 @@ public class ManifestCombiner {
 
                                 Logger.print("MainActivity=" + mainActivity);
 
-                                nameItem.setNodeValue(splashActivity);
+                                nameItem.setNodeValue(splashSetting.splashActivity);
 
                                 applicationNode.appendChild(splashNode);
 
                                 // remove intent-filter from main activity
                                 activityItem.removeChild(activityChildNodes.item(j));
+
+                                // launchMode
+                                if (!StringUtils.isEmpty(splashSetting.launchMode)) {
+                                    Node launchModeItem = splashNode.getAttributes().getNamedItem("android:launchMode");
+                                    if (launchModeItem != null) {
+                                        launchModeItem.setNodeValue(splashSetting.launchMode);
+                                    }else{
+                                        ((Element) splashNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:launchMode", splashSetting.launchMode);
+                                    }
+                                }
 
                                 return mainActivity;
                             }
@@ -392,10 +402,21 @@ public class ManifestCombiner {
 
         public String splashActivity;
         public String mainActivityMetaKey;
+        // android:launchMode="0" = android:launchMode="standard"
+        // android:launchMode="1" = android:launchMode="singleTop"
+        // android:launchMode="2" = android:launchMode="singleTask"
+        // android:launchMode="3" = android:launchMode="singleInstance"
+        public String launchMode;
 
         public SplashSetting(String splashActivity, String mainActivityMetaKey) {
             this.splashActivity = splashActivity;
             this.mainActivityMetaKey = mainActivityMetaKey;
+        }
+
+        public SplashSetting(String splashActivity, String mainActivityMetaKey, String launchMode) {
+            this.splashActivity = splashActivity;
+            this.mainActivityMetaKey = mainActivityMetaKey;
+            this.launchMode = launchMode;
         }
     }
 
