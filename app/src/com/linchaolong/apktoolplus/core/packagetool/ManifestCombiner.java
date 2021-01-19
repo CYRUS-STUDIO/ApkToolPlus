@@ -90,6 +90,10 @@ public class ManifestCombiner {
      */
     public ManifestCombiner setApplicationId(String applicationId) {
         if (!StringUtils.isEmpty(applicationId)) {
+
+            // 自动修改 authorities 防止安装冲突
+            new FileConfigTool(mainFile).setParam("android:authorities=\"" + this.applicationId, "android:authorities=\"" + applicationId).save();
+
             this.applicationId = applicationId;
         }
         return this;
@@ -294,7 +298,7 @@ public class ManifestCombiner {
 
                     if (applicationNameNode == null || overrideApplication) {
                         ((Element) applicationNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:name", applicationName);
-                    }else{
+                    } else {
                         String originalApplicationName = applicationNameNode.getNodeValue();
 
                         if (!originalApplicationName.equals(applicationName)) {
@@ -383,7 +387,7 @@ public class ManifestCombiner {
                                     Node launchModeItem = splashNode.getAttributes().getNamedItem("android:launchMode");
                                     if (launchModeItem != null) {
                                         launchModeItem.setNodeValue(splashSetting.launchMode);
-                                    }else{
+                                    } else {
                                         ((Element) splashNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:launchMode", splashSetting.launchMode);
                                     }
                                 }
