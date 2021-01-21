@@ -16,7 +16,12 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -77,6 +82,8 @@ public class ManifestCombiner {
 
             applicationId = manifest.getAttributes().getNamedItem("package").getNodeValue();
 
+            fixFileProviderConflict();
+
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
@@ -86,7 +93,6 @@ public class ManifestCombiner {
      * 设置包名
      *
      * @param applicationId 包名
-     * @return
      */
     public ManifestCombiner setApplicationId(String applicationId) {
         if (!StringUtils.isEmpty(applicationId)) {
@@ -95,8 +101,97 @@ public class ManifestCombiner {
             new FileConfigTool(mainFile).setParam("android:authorities=\"" + this.applicationId, "android:authorities=\"" + applicationId).save();
 
             this.applicationId = applicationId;
+
+            fixFileProviderConflict();
         }
         return this;
+    }
+
+    /**
+     * 解决 android.support.v4.content.FileProvider 组件冲突问题
+     */
+    protected void fixFileProviderConflict() {
+        try {
+            String fileProvider = "android.support.v4.content.FileProvider";
+
+            String mainContent = FileUtils.readFileToString(mainFile);
+
+            if (mainContent.contains(fileProvider)) {
+
+                if (libFiles != null && libFiles.length > 0) {
+
+                    for (File libFile : libFiles) {
+
+                        String libContent = FileUtils.readFileToString(libFile);
+
+                        if (libContent.contains(fileProvider)) {
+
+                            Logger.error("find file provider conflict");
+
+                            removeFileProvider(mainFile);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 把 android.support.v4.content.FileProvider 从 AndroidManifest.xml 文件中移除
+     */
+    protected void removeFileProvider(File manifestFile) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(manifestFile);
+
+            NodeList providerList = document.getElementsByTagName("provider");
+
+            for (int i = 0; i < providerList.getLength(); i++) {
+
+                Node node = providerList.item(i);
+
+                String name = node.getAttributes().getNamedItem("android:name").getNodeValue();
+
+                if (StringUtils.isEquals(name, "android.support.v4.content.FileProvider")) {
+
+                    Node applicationNode = document.getElementsByTagName("application").item(0);
+
+                    applicationNode.removeChild(node);
+
+                    writeDocument(document, manifestFile);
+
+                    Logger.error("fixed file provider conflict");
+
+                    break;
+                }
+            }
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Convert org.w3c.dom.Document to File file
+     */
+    protected void writeDocument(Document doc, File output) {
+        try {
+            // write the content into xml file
+            DOMSource source = new DOMSource(doc);
+            FileWriter writer = new FileWriter(output);
+
+            StreamResult result = new StreamResult(writer);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.transform(source, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

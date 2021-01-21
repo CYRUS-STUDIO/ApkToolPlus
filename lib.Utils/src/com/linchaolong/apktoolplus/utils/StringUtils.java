@@ -7,7 +7,7 @@ public class StringUtils {
 	}
 
 	public static boolean isEquals(String str, String other){
-		return str != null && other != null && str.equals(other);
+		return str != null && str.equals(other);
 	}
 	
 }
