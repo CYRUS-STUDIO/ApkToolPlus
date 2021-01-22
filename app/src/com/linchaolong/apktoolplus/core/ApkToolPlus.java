@@ -354,13 +354,29 @@ public class ApkToolPlus {
     }
 
     /**
-     * 对apk进行签名，签名apk将被输出到该apk相同目录下，名称格式为APK_NAME_signed.apk。
+     * 对apk进行v1签名，签名apk将被输出到该apk相同目录下，名称格式为APK_NAME_signed.apk。
      *
      * @param apk    apk文件
      * @param config keystore文件配置
      * @return 返回签名apk
      */
     public static File signApk(File apk, KeystoreConfig config) {
+        if (!apk.exists() || !apk.isFile()) {
+            throw new RuntimeException("sign apk error : file '" + apk.getPath() + "' is no exits or not a file.");
+        }
+
+        return signApk(apk, new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk"), config);
+    }
+
+    /**
+     * 对apk进行v1签名
+     *
+     * @param apk    apk文件
+     * @param output 签名后的apk文件输出路径
+     * @param config keystore文件配置
+     * @return 返回签名apk
+     */
+    public static File signApk(File apk, File output , KeystoreConfig config) {
 
         if (!apk.exists() || !apk.isFile()) {
             throw new RuntimeException("sign apk error : file '" + apk.getPath() + "' is no exits or not a file.");
@@ -373,7 +389,7 @@ public class ApkToolPlus {
         //删除META-INF目录，防止包含多个签名问题
         ZipUtils.removeFileFromZip(apkCopy, "META-INF");
 
-        File signedApk = new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk");
+        File signedApk = output == null ? new File(apk.getParentFile(), FileHelper.getNoSuffixName(apk) + "_signed.apk") : output;
         FileHelper.delete(signedApk);
 
         //jarsigner -digestalg SHA1 -sigalg MD5withRSA -keystore keystore路径 -storepass 密码 -keypass 别名密码 -signedjar signed_xxx.apk xxx.apk 别名

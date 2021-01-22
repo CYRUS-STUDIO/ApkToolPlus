@@ -179,6 +179,24 @@ public class PackageTool {
         // 解包
         ApkToolPlus.decompile(new File(dir, name + ".apk"), decompileDir, null);
 
+        // abiFilters
+        if (buildConfig.abiFilters != null && buildConfig.abiFilters.length > 0) {
+            File libDir = new File(decompileDir, "lib");
+            File[] files = libDir.listFiles();
+            if (files != null && files.length > 0) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        for (String abiFilter : buildConfig.abiFilters) {
+                            if (!StringUtils.isEquals(file.getName(), abiFilter)) {
+                                FileHelper.delete(file);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // 合并sdk
         for (SDKConfig sdk : buildConfig.sdkList) {
             mergeSDK(sdk, buildConfig, decompileDir);
@@ -198,8 +216,14 @@ public class PackageTool {
 
         // 签名
         if (buildConfig.keystoreConfig != null) {
+
             FileHelper.delete(signedApk);
-            ApkToolPlus.signApkV2(buildConfig.apkSigner, recompileApk, signedApk, buildConfig.keystoreConfig);
+
+            if (StringUtils.isEqualsIgnoreCase(buildConfig.signatureMethod, "V1")) {
+                ApkToolPlus.signApk(recompileApk, signedApk, buildConfig.keystoreConfig);
+            }else{
+                ApkToolPlus.signApkV2(buildConfig.apkSigner, recompileApk, signedApk, buildConfig.keystoreConfig);
+            }
 
             FileHelper.delete(recompileApk);
         }
@@ -235,6 +259,10 @@ public class PackageTool {
         public String applicationName;
         public boolean overrideApplication;
         public String suffix;
+        public String[] abiFilters;
+        // 签名方式:V1/V2(默认)
+        public String signatureMethod;
+        public String channel;
     }
 
 }

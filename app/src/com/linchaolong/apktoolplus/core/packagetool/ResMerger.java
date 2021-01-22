@@ -1,14 +1,10 @@
 package com.linchaolong.apktoolplus.core.packagetool;
 
 import com.linchaolong.apktoolplus.utils.*;
-import net.lingala.zip4j.model.FileHeader;
 import org.apache.commons.io.FileUtils;
 import org.dom4j.*;
-
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class ResMerger {
