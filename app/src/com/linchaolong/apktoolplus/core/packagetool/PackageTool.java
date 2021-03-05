@@ -37,6 +37,7 @@ public class PackageTool {
     private void mergeSDK(SDKConfig sdk, BuildConfig buildConfig, File decompileDir) {
 
         File smaliDir = new File(sdk.path, "smali");
+        File smaliLibDir = new File(sdk.path, "smali_lib");
 
         // jar2smali
         jar2smali(new File(sdk.path, "jar"), smaliDir);
@@ -98,6 +99,7 @@ public class PackageTool {
 
         // copy smali
         FileHelper.copyDir(smaliDir, new File(decompileDir, "smali"), false);
+        FileHelper.copyDir(smaliLibDir, new File(decompileDir, "smali"), false);
 
         // copy assets
         FileHelper.copyDir(new File(sdk.path, "assets"), new File(decompileDir, "assets"), false);
