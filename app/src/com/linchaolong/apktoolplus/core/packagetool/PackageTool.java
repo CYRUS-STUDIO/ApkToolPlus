@@ -199,6 +199,15 @@ public class PackageTool {
             }
         }
 
+        // assets文件
+        if (buildConfig.assetsFileList != null && !buildConfig.assetsFileList.isEmpty()) {
+            for (Map.Entry<File, String> entry : buildConfig.assetsFileList.entrySet()) {
+                File destFile = new File(decompileDir, "assets\\" + entry.getValue());
+                FileHelper.copyFile(entry.getKey(), destFile);
+                Logger.print("copy %s to %s", entry.getKey().getPath(), destFile.getPath());
+            }
+        }
+
         // 合并sdk
         for (SDKConfig sdk : buildConfig.sdkList) {
             mergeSDK(sdk, buildConfig, decompileDir);
@@ -265,6 +274,7 @@ public class PackageTool {
         // 签名方式:V1/V2(默认)
         public String signatureMethod;
         public String channel;
+        public Map<File, String> assetsFileList;
     }
 
 }
