@@ -391,6 +391,11 @@ public class ManifestCombiner {
                     Node applicationNode = xmlDocument.getXml().getElementsByTagName("application").item(0);
                     Node applicationNameNode = applicationNode.getAttributes().getNamedItem("android:name");
 
+                    // https://blog.csdn.net/qq_35559358/article/details/107234249
+                    if (applicationNode.getAttributes().getNamedItem("android:extractNativeLibs") != null) {
+                        applicationNode.getAttributes().removeNamedItem("android:extractNativeLibs");
+                    }
+
                     if (applicationNameNode == null || overrideApplication) {
                         ((Element) applicationNode).setAttributeNS("http://schemas.android.com/apk/res/android", "android:name", applicationName);
                     } else {

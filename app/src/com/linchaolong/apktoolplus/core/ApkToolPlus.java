@@ -8,10 +8,7 @@ import brut.directory.ExtFile;
 import com.googlecode.dex2jar.tools.Dex2jarCmd;
 import com.googlecode.dex2jar.tools.Jar2Dex;
 import com.googlecode.dex2jar.tools.StdApkCmd;
-import com.linchaolong.apktoolplus.utils.CmdUtils;
-import com.linchaolong.apktoolplus.utils.FileHelper;
-import com.linchaolong.apktoolplus.utils.LogUtils;
-import com.linchaolong.apktoolplus.utils.ZipUtils;
+import com.linchaolong.apktoolplus.utils.*;
 import org.jf.baksmali.Baksmali;
 import org.jf.baksmali.BaksmaliOptions;
 import org.jf.dexlib2.DexFileFactory;
@@ -19,6 +16,7 @@ import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.analysis.InlineMethodResolver;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.DexBackedOdexFile;
+import org.jf.dexlib2.iface.MultiDexContainer;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,9 +78,9 @@ public class ApkToolPlus {
                 outDir.mkdirs();
             }
             if (outDir == null) {
-                runApkTool(new String[]{"d", apk.getPath()});
+                runApkTool(new String[]{"d --only-main-classes", apk.getPath()});
             } else {
-                runApkTool(new String[]{"d", apk.getPath(), "-o", outDir.getPath(), "-f"});
+                runApkTool(new String[]{"d --only-main-classes", apk.getPath(), "-o", outDir.getPath(), "-f"});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,6 +153,7 @@ public class ApkToolPlus {
         com.android.dx.command.dexer.Main.Arguments arguments = new com.android.dx.command.dexer.Main.Arguments();
         arguments.outName = outputDexPath;
         arguments.strictNameCheck = false;
+//        arguments.minSdkVersion = 26;
         arguments.fileNames = new String[]{classesDir.getPath()};
         try {
             com.android.dx.command.dexer.Main.run(arguments);
@@ -173,48 +172,58 @@ public class ApkToolPlus {
      * @return 是否转换成功
      */
     public static boolean dex2smali(File dexFile, File outDir) {
-
-        if (dexFile == null || !dexFile.exists()) {
-            LogUtils.w("dex2smali dexFile is null or not exists : " + dexFile.getPath());
-            return false;
-        }
-
-        // dex文件的处理
-        BaksmaliOptions options = new BaksmaliOptions();
-
-        // options
-        options.deodex = false;
-        options.implicitReferences = false;
-        options.parameterRegisters = true;
-        options.localsDirective = true;
-        options.sequentialLabels = true;
-        options.debugInfo = true;
-        options.codeOffsets = false;
-        options.accessorComments = false;
-        options.registerInfo = 0;
-        options.inlineResolver = null;
-
-        // set jobs automatically
-        int jobs = Runtime.getRuntime().availableProcessors();
-        if (jobs > 6) {
-            jobs = 6;
-        }
-
+        // brut.apktool/apktool-lib/src/main/java/brut/androlib/src/SmaliDecoder.java
         try {
-            //brut/androlib/ApkDecoder.mApi default value is 15
-            // create the dex
-            DexBackedDexFile dexBackedDexFile = DexFileFactory.loadDexFile(dexFile, Opcodes.forApi(15));
+            final BaksmaliOptions options = new BaksmaliOptions();
 
-            if (dexBackedDexFile.isOdexFile()) {
-                LogUtils.w("Warning: You are disassembling an odex file without deodexing it.");
+            // options
+            options.deodex = false;
+            options.implicitReferences = false;
+            options.parameterRegisters = true;
+            options.localsDirective = true;
+            options.sequentialLabels = true;
+            options.debugInfo = true;
+            options.codeOffsets = false;
+            options.accessorComments = false;
+            options.registerInfo = 0;
+            options.inlineResolver = null;
+
+            // set jobs automatically
+            int jobs = Runtime.getRuntime().availableProcessors();
+            if (jobs > 6) {
+                jobs = 6;
             }
 
-            if (dexBackedDexFile instanceof DexBackedOdexFile) {
+            // create the container
+            MultiDexContainer<? extends DexBackedDexFile> container = DexFileFactory.loadDexContainer(dexFile, Opcodes.getDefault());
+            MultiDexContainer.DexEntry<? extends DexBackedDexFile> dexEntry;
+            DexBackedDexFile backedDexFile;
+
+            // If we have 1 item, ignore the passed file. Pull the DexFile we need.
+            if (container.getDexEntryNames().size() == 1) {
+                dexEntry = container.getEntry(container.getDexEntryNames().get(0));
+            } else {
+                dexEntry = container.getEntry("classes.dex");
+            }
+
+            // Double check the passed param exists
+            if (dexEntry == null) {
+                dexEntry = container.getEntry(container.getDexEntryNames().get(0));
+            }
+
+            assert dexEntry != null;
+            backedDexFile = dexEntry.getDexFile();
+
+            if (backedDexFile.supportsOptimizedOpcodes()) {
+                Logger.error("Warning: You are disassembling an odex file without deodexing it.");
+            }
+
+            if (backedDexFile instanceof DexBackedOdexFile) {
                 options.inlineResolver =
-                        InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile) dexBackedDexFile).getOdexVersion());
+                        InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile)backedDexFile).getOdexVersion());
             }
 
-            Baksmali.disassembleDexFile(dexBackedDexFile, outDir, jobs, options);
+            return Baksmali.disassembleDexFile(backedDexFile, outDir, jobs, options);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -297,7 +306,7 @@ public class ApkToolPlus {
 
         try {
             // smali -> dex
-            SmaliBuilder.build(smaliDir, dexFile);
+            SmaliBuilder.build(smaliDir, dexFile, 0);
             return true;
         } catch (AndrolibException e) {
             e.printStackTrace();
