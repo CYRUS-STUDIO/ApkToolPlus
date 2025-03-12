@@ -108,6 +108,11 @@ icon 角标生成工具
 ## 联系方式
 
 - Email：linchaolong.dev@gmail.com
-- Blog：http://www.jianshu.com/u/149dc6683cc7
+- Blog：https://cyrus-studio.github.io/blog/
+
+公众号：CYRUS STUDIO
+
+<img src="https://cyrus-studio.github.io/blog/gongzhonghao.jpg" width="240">
+
 
 > 最后，欢迎 Star，Fork，Issues 和提交 Pull requests，感谢 [ApkTool](https://github.com/iBotPeaches/Apktool) ，[apk-parser](https://github.com/clearthesky/apk-parser)，[AXMLPrinter](https://code.google.com/archive/p/android4me/downloads) 等开源项目的开发者。
