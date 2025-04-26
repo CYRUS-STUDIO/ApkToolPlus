@@ -17,6 +17,7 @@ import com.linchaolong.apktoolplus.ui.FileSelecter;
 import net.dongliu.apk.parser.ApkParser;
 import net.dongliu.apk.parser.bean.ApkMeta;
 import net.dongliu.apk.parser.bean.CertificateMeta;
+import net.dongliu.apk.parser.exception.ParserException;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,20 +82,27 @@ public class ApkInfoPrinterActivity extends Activity{
 
         // 如果是apk文件
         if(FileHelper.isSuffix(file,"apk")){
-            // ApkParser
+
             try(ApkParser parser = new ApkParser(file)){
+                // Meta Data
 //                apkParserData.append("#Meta Data\n").append(parser.getApkMeta()).append("\n\n");
                 apkParserData.append("#Meta Data\n").append(buildMetaDataTree(parser.getApkMeta())).append("\n");
-                apkParserData.append("#签名信息\n");
+
+                // 签名解析
+                StringBuilder signData = new StringBuilder();
+                signData.append("#签名信息\n");
                 List<CertificateMeta> certList = parser.getCertificateMetaList();
                 for (CertificateMeta certificateMeta : certList) {
-                    apkParserData.append(certificateMeta.toString());
+                    signData.append(certificateMeta.toString());
                 }
-                apkParserData.append("\n\n");
+                signData.append("\n\n");
+                apkParserData.append(signData);
             } catch (CertificateException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (ParserException e) {
+                LogUtils.e("apk Meta Data 或 签名信息 解析失败:" + e);
             }
 
             ZipFile apkFile;
@@ -111,7 +119,7 @@ public class ApkInfoPrinterActivity extends Activity{
                 return;
             }
         }else{
-            // 解析AndroidMenifest.xml
+            // 解析 AndroidMenifest.xml
             manifestData = AXMLPrinter.decode(file);
         }
 
