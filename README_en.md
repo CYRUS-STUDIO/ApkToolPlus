@@ -108,4 +108,9 @@ Click [here](release) to download release version of ApkToolPlus。
 ## Contact
 
 - Email：linchaolong.dev@gmail.com
-- Blog：http://www.jianshu.com/u/149dc6683cc7
+- Blog：https://cyrus-studio.github.io/blog/
+
+WeChat Official Account：CYRUS STUDIO
+
+<img src="https://cyrus-studio.github.io/blog/gongzhonghao.jpg" width="240">
+
