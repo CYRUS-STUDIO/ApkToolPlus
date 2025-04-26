@@ -20,10 +20,6 @@ public class AboutSettingsActivity extends Activity implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void actionJianShu() {
-        AppManager.browser(Config.JIANSHU_URL);
-    }
-
     /**
      * 作者博客
      */

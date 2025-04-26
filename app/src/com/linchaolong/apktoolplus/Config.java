@@ -80,9 +80,8 @@ public class Config {
     public static final URL DEFAULT_LOADING_IMAGE = ClassUtils.getResourceAsURL("res/gif/loading.gif");
 
     /** 博客地址 **/
-    public static final String JIANSHU_URL = "http://www.jianshu.com/u/149dc6683cc7";
-    public static final String BLOG_URL = "http://blog.csdn.net/linchaolong";
-    public static final String GITHUB_URL = "https://github.com/linchaolong/ApkToolPlus";
+    public static final String BLOG_URL = "https://cyrus-studio.github.io/blog";
+    public static final String GITHUB_URL = "https://github.com/CYRUS-STUDIO";
 
     static{
         try {

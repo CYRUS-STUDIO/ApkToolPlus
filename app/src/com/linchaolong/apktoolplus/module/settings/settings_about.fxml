@@ -30,7 +30,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Text>
-                  <Hyperlink onAction="#actionGithub" text="https://github.com/linchaolong/ApkToolPlus" />
+                  <Hyperlink onAction="#actionGithub" text="https://github.com/CYRUS-STUDIO" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="作者博客">
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -39,8 +39,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Text>
-                  <Hyperlink onAction="#actionJianShu" text="http://www.jianshu.com/u/149dc6683cc7" />
-                  <Hyperlink onAction="#actionBlog" text="http://blog.csdn.net/linchaolong" />
+                  <Hyperlink onAction="#actionBlog" text="https://cyrus-studio.github.io/blog" />
                </children>
             </VBox>
          </children>
